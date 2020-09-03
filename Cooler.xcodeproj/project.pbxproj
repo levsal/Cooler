@@ -3,29 +3,35 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DEABF08C91F92D57F7AA40F /* Pods_Cooler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A80370F2BD337BDE819D0F88 /* Pods_Cooler.framework */; };
 		BEEEC469250081F900A4732B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC468250081F900A4732B /* AppDelegate.swift */; };
 		BEEEC46B250081F900A4732B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC46A250081F900A4732B /* SceneDelegate.swift */; };
-		BEEEC46D250081F900A4732B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC46C250081F900A4732B /* ViewController.swift */; };
+		BEEEC46D250081F900A4732B /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC46C250081F900A4732B /* WelcomeViewController.swift */; };
 		BEEEC470250081F900A4732B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC46E250081F900A4732B /* Main.storyboard */; };
 		BEEEC472250081FC00A4732B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC471250081FC00A4732B /* Assets.xcassets */; };
 		BEEEC475250081FC00A4732B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC473250081FC00A4732B /* LaunchScreen.storyboard */; };
 		BEEEC47D250082D100A4732B /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC47C250082D100A4732B /* Fonts */; };
+		BEEEC481250086F100A4732B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC480250086F100A4732B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		828583950298E2F2A0B64819 /* Pods-Cooler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.debug.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.debug.xcconfig"; sourceTree = "<group>"; };
+		A6D6413E73ABC88DC1477ECF /* Pods-Cooler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.release.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.release.xcconfig"; sourceTree = "<group>"; };
+		A80370F2BD337BDE819D0F88 /* Pods_Cooler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cooler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEEEC465250081F900A4732B /* Cooler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cooler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEEEC468250081F900A4732B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEEEC46A250081F900A4732B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BEEEC46C250081F900A4732B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BEEEC46C250081F900A4732B /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		BEEEC46F250081F900A4732B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BEEEC471250081FC00A4732B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEEEC474250081FC00A4732B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEEEC476250081FC00A4732B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEEEC47C250082D100A4732B /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = ../../../Downloads/Fonts; sourceTree = "<group>"; };
+		BEEEC480250086F100A4732B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +39,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DEABF08C91F92D57F7AA40F /* Pods_Cooler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		102CCC74C91FCB9A98A43E70 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				828583950298E2F2A0B64819 /* Pods-Cooler.debug.xcconfig */,
+				A6D6413E73ABC88DC1477ECF /* Pods-Cooler.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		446518D0882E5490E1EF653B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A80370F2BD337BDE819D0F88 /* Pods_Cooler.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BEEEC45C250081F900A4732B = {
 			isa = PBXGroup;
 			children = (
 				BEEEC467250081F900A4732B /* Cooler */,
 				BEEEC466250081F900A4732B /* Products */,
+				102CCC74C91FCB9A98A43E70 /* Pods */,
+				446518D0882E5490E1EF653B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,12 +86,13 @@
 			children = (
 				BEEEC468250081F900A4732B /* AppDelegate.swift */,
 				BEEEC46A250081F900A4732B /* SceneDelegate.swift */,
-				BEEEC46C250081F900A4732B /* ViewController.swift */,
+				BEEEC46C250081F900A4732B /* WelcomeViewController.swift */,
 				BEEEC46E250081F900A4732B /* Main.storyboard */,
 				BEEEC471250081FC00A4732B /* Assets.xcassets */,
 				BEEEC473250081FC00A4732B /* LaunchScreen.storyboard */,
 				BEEEC47C250082D100A4732B /* Fonts */,
 				BEEEC476250081FC00A4732B /* Info.plist */,
+				BEEEC480250086F100A4732B /* GoogleService-Info.plist */,
 			);
 			path = Cooler;
 			sourceTree = "<group>";
@@ -77,9 +104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BEEEC479250081FC00A4732B /* Build configuration list for PBXNativeTarget "Cooler" */;
 			buildPhases = (
+				A0B97A1B7F5B163107C7070D /* [CP] Check Pods Manifest.lock */,
 				BEEEC461250081F900A4732B /* Sources */,
 				BEEEC462250081F900A4732B /* Frameworks */,
 				BEEEC463250081F900A4732B /* Resources */,
+				DC53E773F8ECF06C082223D9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -130,6 +159,7 @@
 			files = (
 				BEEEC475250081FC00A4732B /* LaunchScreen.storyboard in Resources */,
 				BEEEC47D250082D100A4732B /* Fonts in Resources */,
+				BEEEC481250086F100A4732B /* GoogleService-Info.plist in Resources */,
 				BEEEC472250081FC00A4732B /* Assets.xcassets in Resources */,
 				BEEEC470250081F900A4732B /* Main.storyboard in Resources */,
 			);
@@ -137,12 +167,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A0B97A1B7F5B163107C7070D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Cooler-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC53E773F8ECF06C082223D9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BEEEC461250081F900A4732B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEEEC46D250081F900A4732B /* ViewController.swift in Sources */,
+				BEEEC46D250081F900A4732B /* WelcomeViewController.swift in Sources */,
 				BEEEC469250081F900A4732B /* AppDelegate.swift in Sources */,
 				BEEEC46B250081F900A4732B /* SceneDelegate.swift in Sources */,
 			);
@@ -286,6 +358,7 @@
 		};
 		BEEEC47A250081FC00A4732B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 828583950298E2F2A0B64819 /* Pods-Cooler.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -303,6 +376,7 @@
 		};
 		BEEEC47B250081FC00A4732B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6D6413E73ABC88DC1477ECF /* Pods-Cooler.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
