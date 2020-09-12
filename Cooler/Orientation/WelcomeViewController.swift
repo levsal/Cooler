@@ -14,7 +14,8 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
+    
+    //MARK: - Segues
     @IBAction func signUpButton(_ sender: UIButton) {
         performSegue(withIdentifier: "welcomeToSignUp", sender: self)
     }

@@ -7,24 +7,33 @@
 //
 
 import UIKit
+import Firebase
 
 class SignUpViewController: UIViewController {
 
+    @IBOutlet weak var welcomeMessage: UILabel!
+    @IBOutlet weak var signUpStackView: UIStackView!
+    
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+       
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func signUpPressed(_ sender: UIButton) {
+        if let email = emailTextField.text, let password = passwordTextField.text{
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                if let e = error{
+                    self.welcomeMessage.textColor = .red
+                    self.welcomeMessage.text = e.localizedDescription
+                    print(e.localizedDescription)
+                } else {
+                    //Navigate to the chat
+                    self.performSegue(withIdentifier: "signUpToTabs", sender: self)
+                }
+            }
+        }
     }
-    */
-
 }
