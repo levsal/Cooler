@@ -25,11 +25,12 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadPosts()
         userEmail?.text = Auth.auth().currentUser?.email
         postTableView?.dataSource = self
         postVC.delegate = self
         
-        loadPosts()
+        
         
     }
     
