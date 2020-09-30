@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import Firebase
 
 class AddFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    let db = Firestore.firestore()
+    
+    var users : [String]? = [""]
+    
+    var parentVC: UIViewController?
     
     @IBOutlet var collectionView: UICollectionView!
     
@@ -20,8 +27,29 @@ class AddFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         collectionView.dataSource = self
         
         collectionView.showsHorizontalScrollIndicator = false
+        fetchUsers()
     }
     
+    func fetchUsers() {
+        db.collection("Users").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+            self.users = []
+            if let e = error {
+                print("There was an issue retrieving data from Firestore, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let user = data["email"] {
+                            self.users?.append(user as! String)
+                            self.collectionView.reloadData()
+                            print(user)
+                        }
+                    }
+                }
+            }
+        }
+
+    }
     
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,22 +63,19 @@ class AddFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
 
 extension AddFriendsTableViewCell: UICollectionViewDataSource {
     
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: 80, height: 80)
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 80, height: 80)
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return users!.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if indexPath.row == 1 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddFriendsCollectionViewCell", for: indexPath) as! AddFriendsCollectionViewCell
-            cell.userEmail.text = "Username"
-//            print("Googoogaga")
-            return cell
-//        }
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddFriendsCollectionViewCell", for: indexPath) as! AddFriendsCollectionViewCell
+        cell.userEmail.setTitle(users?[indexPath.row], for: .normal)
+        cell.parentCell = self
+        return cell
     }
     
 }

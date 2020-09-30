@@ -26,12 +26,14 @@
                                     <constraint firstAttribute="width" constant="50" id="21m-pD-l3p"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yH4-DZ-Fvv">
-                                <rect key="frame" x="37" y="57.5" width="41.5" height="57.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56g-1b-51g">
+                                <rect key="frame" x="42.5" y="57.5" width="30" height="57.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="Blah"/>
+                                <connections>
+                                    <action selector="userEmailPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Qc1-lG-aPx"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </stackView>
                 </subviews>
@@ -39,16 +41,76 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="05r-zS-2TX"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0Nd-AW-L6W"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="10z-85-G48"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="1IP-sD-Kqa"/>
                 <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="1cK-F0-AD5"/>
                 <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="1uK-yj-hTv"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="2O6-Dp-yH3"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="2uA-bT-Vbu"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="4NT-Xc-WAV"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="6yd-WZ-nT3"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="96G-Sp-Gh9"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="A3F-xf-ZwS"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="DKw-o2-bzl"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FXz-UR-CwA"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="G63-J9-q5j"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="HpV-3J-sMT"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="JXP-kA-s7D"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="JvU-eW-gpx"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="KL5-5m-7zJ"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="KRW-Sx-6Pl"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Kp4-9s-fnO"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="MbM-ce-U4g"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="NcV-BG-j8p"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="OCE-VV-qn2"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="OWD-PL-Y3O"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="Ob1-d7-Lfv"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="OrC-KU-amR"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="OuP-Q5-Gyc"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="PeI-gc-Wgr"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="Pjv-6u-gFP"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="RJS-KH-wDe"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="Sux-gO-uu8"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="TWn-U8-Hjz"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="W0G-2A-wlc"/>
                 <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="WV3-pz-84H"/>
                 <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="WZN-6f-9km"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="WwQ-vV-kiX"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="X6q-gG-VdQ"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="XRD-up-Sd3"/>
                 <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="XpF-Tk-l3a"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Y5M-2C-Mjq"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="YLh-bd-two"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="YUB-5X-NKt"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Z7H-5s-cIh"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Zqt-al-YsY"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="bvm-en-ClY"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="cb6-00-NOa"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="dv6-fr-S2D"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="eaf-f4-wpQ"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="gEM-ii-JJr"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="gFa-kn-nSe"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="gQ8-2M-ZiW"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="hCQ-ho-yn6"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="iOe-Yx-tqR"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="jCq-Zb-hD1"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="jEz-Cj-Xqb"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="kJG-HX-s7g"/>
                 <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lkN-kN-Vhj"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="mj0-rr-Kag"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="sff-ps-WaM"/>
+                <constraint firstAttribute="bottom" secondItem="2FW-pg-Qo8" secondAttribute="bottom" id="smR-f7-1QC"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="ueW-RA-Ic6"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="vWf-RP-3pp"/>
+                <constraint firstAttribute="trailing" secondItem="2FW-pg-Qo8" secondAttribute="trailing" id="wgL-P1-cbT"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="xIP-co-jvJ"/>
+                <constraint firstItem="2FW-pg-Qo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="xaz-ul-Ql8"/>
             </constraints>
             <size key="customSize" width="115" height="115"/>
             <connections>
-                <outlet property="userEmail" destination="yH4-DZ-Fvv" id="8NJ-xB-sOH"/>
+                <outlet property="userEmail" destination="56g-1b-51g" id="EUk-LE-bBj"/>
             </connections>
             <point key="canvasLocation" x="-223.91304347826087" y="127.56696428571428"/>
         </collectionViewCell>

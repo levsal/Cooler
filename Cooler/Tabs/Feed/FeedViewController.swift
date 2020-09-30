@@ -13,12 +13,17 @@ class FeedViewController: UIViewController {
 
     @IBOutlet weak var feedTableView: UITableView!
     
+ 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         feedTableView.register(UINib(nibName: "AddFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "AddFriendsTableViewCell")
         feedTableView.dataSource = self
         
+        
     }
+    
+    
 
 }
 
@@ -28,7 +33,8 @@ extension FeedViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AddFriendsTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AddFriendsTableViewCell", for: indexPath) as! AddFriendsTableViewCell
+        cell.parentVC = self
         return cell
     }
     

@@ -41,6 +41,7 @@ class SignUpViewController: UIViewController {
                             //Navigate to the chat
                             self.db.collection("\((Auth.auth().currentUser?.email)!)_Posts").addDocument(data: ["text": "My first post", "date": -Date().timeIntervalSince1970])
                             self.db.collection("\((Auth.auth().currentUser?.email)!)_Friends").addDocument(data: ["email": "coolerdevelopment@gmail.com", "date": -Date().timeIntervalSince1970])
+                            self.db.collection("Users").addDocument(data: ["email": "\((Auth.auth().currentUser?.email)!)", "date": -Date().timeIntervalSince1970])
                             self.performSegue(withIdentifier: "signUpToTabs", sender: self)
                         }
                     }

@@ -17,20 +17,27 @@ class ProfileViewController: UIViewController {
     
     let db = Firestore.firestore()
     
-    @IBOutlet weak var userEmail: UILabel!
+    @IBOutlet var userEmail: UILabel!
+    
+    @IBOutlet weak var addFriendButton: UIButton!
+    
     @IBOutlet weak var postTableView: UITableView!
     
+    var isHost : Bool = true
     var posts: [String] = [""]
+    
     let postVC: PostViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postViewController") as! PostViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadPosts()
-        userEmail?.text = Auth.auth().currentUser?.email
+        
+        if isHost {
+            userEmail?.text = Auth.auth().currentUser?.email!
+            loadPosts()
+            
+        }
         postTableView?.dataSource = self
         postVC.delegate = self
-        
-        
         
     }
     
@@ -39,20 +46,21 @@ class ProfileViewController: UIViewController {
     }
     
     func loadPosts(){
-        db.collection("\(Auth.auth().currentUser!.email!)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
-                self.posts = []
-                if let e = error {
-                    print("There was an issue retrieving data from Firestore, \(e)")
-                } else {
-                    if let snapshotDocuments = querySnapshot?.documents {
-                        for doc in snapshotDocuments {
-                            let data = doc.data()
-                            if let postText = data["text"] {
-                                self.posts.append(postText as! String)
-                            }
-                            DispatchQueue.main.async {
-                                self.postTableView?.reloadData()
-                            }
+        print(userEmail.text!)
+        db.collection("\(userEmail.text!)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+            self.posts = []
+            if let e = error {
+                print("There was an issue retrieving data from Firestore, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let postText = data["text"] {
+                            self.posts.append(postText as! String)
+                        }
+                        DispatchQueue.main.async {
+                            self.postTableView?.reloadData()
+                        }
                     }
                 }
             }
@@ -60,6 +68,27 @@ class ProfileViewController: UIViewController {
         
         
         
+    }
+    
+    @IBAction func addFriendPressed(_ sender: UIButton) {
+        db.collection("\(userEmail.text!)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+            self.posts = []
+            if let e = error {
+                print("There was an issue retrieving data from Firestore, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let postText = data["text"] {
+                            self.posts.append(postText as! String)
+                        }
+                        DispatchQueue.main.async {
+                            self.postTableView?.reloadData()
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

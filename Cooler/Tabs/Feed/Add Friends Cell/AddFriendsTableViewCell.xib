@@ -8,42 +8,74 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-BoldItalic.ttf">
+            <string>OpenSans-BoldItalic</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddFriendsTableViewCell" rowHeight="73" id="KGk-i7-Jjw" customClass="AddFriendsTableViewCell" customModule="Cooler" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="321" height="73"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddFriendsTableViewCell" rowHeight="149" id="KGk-i7-Jjw" customClass="AddFriendsTableViewCell" customModule="Cooler" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="321" height="149"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="321" height="73"/>
+                <rect key="frame" x="0.0" y="0.0" width="321" height="149"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ka8-1e-4rf">
-                        <rect key="frame" x="0.0" y="0.0" width="321" height="73"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="l1G-pj-fd6">
+                        <rect key="frame" x="0.0" y="-44" width="321" height="191"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H5f-bw-kCg">
+                                <rect key="frame" x="0.0" y="0.0" width="321" height="80"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTx-VL-JC9">
+                                        <rect key="frame" x="8" y="52" width="103" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="OpenSans-BoldItalic" family="Open Sans" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="8Z5-2N-ryD"/>
+                                </constraints>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ka8-1e-4rf">
+                                <rect key="frame" x="0.0" y="80" width="321" height="111"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="750" constant="80" id="Zym-Fu-aMr"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8ka-qP-zkJ">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                        </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" priority="250" constant="80" id="Zym-Fu-aMr"/>
+                            <constraint firstItem="H5f-bw-kCg" firstAttribute="top" secondItem="l1G-pj-fd6" secondAttribute="top" id="UJX-TX-ee3"/>
+                            <constraint firstItem="H5f-bw-kCg" firstAttribute="leading" secondItem="l1G-pj-fd6" secondAttribute="leading" id="kaU-5g-dcs"/>
+                            <constraint firstItem="Ka8-1e-4rf" firstAttribute="top" secondItem="H5f-bw-kCg" secondAttribute="bottom" id="mng-d2-pbg"/>
+                            <constraint firstAttribute="trailing" secondItem="H5f-bw-kCg" secondAttribute="trailing" id="wV3-RG-IHu"/>
                         </constraints>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8ka-qP-zkJ">
-                            <size key="itemSize" width="128" height="128"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                    </collectionView>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="Ka8-1e-4rf" secondAttribute="bottom" id="HbX-bC-aeQ"/>
-                    <constraint firstAttribute="trailing" secondItem="Ka8-1e-4rf" secondAttribute="trailing" id="bm7-jW-0Fs"/>
-                    <constraint firstItem="Ka8-1e-4rf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fpi-DB-jj9"/>
-                    <constraint firstItem="Ka8-1e-4rf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="rdg-f4-lWS"/>
+                    <constraint firstItem="l1G-pj-fd6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-55" id="SJG-7N-bvt"/>
+                    <constraint firstItem="l1G-pj-fd6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-20" id="TaU-7l-5R2"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="l1G-pj-fd6" secondAttribute="bottom" constant="-9" id="cUm-3U-pGi"/>
+                    <constraint firstItem="l1G-pj-fd6" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="oVN-pG-1GY"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="collectionView" destination="Ka8-1e-4rf" id="orH-Ou-b3z"/>
             </connections>
-            <point key="canvasLocation" x="-213.768115942029" y="77.34375"/>
+            <point key="canvasLocation" x="-213.768115942029" y="72.65625"/>
         </tableViewCell>
     </objects>
     <resources>
