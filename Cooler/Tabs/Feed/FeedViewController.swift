@@ -10,6 +10,10 @@ import UIKit
 import Firebase
 
 class FeedViewController: UIViewController {
+    
+    let db = Firestore.firestore()
+    
+    var friends : [String] = []
 
     @IBOutlet weak var feedTableView: UITableView!
     
@@ -20,7 +24,30 @@ class FeedViewController: UIViewController {
         feedTableView.register(UINib(nibName: "AddFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "AddFriendsTableViewCell")
         feedTableView.dataSource = self
         
+        //Create Friends List
+        getFriends()
         
+        
+        
+    }
+    
+    func getFriends() {
+        db.collection("\(Auth.auth().currentUser!.email!)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+            print("\(Auth.auth().currentUser!.email!)_Friends")
+            if let e = error {
+                print("There was an issue retrieving data from Firestore, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let friend = data["email"] {
+                            self.friends.append(friend as! String)
+                            print(self.friends)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     

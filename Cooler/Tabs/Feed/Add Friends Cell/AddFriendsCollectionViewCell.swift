@@ -27,6 +27,7 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
         profileVC.isHost = false
         parentCell?.parentVC?.present(profileVC, animated: true)
         profileVC.userEmail.text = userEmail!.titleLabel?.text!
+        profileVC.addFriendButton.isHidden = false
         profileVC.loadPosts()
         
         

@@ -42,7 +42,6 @@ class AddFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
                         if let user = data["email"] {
                             self.users?.append(user as! String)
                             self.collectionView.reloadData()
-                            print(user)
                         }
                     }
                 }

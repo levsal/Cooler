@@ -31,6 +31,8 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addFriendButton.isHidden = true
+        
         if isHost {
             userEmail?.text = Auth.auth().currentUser?.email!
             loadPosts()
@@ -46,7 +48,7 @@ class ProfileViewController: UIViewController {
     }
     
     func loadPosts(){
-        print(userEmail.text!)
+//        print(userEmail.text!)
         db.collection("\(userEmail.text!)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.posts = []
             if let e = error {
@@ -71,24 +73,10 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func addFriendPressed(_ sender: UIButton) {
-        db.collection("\(userEmail.text!)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
-            self.posts = []
-            if let e = error {
-                print("There was an issue retrieving data from Firestore, \(e)")
-            } else {
-                if let snapshotDocuments = querySnapshot?.documents {
-                    for doc in snapshotDocuments {
-                        let data = doc.data()
-                        if let postText = data["text"] {
-                            self.posts.append(postText as! String)
-                        }
-                        DispatchQueue.main.async {
-                            self.postTableView?.reloadData()
-                        }
-                    }
-                }
-            }
-        }
+        print("Current user is \(Auth.auth().currentUser!.email!)")
+        print("Adding friend \(userEmail.text!)")
+        
+        db.collection("\(Auth.auth().currentUser!.email!)_Friends").addDocument(data: ["date" : Date().timeIntervalSince1970, "email": userEmail.text!])
     }
 }
 
