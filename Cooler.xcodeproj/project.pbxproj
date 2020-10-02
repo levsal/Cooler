@@ -19,13 +19,23 @@
 		BE3FF8F82525819F00F9B5E5 /* AddFriendsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF8E325257EBD00F9B5E5 /* AddFriendsCollectionViewCell.xib */; };
 		BE3FF8F9252581A200F9B5E5 /* FriendsPostsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF8E925257EC600F9B5E5 /* FriendsPostsTableViewCell.xib */; };
 		BE3FF8FD2526948200F9B5E5 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FF8FC2526948100F9B5E5 /* Post.swift */; };
+		BE3FF90F2526D8A200F9B5E5 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF9042526D8A200F9B5E5 /* OpenSans-Bold.ttf */; };
+		BE3FF9102526D8A200F9B5E5 /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF9052526D8A200F9B5E5 /* OpenSans-Italic.ttf */; };
+		BE3FF9112526D8A200F9B5E5 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF9062526D8A200F9B5E5 /* OpenSans-ExtraBoldItalic.ttf */; };
+		BE3FF9122526D8A200F9B5E5 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF9072526D8A200F9B5E5 /* OpenSans-SemiBold.ttf */; };
+		BE3FF9132526D8A200F9B5E5 /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF9082526D8A200F9B5E5 /* OpenSans-ExtraBold.ttf */; };
+		BE3FF9142526D8A200F9B5E5 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF9092526D8A200F9B5E5 /* OpenSans-Regular.ttf */; };
+		BE3FF9152526D8A200F9B5E5 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF90A2526D8A200F9B5E5 /* OpenSans-Light.ttf */; };
+		BE3FF9162526D8A200F9B5E5 /* OpenSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF90B2526D8A200F9B5E5 /* OpenSans-LightItalic.ttf */; };
+		BE3FF9172526D8A200F9B5E5 /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF90C2526D8A200F9B5E5 /* OpenSans-BoldItalic.ttf */; };
+		BE3FF9182526D8A200F9B5E5 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF90D2526D8A200F9B5E5 /* LICENSE.txt */; };
+		BE3FF9192526D8A200F9B5E5 /* OpenSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF90E2526D8A200F9B5E5 /* OpenSans-SemiBoldItalic.ttf */; };
 		BEEEC469250081F900A4732B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC468250081F900A4732B /* AppDelegate.swift */; };
 		BEEEC46B250081F900A4732B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC46A250081F900A4732B /* SceneDelegate.swift */; };
 		BEEEC46D250081F900A4732B /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC46C250081F900A4732B /* WelcomeViewController.swift */; };
 		BEEEC470250081F900A4732B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC46E250081F900A4732B /* Main.storyboard */; };
 		BEEEC472250081FC00A4732B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC471250081FC00A4732B /* Assets.xcassets */; };
 		BEEEC475250081FC00A4732B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC473250081FC00A4732B /* LaunchScreen.storyboard */; };
-		BEEEC47D250082D100A4732B /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC47C250082D100A4732B /* Fonts */; };
 		BEEEC481250086F100A4732B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEEEC480250086F100A4732B /* GoogleService-Info.plist */; };
 		BEEEC483250185F700A4732B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC482250185F700A4732B /* SignUpViewController.swift */; };
 		BEEEC4852501860900A4732B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC4842501860900A4732B /* LogInViewController.swift */; };
@@ -46,6 +56,17 @@
 		BE3FF8E925257EC600F9B5E5 /* FriendsPostsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsPostsTableViewCell.xib; sourceTree = "<group>"; };
 		BE3FF8EA25257EC600F9B5E5 /* FriendsPostsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPostsTableViewCell.swift; sourceTree = "<group>"; };
 		BE3FF8FC2526948100F9B5E5 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		BE3FF9042526D8A200F9B5E5 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../../../Downloads/Fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		BE3FF9052526D8A200F9B5E5 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Italic.ttf"; path = "../../../Downloads/Fonts/OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		BE3FF9062526D8A200F9B5E5 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-ExtraBoldItalic.ttf"; path = "../../../Downloads/Fonts/OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		BE3FF9072526D8A200F9B5E5 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiBold.ttf"; path = "../../../Downloads/Fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		BE3FF9082526D8A200F9B5E5 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-ExtraBold.ttf"; path = "../../../Downloads/Fonts/OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		BE3FF9092526D8A200F9B5E5 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../../../Downloads/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		BE3FF90A2526D8A200F9B5E5 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Light.ttf"; path = "../../../Downloads/Fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		BE3FF90B2526D8A200F9B5E5 /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-LightItalic.ttf"; path = "../../../Downloads/Fonts/OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
+		BE3FF90C2526D8A200F9B5E5 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-BoldItalic.ttf"; path = "../../../Downloads/Fonts/OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
+		BE3FF90D2526D8A200F9B5E5 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.txt; path = ../../../Downloads/Fonts/LICENSE.txt; sourceTree = "<group>"; };
+		BE3FF90E2526D8A200F9B5E5 /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiBoldItalic.ttf"; path = "../../../Downloads/Fonts/OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		BEEEC465250081F900A4732B /* Cooler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cooler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEEEC468250081F900A4732B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEEEC46A250081F900A4732B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,7 +75,6 @@
 		BEEEC471250081FC00A4732B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEEEC474250081FC00A4732B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEEEC476250081FC00A4732B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BEEEC47C250082D100A4732B /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = ../../../Downloads/Fonts; sourceTree = "<group>"; };
 		BEEEC480250086F100A4732B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BEEEC482250185F700A4732B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BEEEC4842501860900A4732B /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -189,7 +209,17 @@
 				BE3FF8EE25257F5100F9B5E5 /* Controller */,
 				BEEEC471250081FC00A4732B /* Assets.xcassets */,
 				BEEEC473250081FC00A4732B /* LaunchScreen.storyboard */,
-				BEEEC47C250082D100A4732B /* Fonts */,
+				BE3FF90D2526D8A200F9B5E5 /* LICENSE.txt */,
+				BE3FF9042526D8A200F9B5E5 /* OpenSans-Bold.ttf */,
+				BE3FF90C2526D8A200F9B5E5 /* OpenSans-BoldItalic.ttf */,
+				BE3FF9082526D8A200F9B5E5 /* OpenSans-ExtraBold.ttf */,
+				BE3FF9062526D8A200F9B5E5 /* OpenSans-ExtraBoldItalic.ttf */,
+				BE3FF9052526D8A200F9B5E5 /* OpenSans-Italic.ttf */,
+				BE3FF90A2526D8A200F9B5E5 /* OpenSans-Light.ttf */,
+				BE3FF90B2526D8A200F9B5E5 /* OpenSans-LightItalic.ttf */,
+				BE3FF9092526D8A200F9B5E5 /* OpenSans-Regular.ttf */,
+				BE3FF9072526D8A200F9B5E5 /* OpenSans-SemiBold.ttf */,
+				BE3FF90E2526D8A200F9B5E5 /* OpenSans-SemiBoldItalic.ttf */,
 				BEEEC476250081FC00A4732B /* Info.plist */,
 				BEEEC480250086F100A4732B /* GoogleService-Info.plist */,
 			);
@@ -277,13 +307,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEEEC475250081FC00A4732B /* LaunchScreen.storyboard in Resources */,
-				BEEEC47D250082D100A4732B /* Fonts in Resources */,
 				BEEEC481250086F100A4732B /* GoogleService-Info.plist in Resources */,
 				BE3FF8F62525819700F9B5E5 /* AddFriendsTableViewCell.xib in Resources */,
+				BE3FF9152526D8A200F9B5E5 /* OpenSans-Light.ttf in Resources */,
+				BE3FF9192526D8A200F9B5E5 /* OpenSans-SemiBoldItalic.ttf in Resources */,
+				BE3FF9102526D8A200F9B5E5 /* OpenSans-Italic.ttf in Resources */,
+				BE3FF9122526D8A200F9B5E5 /* OpenSans-SemiBold.ttf in Resources */,
+				BE3FF9162526D8A200F9B5E5 /* OpenSans-LightItalic.ttf in Resources */,
+				BE3FF9172526D8A200F9B5E5 /* OpenSans-BoldItalic.ttf in Resources */,
 				BE3FF8F82525819F00F9B5E5 /* AddFriendsCollectionViewCell.xib in Resources */,
 				BE3FF8F9252581A200F9B5E5 /* FriendsPostsTableViewCell.xib in Resources */,
+				BE3FF90F2526D8A200F9B5E5 /* OpenSans-Bold.ttf in Resources */,
 				BEEEC472250081FC00A4732B /* Assets.xcassets in Resources */,
+				BE3FF9182526D8A200F9B5E5 /* LICENSE.txt in Resources */,
 				BEEEC470250081F900A4732B /* Main.storyboard in Resources */,
+				BE3FF9142526D8A200F9B5E5 /* OpenSans-Regular.ttf in Resources */,
+				BE3FF9112526D8A200F9B5E5 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
+				BE3FF9132526D8A200F9B5E5 /* OpenSans-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

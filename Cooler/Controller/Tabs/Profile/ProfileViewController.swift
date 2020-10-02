@@ -32,10 +32,13 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         addFriendButton.isHidden = true
+        postTableView.register(UINib(nibName: "FriendsPostsTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendsPostsTableViewCell")
         
         if isHost {
             userEmail?.text = Auth.auth().currentUser?.email!
+            
             loadPosts()
+            
             
         }
         postTableView?.dataSource = self
@@ -90,8 +93,11 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
-        cell.textLabel?.text = posts[indexPath.row] ?? "Goog"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsPostsTableViewCell", for: indexPath) as! FriendsPostsTableViewCell
+        cell.friendsPostTextView.text = posts[indexPath.row]
+        if isHost{
+            cell.userEmail.isHidden = true
+        }
         return cell
     }
     
