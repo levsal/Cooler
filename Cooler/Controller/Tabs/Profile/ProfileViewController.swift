@@ -77,6 +77,9 @@ class ProfileViewController: UIViewController {
         print("Adding friend \(userEmail.text!)")
         
         db.collection("\(Auth.auth().currentUser!.email!)_Friends").addDocument(data: ["date" : Date().timeIntervalSince1970, "email": userEmail.text!])
+        self.dismiss(animated: true) {
+            
+        }
     }
 }
 

@@ -10,6 +10,7 @@ import UIKit
 
 class FriendsPostsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var userEmail: UIButton!
     @IBOutlet weak var friendsPostTextView: UITextView!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,8 +22,6 @@ class FriendsPostsTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }

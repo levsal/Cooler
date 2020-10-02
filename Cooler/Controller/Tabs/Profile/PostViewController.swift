@@ -18,6 +18,7 @@ class PostViewController: UIViewController {
     var delegate: ProfileViewController!
     
     @IBOutlet weak var postTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         postTextView.delegate = self

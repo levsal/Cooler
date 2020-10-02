@@ -24,13 +24,17 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
     }
     @IBAction func userEmailPressed(_ sender: UIButton) {
         //Upon showing popup, change user email and reperform necessary functions
+        setUpProfile()
+        
+        
+    }
+    
+    func setUpProfile() {
         profileVC.isHost = false
         parentCell?.parentVC?.present(profileVC, animated: true)
         profileVC.userEmail.text = userEmail!.titleLabel?.text!
         profileVC.addFriendButton.isHidden = false
         profileVC.loadPosts()
-        
-        
     }
     
 }
