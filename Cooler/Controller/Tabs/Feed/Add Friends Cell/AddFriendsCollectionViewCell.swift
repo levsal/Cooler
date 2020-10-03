@@ -31,10 +31,10 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
     
     func setUpProfile() {
         profileVC.isHost = false
-        parentCell?.parentVC?.present(profileVC, animated: true)
         profileVC.userEmail.text = userEmail!.titleLabel?.text!
         profileVC.addFriendButton.isHidden = false
         profileVC.loadPosts()
+        parentCell?.parentVC?.present(profileVC, animated: true)
     }
     
 }

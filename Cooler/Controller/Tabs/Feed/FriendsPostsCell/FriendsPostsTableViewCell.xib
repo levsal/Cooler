@@ -27,10 +27,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pte-Cp-Ay0">
-                        <rect key="frame" x="5" y="0.0" width="310" height="112"/>
+                        <rect key="frame" x="5" y="5" width="310" height="102"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAG-qZ-3nV">
-                                <rect key="frame" x="0.0" y="0.0" width="46" height="28"/>
+                                <rect key="frame" x="0.0" y="0.0" width="46" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="30" id="OrN-vf-Ueo"/>
                                 </constraints>
@@ -40,7 +40,7 @@
                                 </state>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="A fictional post" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xjc-Xk-NA0">
-                                <rect key="frame" x="0.0" y="32" width="310" height="80"/>
+                                <rect key="frame" x="0.0" y="22" width="310" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="750" constant="80" id="He5-EE-gRM"/>
@@ -57,9 +57,9 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="pte-Cp-Ay0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8rH-SP-3aa"/>
+                    <constraint firstItem="pte-Cp-Ay0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="8rH-SP-3aa"/>
                     <constraint firstItem="pte-Cp-Ay0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="WfL-PE-OIe"/>
-                    <constraint firstAttribute="bottom" secondItem="pte-Cp-Ay0" secondAttribute="bottom" id="pz3-LQ-CGW"/>
+                    <constraint firstAttribute="bottom" secondItem="pte-Cp-Ay0" secondAttribute="bottom" constant="5" id="pz3-LQ-CGW"/>
                     <constraint firstAttribute="trailing" secondItem="pte-Cp-Ay0" secondAttribute="trailing" constant="5" id="tL2-ef-aaM"/>
                 </constraints>
             </tableViewCellContentView>

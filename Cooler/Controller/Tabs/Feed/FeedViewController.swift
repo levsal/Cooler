@@ -68,9 +68,7 @@ class FeedViewController: UIViewController {
                             if let date = data["date"], let text = data["text"] {
                                 let post = Post(user: friend, date: date as! Double, postText: text as! String)
                                 self.posts.append(post)
-                                self.feedTableView.reloadData()
-                                print(self.posts)
-                                
+                                self.feedTableView.reloadData()                                
                             }
                         }
                     }
