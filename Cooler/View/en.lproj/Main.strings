@@ -1,0 +1,93 @@
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "6pO-my-Cot"; */
+"6pO-my-Cot.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "Post"; ObjectID = "AtY-lD-KAf"; */
+"AtY-lD-KAf.normalTitle" = "Post";
+
+/* Class = "UINavigationItem"; title = "Cooler"; ObjectID = "DTR-Qq-xIj"; */
+"DTR-Qq-xIj.title" = "Cooler";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "Gaf-ch-9WI"; */
+"Gaf-ch-9WI.normalTitle" = "Sign Up";
+
+/* Class = "UITabBarItem"; title = "Profile"; ObjectID = "Nzw-Td-uW7"; */
+"Nzw-Td-uW7.title" = "Profile";
+
+/* Class = "UITextView"; text = "Type Here"; ObjectID = "OUD-kS-gJT"; */
+"OUD-kS-gJT.text" = "Type Here";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "Pld-1Z-8eP"; */
+"Pld-1Z-8eP.placeholder" = "password";
+
+/* Class = "UITextField"; text = "123456"; ObjectID = "Pld-1Z-8eP"; */
+"Pld-1Z-8eP.text" = "123456";
+
+/* Class = "UILabel"; text = "levisaltzman@gmail.com"; ObjectID = "Tzr-Yg-pSk"; */
+"Tzr-Yg-pSk.text" = "levisaltzman@gmail.com";
+
+/* Class = "UITextField"; placeholder = "username"; ObjectID = "U1p-v7-pby"; */
+"U1p-v7-pby.placeholder" = "username";
+
+/* Class = "UITextField"; text = "levisaltzman@gmail.com"; ObjectID = "U1p-v7-pby"; */
+"U1p-v7-pby.text" = "levisaltzman@gmail.com";
+
+/* Class = "UINavigationItem"; title = "Profile"; ObjectID = "UA2-eV-O63"; */
+"UA2-eV-O63.title" = "Profile";
+
+/* Class = "UITabBarItem"; title = "Feed"; ObjectID = "XKR-X6-tcX"; */
+"XKR-X6-tcX.title" = "Feed";
+
+/* Class = "UILabel"; text = "Categories"; ObjectID = "ZZH-jb-adm"; */
+"ZZH-jb-adm.text" = "Categories";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "aZQ-r1-J0E"; */
+"aZQ-r1-J0E.normalTitle" = "Sign Up";
+
+/* Class = "UIButton"; normalTitle = "Friends:"; ObjectID = "f58-hR-30f"; */
+"f58-hR-30f.normalTitle" = "Friends:";
+
+/* Class = "UILabel"; text = "Welcome Back!"; ObjectID = "gFL-8Y-PyF"; */
+"gFL-8Y-PyF.text" = "Welcome Back!";
+
+/* Class = "UIButton"; normalTitle = "Friended:"; ObjectID = "glh-Mh-bQm"; */
+"glh-Mh-bQm.normalTitle" = "Friended:";
+
+/* Class = "UIButton"; normalTitle = "Log In"; ObjectID = "hEg-OG-W3g"; */
+"hEg-OG-W3g.normalTitle" = "Log In";
+
+/* Class = "UILabel"; text = "Welcome to Cooler!"; ObjectID = "jMW-RR-12j"; */
+"jMW-RR-12j.text" = "Welcome to Cooler!";
+
+/* Class = "UINavigationItem"; title = "Sign Up"; ObjectID = "kOL-2l-Aae"; */
+"kOL-2l-Aae.title" = "Sign Up";
+
+/* Class = "UIViewController"; title = "profileViewController"; ObjectID = "nAo-Zd-Woy"; */
+"nAo-Zd-Woy.title" = "profileViewController";
+
+/* Class = "UIViewController"; title = "postViewController"; ObjectID = "pjh-uh-NR5"; */
+"pjh-uh-NR5.title" = "postViewController";
+
+/* Class = "UITextField"; placeholder = "username"; ObjectID = "qVS-Tk-fFy"; */
+"qVS-Tk-fFy.placeholder" = "username";
+
+/* Class = "UINavigationItem"; title = "Log In"; ObjectID = "qfj-gt-Jot"; */
+"qfj-gt-Jot.title" = "Log In";
+
+/* Class = "UITabBarItem"; title = "Feed"; ObjectID = "suv-E7-7fa"; */
+"suv-E7-7fa.title" = "Feed";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "u7V-B3-dlA"; */
+"u7V-B3-dlA.placeholder" = "password";
+
+/* Class = "UILabel"; text = "Cooler"; ObjectID = "utn-IH-OR0"; */
+"utn-IH-OR0.text" = "Cooler";
+
+/* Class = "UIButton"; normalTitle = "Log In"; ObjectID = "xZT-pR-P5E"; */
+"xZT-pR-P5E.normalTitle" = "Log In";
+
+/* Class = "UIButton"; normalTitle = "Add Friend"; ObjectID = "yW9-NP-RWP"; */
+"yW9-NP-RWP.normalTitle" = "Add Friend";
+
+/* Class = "UITabBarItem"; title = "Profile"; ObjectID = "zbJ-jb-rqa"; */
+"zbJ-jb-rqa.title" = "Profile";

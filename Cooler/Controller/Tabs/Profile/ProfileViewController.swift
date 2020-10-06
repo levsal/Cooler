@@ -13,19 +13,22 @@ protocol PopoverDelegate {
     func appendToArray(post: String)
 }
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ProfileViewController: UIViewController {
     
     let db = Firestore.firestore()
     
     @IBOutlet weak var profilePic: UIImageView!
     
-    @IBOutlet var userEmail: UILabel!
+    @IBOutlet weak var userEmail: UILabel!
     
     @IBOutlet weak var addFriendButton: UIButton!
     
     @IBOutlet weak var categoryCollectionView: UICollectionView!
     
     @IBOutlet weak var postTableView: UITableView!
+    
+    var categories : [String] = ["Albums", "Movies", "TV Shows", "Books"]
+    var categoryColors = [#colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), #colorLiteral(red: 0, green: 0.7927191854, blue: 0, alpha: 1), #colorLiteral(red: 0.838627696, green: 0.3329468966, blue: 0.3190356791, alpha: 1)]
     
     var isHost : Bool = true
     var posts: [String] = [""]
@@ -43,11 +46,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         postTableView.register(UINib(nibName: "FriendsPostsTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendsPostsTableViewCell")
         
         if isHost {
-            userEmail?.text = Auth.auth().currentUser?.email!
-            
+            userEmail.text = Auth.auth().currentUser?.email!
             loadPosts()
-            
-            
         }
         
         categoryCollectionView.dataSource = self
@@ -57,15 +57,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         postVC.delegate = self
         
         postTableView.separatorColor = UIColor.clear
-        
     }
+
     
     @IBAction func postButtonPressed(_ sender: UIBarButtonItem) {
         present(postVC, animated: true)
     }
     
     func loadPosts(){
-        //        print(userEmail.text!)
         db.collection("\(userEmail.text!)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.posts = []
             if let e = error {
@@ -101,28 +100,31 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 }
 
 //MARK: - Collection View
-extension ProfileViewController: UICollectionViewDataSource {
-    
+
+
+extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return categories.count
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        print(UIScreen.main.bounds.width)
-        return CGSize(width: CGFloat((collectionView.frame.size.width / 3)), height: CGFloat(20))
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return 0
-        }
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionViewCell", for: indexPath) as! CategoriesCollectionViewCell
+        cell.category.setTitle(categories[indexPath.item], for: .normal)
+        cell.category.setTitleColor(categoryColors[indexPath.item], for: .normal)
         return cell
     }
     
+
+        
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: CGFloat((collectionView.frame.size.width / CGFloat(categories.count))), height: CGFloat(20))
+        
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }
 
 //MARK: - Table View
@@ -147,6 +149,4 @@ extension ProfileViewController: PopoverDelegate {
     func appendToArray(post: String) {
         posts.append(post)
     }
-    
-    
 }

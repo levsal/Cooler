@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -315,13 +316,29 @@
                                     <constraint firstAttribute="width" priority="750" constant="394" id="CiL-gZ-W0o"/>
                                     <constraint firstAttribute="height" priority="750" constant="40" id="jRQ-aa-q6R"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7MC-IU-5M0">
-                                    <size key="itemSize" width="128" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="E4b-4Y-xZe">
+                                    <size key="itemSize" width="114" height="25"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GOGO" id="yHa-je-bqa" customClass="CategoriesCollectionViewCell" customModule="Cooler" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="7.5" width="114" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nIZ-yE-ZYo">
+                                            <rect key="frame" x="0.0" y="0.0" width="114" height="25"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AB2-M0-vwI" userLabel="Category">
+                                                    <rect key="frame" x="26" y="-3" width="63" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Category"/>
+                                                </button>
+                                            </subviews>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kUh-8E-uSz">
                                 <rect key="frame" x="0.0" y="246.5" width="414" height="566.5"/>
@@ -371,7 +388,7 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glh-Mh-bQm">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glh-Mh-bQm">
                                         <rect key="frame" x="0.0" y="34" width="120" height="36"/>
                                         <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="17"/>
                                         <state key="normal" title="Friended:">
@@ -397,8 +414,10 @@
                             <constraint firstItem="S1k-Y5-BiI" firstAttribute="top" secondItem="jWp-Ph-ENr" secondAttribute="top" constant="15" id="Y1x-Mq-y28"/>
                             <constraint firstItem="kUh-8E-uSz" firstAttribute="top" secondItem="Nao-1o-HRF" secondAttribute="bottom" id="Ykh-eE-kAL"/>
                             <constraint firstItem="kUh-8E-uSz" firstAttribute="leading" secondItem="jWp-Ph-ENr" secondAttribute="leading" id="aSD-HU-ZXm"/>
+                            <constraint firstItem="jWp-Ph-ENr" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Tzr-Yg-pSk" secondAttribute="trailing" symbolic="YES" id="cjZ-Lg-dsj"/>
                             <constraint firstItem="jWp-Ph-ENr" firstAttribute="trailing" secondItem="Nao-1o-HRF" secondAttribute="trailing" constant="10" id="dKD-8Y-8Gm"/>
                             <constraint firstItem="Nao-1o-HRF" firstAttribute="top" secondItem="Tzr-Yg-pSk" secondAttribute="bottom" id="gI0-4W-Sfd"/>
+                            <constraint firstItem="yW9-NP-RWP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="S1k-Y5-BiI" secondAttribute="trailing" constant="8" symbolic="YES" id="hsK-RI-NEV"/>
                             <constraint firstItem="K6K-Kb-R7q" firstAttribute="leading" secondItem="jWp-Ph-ENr" secondAttribute="leading" constant="10" id="jox-R9-4q1"/>
                             <constraint firstItem="kUh-8E-uSz" firstAttribute="bottom" secondItem="jWp-Ph-ENr" secondAttribute="bottom" id="oWb-2x-w2t"/>
                             <constraint firstItem="yW9-NP-RWP" firstAttribute="top" secondItem="jWp-Ph-ENr" secondAttribute="top" constant="15" id="sBc-3E-47h"/>
@@ -414,11 +433,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addFriendButton" destination="yW9-NP-RWP" id="JTJ-O1-LqW"/>
+                        <outlet property="addFriendButton" destination="yW9-NP-RWP" id="GHq-ej-JWr"/>
                         <outlet property="categoryCollectionView" destination="Nao-1o-HRF" id="7yo-hg-QpC"/>
                         <outlet property="postTableView" destination="kUh-8E-uSz" id="yDK-da-x44"/>
                         <outlet property="profilePic" destination="K6K-Kb-R7q" id="7HV-a8-mXd"/>
-                        <outlet property="userEmail" destination="Tzr-Yg-pSk" id="kdu-pQ-bBN"/>
+                        <outlet property="userEmail" destination="Tzr-Yg-pSk" id="NcF-Rk-j4A"/>
                         <segue destination="pjh-uh-NR5" kind="popoverPresentation" identifier="profileToPost" popoverAnchorView="mnk-Qv-Smk" id="OCh-4X-eCK">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
@@ -442,7 +461,7 @@
                                     <constraint firstAttribute="height" constant="286" id="adS-wy-qsR"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
@@ -488,6 +507,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="T1e-8d-CFC"/>
                     <connections>
+                        <outlet property="categoryHeader" destination="ZZH-jb-adm" id="e2U-Yq-cFN"/>
                         <outlet property="categoryPicker" destination="E3e-My-Ei4" id="lxd-Pg-S8M"/>
                         <outlet property="postTextView" destination="OUD-kS-gJT" id="A9M-M7-FwR"/>
                     </connections>
