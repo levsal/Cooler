@@ -71,8 +71,8 @@ class FeedViewController: UIViewController {
                     if let snapshotDocuments = querySnapshot?.documents {
                         for doc in snapshotDocuments {
                             let data = doc.data()
-                            if let date = data["date"], let text = data["text"] {
-                                let post = Post(user: friend, date: (date as! Double), postText: (text as! String))
+                            if let date = data["date"], let text = data["text"], let category = data["category"] {
+                                let post = Post(user: friend, date: (date as! Double), postText: (text as! String), category: category as! String)
                                 self.posts.append(post)
 //                                print(self.posts)
 //                                print("Reloading...")

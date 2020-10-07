@@ -42,26 +42,34 @@ class PostViewController: UIViewController {
         postTextView.text = "Type your post here"
         
         //Border
-//        postTextView.layer.borderWidth = 1
-//        postTextView.layer.borderColor = UIColor.red.cgColor
-//        postTextView.layer.cornerRadius = postTextView.layer.frame.width/40
+        //        postTextView.layer.borderWidth = 1
+        //        postTextView.layer.borderColor = UIColor.red.cgColor
+        //        postTextView.layer.cornerRadius = postTextView.layer.frame.width/40
     }
     
     //MARK: - Post Pressed
     @IBAction func postButtonPressed(_ sender: Any) {
-        postText = postTextView.text
-        print(postText)
-        delegate.appendToArray(post: postText)
-        db.collection("\((Auth.auth().currentUser?.email)!)_Posts").addDocument(data: ["text": postText, "date": -Date().timeIntervalSince1970, "category": categories[categoryPicker.selectedRow(inComponent: 0)]]){ (error) in
+        
+        if postTextView.text != "" {
             
-            if let e = error{
-                print("There was an issue saving data to Firestore, \(e)")
-            } else{
+            postText = postTextView.text
+            
+            let dateReversed = -Date().timeIntervalSince1970
+            
+            delegate.appendToArray(post: Post(user: nil, date: dateReversed, postText: postText, category: categories[categoryPicker.selectedRow(inComponent: 0)]))
+            
+            db.collection("\((Auth.auth().currentUser?.email)!)_Posts").addDocument(data: ["text": postText, "date": dateReversed, "category": categories[categoryPicker.selectedRow(inComponent: 0)]]){ (error) in
+                
+                if let e = error{
+                    print("There was an issue saving data to Firestore, \(e)")
+                } else{
+                    
+                }
             }
-        }
-        delegate.postTableView.reloadData()
-        self.dismiss(animated: true) {
-            
+            delegate.postTableView.reloadData()
+            self.dismiss(animated: true) {
+                
+            }
         }
         
     }

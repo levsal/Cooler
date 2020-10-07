@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 struct Post {
-    var user: String
+    var user: String?
     var date : Double
     var postText : String
-//    var category: String
+    var category: String
 }

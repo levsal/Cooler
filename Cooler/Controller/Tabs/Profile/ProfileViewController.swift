@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 protocol PopoverDelegate {
-    func appendToArray(post: String)
+    func appendToArray(post: Post)
 }
 
 class ProfileViewController: UIViewController {
@@ -29,14 +29,18 @@ class ProfileViewController: UIViewController {
     
     
     var categories : [String] = ["Albums", "Movies", "TV Shows", "Books"]
-    var categoryColors = [#colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), #colorLiteral(red: 0, green: 0.7927191854, blue: 0, alpha: 1), #colorLiteral(red: 0.838627696, green: 0.3329468966, blue: 0.3190356791, alpha: 1)]
+//    var categoryColors = [#colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), #colorLiteral(red: 0, green: 0.7927191854, blue: 0, alpha: 1), #colorLiteral(red: 0.838627696, green: 0.3329468966, blue: 0.3190356791, alpha: 1)]
     var selectedCategories : [String] = []
+    
+    
+    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), "Movie": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1), "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)]
+    var categoryColorsPlural = ["Albums": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), "Movies": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), "TV Shows": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1), "Books": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)]
 
     
     var isHost : Bool = true
     var resetSelecteds = true
     
-    var posts: [String] = [""]
+    var posts: [Post] = []
     
     let postVC: PostViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "postViewController") as! PostViewController
     
@@ -44,7 +48,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         for category in categories {
-            selectedCategories.append(String(category.dropLast()))            
+            selectedCategories.append(String(category.dropLast()))
         }
         print(selectedCategories)
         profilePic.layer.cornerRadius = profilePic.layer.frame.height/10
@@ -90,11 +94,12 @@ class ProfileViewController: UIViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let postText = data["text"] {
+                        if let postText = data["text"], let date = data["date"] {
+                            //Filter by selected genre
                             for genre in genres {
                                 if let category = data["category"]{
                                     if category as! String == genre {
-                                        self.posts.append(postText as! String)
+                                        self.posts.append(Post(user: nil, date: date as! Double, postText: postText as! String, category: category as! String))
                                     }
                                 }
                             }
@@ -137,7 +142,7 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
         cell.parentVC = self
         
         cell.category.setTitle(categories[indexPath.item], for: .normal)
-        cell.category.setTitleColor(categoryColors[indexPath.item], for: .normal)
+        cell.category.setTitleColor(categoryColorsPlural[cell.category.titleLabel!.text!], for: .normal)
         
         return cell
     }
@@ -162,10 +167,9 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsPostsTableViewCell", for: indexPath) as! FriendsPostsTableViewCell
-        cell.friendsPostTextView.text = posts[indexPath.row]
-        if isHost{
-            cell.userEmail.isHidden = true
-        }
+        cell.friendsPostTextView.text = posts[indexPath.row].postText
+        cell.friendsPostTextView.backgroundColor = categoryColorsSingular[posts[indexPath.row].category]        
+        cell.userEmail.isHidden = true
         return cell
     }
     
@@ -173,7 +177,7 @@ extension ProfileViewController: UITableViewDataSource {
 }
 
 extension ProfileViewController: PopoverDelegate {
-    func appendToArray(post: String) {
+    func appendToArray(post: Post) {
         posts.append(post)
     }
 }
