@@ -15,9 +15,9 @@ class FriendsPostsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        friendsPostTextView.layer.borderWidth = 1
-        friendsPostTextView.layer.borderColor = UIColor.red.cgColor
-        friendsPostTextView.layer.cornerRadius = friendsPostTextView.layer.frame.width/40
+//        friendsPostTextView.layer.borderWidth = 1
+//        friendsPostTextView.layer.borderColor = UIColor.red.cgColor
+//        friendsPostTextView.layer.cornerRadius = friendsPostTextView.layer.frame.width/40
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

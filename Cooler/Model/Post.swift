@@ -12,4 +12,5 @@ struct Post {
     var user: String
     var date : Double
     var postText : String
+//    var category: String
 }

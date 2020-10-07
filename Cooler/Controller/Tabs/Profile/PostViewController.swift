@@ -42,9 +42,9 @@ class PostViewController: UIViewController {
         postTextView.text = "Type your post here"
         
         //Border
-        postTextView.layer.borderWidth = 1
-        postTextView.layer.borderColor = UIColor.red.cgColor
-        postTextView.layer.cornerRadius = postTextView.layer.frame.width/40
+//        postTextView.layer.borderWidth = 1
+//        postTextView.layer.borderColor = UIColor.red.cgColor
+//        postTextView.layer.cornerRadius = postTextView.layer.frame.width/40
     }
     
     //MARK: - Post Pressed

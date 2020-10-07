@@ -5,15 +5,14 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="OpenSans-Bold.ttf">
             <string>OpenSans-Bold</string>
         </array>
-        <array key="OpenSans-Regular.ttf">
-            <string>OpenSans-Regular</string>
+        <array key="OpenSans-SemiBold.ttf">
+            <string>OpenSans-SemiBold</string>
         </array>
     </customFonts>
     <objects>
@@ -26,11 +25,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pte-Cp-Ay0">
-                        <rect key="frame" x="5" y="5" width="310" height="102"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="pte-Cp-Ay0">
+                        <rect key="frame" x="5" y="5" width="310" height="105"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAG-qZ-3nV">
-                                <rect key="frame" x="0.0" y="0.0" width="46" height="18"/>
+                                <rect key="frame" x="0.0" y="0.0" width="46" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="30" id="OrN-vf-Ueo"/>
                                 </constraints>
@@ -39,14 +38,14 @@
                                     <color key="titleColor" red="0.27989258218568985" green="0.57609633977900554" blue="0.17199886541856796" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="A fictional post" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xjc-Xk-NA0">
-                                <rect key="frame" x="0.0" y="22" width="310" height="80"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="A fictional post" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xjc-Xk-NA0">
+                                <rect key="frame" x="0.0" y="25" width="310" height="80"/>
+                                <color key="backgroundColor" red="0.57355820970000004" green="0.67942767780000002" blue="0.96620899439999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="750" constant="80" id="He5-EE-gRM"/>
                                 </constraints>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -59,7 +58,7 @@
                 <constraints>
                     <constraint firstItem="pte-Cp-Ay0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="8rH-SP-3aa"/>
                     <constraint firstItem="pte-Cp-Ay0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="WfL-PE-OIe"/>
-                    <constraint firstAttribute="bottom" secondItem="pte-Cp-Ay0" secondAttribute="bottom" constant="5" id="pz3-LQ-CGW"/>
+                    <constraint firstAttribute="bottom" secondItem="pte-Cp-Ay0" secondAttribute="bottom" constant="2" id="pz3-LQ-CGW"/>
                     <constraint firstAttribute="trailing" secondItem="pte-Cp-Ay0" secondAttribute="trailing" constant="5" id="tL2-ef-aaM"/>
                 </constraints>
             </tableViewCellContentView>
@@ -71,9 +70,4 @@
             <point key="canvasLocation" x="105.79710144927537" y="99.776785714285708"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>
