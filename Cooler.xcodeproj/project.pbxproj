@@ -33,6 +33,9 @@
 		BE3FF9372528323600F9B5E5 /* CategoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FF92A25277CA700F9B5E5 /* CategoriesCollectionViewCell.swift */; };
 		BE3FF943252965EF00F9B5E5 /* AddFriendsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FF8E125257EBD00F9B5E5 /* AddFriendsCollectionViewCell.swift */; };
 		BE3FF94F252969F300F9B5E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF94D252969F300F9B5E5 /* Main.storyboard */; };
+		BEAD57AB2530F96700261E8F /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD57A92530F96700261E8F /* PostDetailView.swift */; };
+		BEAD57AC2530F96700261E8F /* PostDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAD57AA2530F96700261E8F /* PostDetailView.xib */; };
+		BEAD57AF25312D9400261E8F /* PositionCorrectingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */; };
 		BEEEC469250081F900A4732B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC468250081F900A4732B /* AppDelegate.swift */; };
 		BEEEC46B250081F900A4732B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC46A250081F900A4732B /* SceneDelegate.swift */; };
 		BEEEC46D250081F900A4732B /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEEC46C250081F900A4732B /* WelcomeViewController.swift */; };
@@ -72,6 +75,9 @@
 		BE3FF92A25277CA700F9B5E5 /* CategoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		BE3FF92B25277CA800F9B5E5 /* CategoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoriesCollectionViewCell.xib; sourceTree = "<group>"; };
 		BE3FF94E252969F300F9B5E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BEAD57A92530F96700261E8F /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		BEAD57AA2530F96700261E8F /* PostDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDetailView.xib; sourceTree = "<group>"; };
+		BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCorrectingTableView.swift; sourceTree = "<group>"; };
 		BEEEC465250081F900A4732B /* Cooler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cooler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEEEC468250081F900A4732B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEEEC46A250081F900A4732B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +124,8 @@
 			children = (
 				BE3FF8EA25257EC600F9B5E5 /* FriendsPostsTableViewCell.swift */,
 				BE3FF8E925257EC600F9B5E5 /* FriendsPostsTableViewCell.xib */,
+				BEAD57A92530F96700261E8F /* PostDetailView.swift */,
+				BEAD57AA2530F96700261E8F /* PostDetailView.xib */,
 			);
 			path = FriendsPostsCell;
 			sourceTree = "<group>";
@@ -161,6 +169,7 @@
 			children = (
 				BE3FF8D825257E9600F9B5E5 /* ProfileViewController.swift */,
 				BE3FF8D725257E9600F9B5E5 /* PostViewController.swift */,
+				BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */,
 				BE3FF92F25278A3F00F9B5E5 /* Category Header */,
 			);
 			path = Profile;
@@ -339,6 +348,7 @@
 				BE3FF9112526D8A200F9B5E5 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				BE3FF94F252969F300F9B5E5 /* Main.storyboard in Resources */,
 				BE3FF9132526D8A200F9B5E5 /* OpenSans-ExtraBold.ttf in Resources */,
+				BEAD57AC2530F96700261E8F /* PostDetailView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +406,9 @@
 				BE3FF8DA25257E9600F9B5E5 /* ProfileViewController.swift in Sources */,
 				BEEEC46D250081F900A4732B /* WelcomeViewController.swift in Sources */,
 				BE3FF8FD2526948200F9B5E5 /* Post.swift in Sources */,
+				BEAD57AF25312D9400261E8F /* PositionCorrectingTableView.swift in Sources */,
 				BEEEC469250081F900A4732B /* AppDelegate.swift in Sources */,
+				BEAD57AB2530F96700261E8F /* PostDetailView.swift in Sources */,
 				BE3FF943252965EF00F9B5E5 /* AddFriendsCollectionViewCell.swift in Sources */,
 				BEEEC483250185F700A4732B /* SignUpViewController.swift in Sources */,
 				BE3FF9372528323600F9B5E5 /* CategoriesCollectionViewCell.swift in Sources */,

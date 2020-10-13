@@ -33,7 +33,7 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
         profileVC.userEmail.text = userEmail.titleLabel?.text!
         profileVC.addFriendButton.isHidden = false
         profileVC.loadPosts(from: profileVC.selectedCategories)
-
+        profileVC.getFriends(of: (userEmail.titleLabel?.text)!)
     }
     
 }

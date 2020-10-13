@@ -9,9 +9,10 @@
 import Foundation
 import UIKit
 
-struct Post {
+struct Post: Equatable {
     var user: String?
     var date : Double
     var postText : String
     var category: String
+    var creator: String
 }
