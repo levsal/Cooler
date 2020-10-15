@@ -10,11 +10,12 @@ import UIKit
 
 class AddFriendsCollectionViewCell: UICollectionViewCell {
     
+    var email = ""
     @IBOutlet weak var userEmail: UIButton!
     
     weak var parentCell : AddFriendsTableViewCell?
     
-    let profileVC: ProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
+    let profileVC: ProfileViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
     
     
     override func awakeFromNib() {
@@ -28,12 +29,21 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
     }
     
     func setUpProfile() {
+        
         profileVC.isHost = false
+        profileVC.getName(user: email) //Determines usernameString
+        
         parentCell?.parentVC?.present(profileVC, animated: true)
-        profileVC.userEmail.text = userEmail.titleLabel?.text!
+        
+        profileVC.username.text = profileVC.usernameString
         profileVC.addFriendButton.isHidden = false
+
+        profileVC.email = email
+        
+        
+        
         profileVC.loadPosts(from: profileVC.selectedCategories)
-        profileVC.getFriends(of: (userEmail.titleLabel?.text)!)
+        profileVC.getFriends(of: (email))
     }
     
 }

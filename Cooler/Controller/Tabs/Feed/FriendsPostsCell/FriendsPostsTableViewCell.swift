@@ -39,15 +39,16 @@ class FriendsPostsTableViewCell: UITableViewCell {
             
             parentProfileVC?.postTableView.reloadData()
             parentProfileVC?.postTableView.layoutIfNeeded()
-            fixBottom(closed: true)
+           
+//            fixBottom(closed: true)
         }
         else if parentProfileVC?.postOpen[work!] == true{
             parentProfileVC?.postOpen[work!] = false
             
             parentProfileVC?.postTableView.reloadData()
             parentProfileVC?.postTableView.layoutIfNeeded()
-            fixBottom(closed: false)
-            
+
+//                        fixBottom(closed: false)
         }
         
         //FEED
@@ -56,37 +57,41 @@ class FriendsPostsTableViewCell: UITableViewCell {
 
             parentFeedVC?.feedTableView.reloadData()
             parentFeedVC?.feedTableView.layoutIfNeeded()
+
 //            fixBottom(closed: true)
         }
         else if parentFeedVC?.postOpen[work!] == true{
             parentFeedVC?.postOpen[work!] = false
-
+            
             parentFeedVC?.feedTableView.reloadData()
             parentFeedVC?.feedTableView.layoutIfNeeded()
+
 //            fixBottom(closed: false)
             
         }
         
-        //BOTH
         self.layoutIfNeeded()
         parentProfileVC?.postTableView.setContentOffset((parentProfileVC?.postTableView.offset)!, animated: false)
         parentFeedVC?.feedTableView.setContentOffset((parentFeedVC?.feedTableView.offset)!, animated: false)
         
     }
     
-    
-    
-    
-    
-    
-    
-    
+    func reloadSections(forVC vC: FeedViewController){
+        for post in vC.posts {
+            if post.postText == friendsPostTextView.text {
+                sectionNumber = vC.posts.firstIndex(of: post)!
+                vC.feedTableView.reloadSections([sectionNumber], with: .none)
+            }
+        }
+    }
+
     func fixBottom(closed: Bool) {
         if parentProfileVC != nil {
             for post in parentProfileVC!.posts{
                 if post.postText == friendsPostTextView.text {
                     sectionNumber = parentProfileVC!.posts.firstIndex(of: post)!
                     let indexPath = IndexPath(row: NSNotFound, section: sectionNumber)
+                    
                     //CHECK IF IT'S THE LAST ROW
                     if sectionNumber == (parentProfileVC?.posts.count)!-1 {
                         if closed {

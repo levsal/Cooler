@@ -22,7 +22,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="115" height="115"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2FW-pg-Qo8">
+                    <stackView opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2FW-pg-Qo8">
                         <rect key="frame" x="0.0" y="0.0" width="115" height="115"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" highlightedImage="person.fill" translatesAutoresizingMaskIntoConstraints="NO" id="t5e-hg-2b1">

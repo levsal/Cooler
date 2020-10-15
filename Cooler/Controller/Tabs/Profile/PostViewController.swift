@@ -8,9 +8,10 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 class PostViewController: UIViewController {
-    
+
     let db = Firestore.firestore()
     
     var delegate: ProfileViewController!
@@ -21,11 +22,15 @@ class PostViewController: UIViewController {
     var selectedCategory : String?
     
     @IBOutlet weak var categoryHeader: UILabel!
+    
     @IBOutlet weak var categoryPicker: UIPickerView!
+    @IBOutlet weak var ratingPicker: UIPickerView!
     
     //User Input
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var creatorTextView: UITextView!
+    @IBOutlet weak var blurbTextView: UITextView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,33 +40,41 @@ class PostViewController: UIViewController {
         
         categoryPicker.dataSource = self
         categoryPicker.delegate = self
+        ratingPicker.dataSource = self
+        ratingPicker.delegate = self
         
         postTextView.delegate = self
         creatorTextView.delegate = self
+        blurbTextView.delegate = self
         //Placeholder
         postTextView.textColor = .lightGray
         creatorTextView.textColor = .lightGray
+        blurbTextView.textColor = .lightGray
         
         postTextView.layer.borderWidth = 1
         postTextView.layer.borderColor = UIColor.black.cgColor
         creatorTextView.layer.borderWidth = 1
         creatorTextView.layer.borderColor = UIColor.black.cgColor
+        blurbTextView.layer.borderWidth = 1
+        blurbTextView.layer.borderColor = UIColor.black.cgColor
         //        postTextView.layer.cornerRadius = postTextView.layer.frame.width/40
     }
     
     //MARK: - Post Pressed
     @IBAction func postButtonPressed(_ sender: Any) {
         
-        if postTextView.text != "" && postTextView.text != nil && postTextView.text != "Work" && creatorTextView.text != "" && creatorTextView.text != nil && creatorTextView.text != "Work" {
+        if postTextView.text != "" && postTextView.text != nil && postTextView.text != "Work" && creatorTextView.text != "" && creatorTextView.text != nil && creatorTextView.text != "Creator" && blurbTextView.text != "" && blurbTextView.text != nil && blurbTextView.text != "Blurb" {
             
             let postText = postTextView.text
             let creatorText = creatorTextView.text
-            
+            let blurbText = blurbTextView.text
+            let selectedCategory = categories[categoryPicker.selectedRow(inComponent: 0)]
+            let givenRating = Double(ratingPicker.selectedRow(inComponent: 0))/10.0
             let dateReversed = -Date().timeIntervalSince1970
             
-            delegate.appendToArray(post: Post(user: nil, date: dateReversed, postText: postText!, category: categories[categoryPicker.selectedRow(inComponent: 0)], creator: creatorText!))
+            delegate.appendToArray(post: Post(user: nil, date: dateReversed, postText: postText!, category: selectedCategory, creator: creatorText!, blurb: blurbText!, rating: givenRating))
             
-            db.collection("\((Auth.auth().currentUser?.email)!)_Posts").addDocument(data: ["text": postText! as String, "date": dateReversed, "category": categories[categoryPicker.selectedRow(inComponent: 0)], "creator": creatorText!]){ (error) in
+            db.collection("\((delegate.email))_Posts").addDocument(data: ["text": postText! as String, "date": dateReversed, "category": categories[categoryPicker.selectedRow(inComponent: 0)], "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating]){ (error) in
                 
                 if let e = error{
                     print("There was an issue saving data to Firestore, \(e)")
@@ -80,7 +93,7 @@ class PostViewController: UIViewController {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let profileVC = segue.destination as! ProfileViewController
-        profileVC.userEmail!.text = "Test"
+        profileVC.username!.text = "Test"
     }
     
 }
@@ -94,6 +107,10 @@ extension PostViewController: UITextViewDelegate{
         else if textView == creatorTextView, creatorTextView.text == "Creator"  {
             creatorTextView.text = ""
             creatorTextView.textColor = .black
+        }
+        else if textView == blurbTextView, blurbTextView.text == "Blurb"  {
+                blurbTextView.text = ""
+                blurbTextView.textColor = .black
         }
         
     }
@@ -111,23 +128,40 @@ extension PostViewController: UITextViewDelegate{
                 creatorTextView.text = "Creator"
             }
         }
+        else if textView == blurbTextView {
+            if blurbTextView.text == "" {
+                blurbTextView.textColor = .lightGray
+                blurbTextView.text = "Blurb"
+            }
+        }
     }
 }
     
     extension PostViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            return 1
+          return 1
         }
         
         func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            return 4
+            if pickerView == categoryPicker{
+                return 4
+            }
+            else {
+                return 101
+            }
         }
         
         func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            return categories[row]
+            if pickerView == categoryPicker{
+                return categories[row]
+            }
+            else {
+                return "\(Double(row)/10.0)"
+            }
         }
         
         func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+            
             var pickerLabel = view as? UILabel
             if (pickerLabel == nil)
             {
@@ -136,8 +170,14 @@ extension PostViewController: UITextViewDelegate{
                 pickerLabel?.font = UIFont(name: "OpenSans-Bold", size: 16)
                 pickerLabel?.textAlignment = NSTextAlignment.center
             }
-            pickerLabel?.text = categories[row]
-            pickerLabel?.textColor = categoryColors[row]
+            if pickerView == categoryPicker {
+                pickerLabel?.text = categories[row]
+                pickerLabel?.textColor = categoryColors[row]
+            }
+            else {
+                pickerLabel?.text = "\(Double(row)/10.0)"
+                pickerLabel?.textColor = .red
+            }
             return pickerLabel!
         }
         

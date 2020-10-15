@@ -9,7 +9,10 @@
 import UIKit
 
 class PostDetailView: UITableViewCell {
-
+    @IBOutlet weak var blurbTextView: UITextView!
+    @IBOutlet weak var ratingValue: UILabel!
+    @IBOutlet weak var ratingCircle: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

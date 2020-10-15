@@ -24,14 +24,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAG-qZ-3nV">
-                        <rect key="frame" x="5" y="0.0" width="44" height="13"/>
+                        <rect key="frame" x="5" y="0.0" width="154" height="13"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="750" constant="10" id="UyK-Eu-KIw"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="13"/>
-                        <state key="normal" title="Button">
-                            <color key="titleColor" red="0.27989258220000002" green="0.57609633979999997" blue="0.17199886540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <state key="normal" title="useremail@website.com">
+                            <color key="titleColor" red="0.2475045397" green="0.57609633979999997" blue="0.1226872941" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </state>
                     </button>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="kD1-Ro-2kM" userLabel="Title Stack">

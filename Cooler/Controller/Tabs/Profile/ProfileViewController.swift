@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 protocol PopoverDelegate {
     func appendToArray(post: Post)
@@ -19,7 +20,10 @@ class ProfileViewController: UIViewController {
     
     
     @IBOutlet weak var profilePic: UIImageView!
-    @IBOutlet weak var userEmail: UILabel!
+   
+    @IBOutlet weak var username: UILabel!
+    var email = ""
+    var usernameString = ""
     
     @IBOutlet weak var addFriendButton: UIButton!
     
@@ -52,11 +56,11 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        username.text = ""
         for category in categories {
             selectedCategories.append(String(category.dropLast()))
         }
-        //        print(selectedCategories)
+
         profilePic.layer.cornerRadius = profilePic.layer.frame.height/10
         
         addFriendButton.isHidden = true
@@ -66,9 +70,16 @@ class ProfileViewController: UIViewController {
         postTableView.register(UINib(nibName: "PostDetailView", bundle: nil), forCellReuseIdentifier: "PostDetailView")
         
         if isHost {
-            userEmail.text = Auth.auth().currentUser?.email!
+            email = (Auth.auth().currentUser?.email!)!
+            print(email)
+            getName(user: email)
+            print(usernameString)
             loadPosts(from: selectedCategories)
-            getFriends(of: (Auth.auth().currentUser?.email!)!)
+            getFriends(of: email)
+            
+        }
+        else {
+            print("Not Host")
         }
         
         
@@ -82,6 +93,29 @@ class ProfileViewController: UIViewController {
         postVC.delegate = self
         
         postTableView.separatorColor = UIColor.clear
+        
+        
+    }
+    
+    func getName(user: String) {
+        db.collection("Users").addSnapshotListener { (querySnapshot, error) in
+            if let e = error {
+                print("Error finding user's name, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let email = data["email"] as? String, let name = data["name"] as? String {
+                            if email == user {
+                                self.username.text = name
+                                self.usernameString = name
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         
         
     }
@@ -107,7 +141,7 @@ class ProfileViewController: UIViewController {
     }
     
     func loadPosts(from genres: [String]){
-        db.collection("\(userEmail.text!)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+        db.collection("\(email)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.posts = []
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
@@ -115,12 +149,16 @@ class ProfileViewController: UIViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let postText = data["text"], let date = data["date"], let creator = data["creator"] {
+                        if let postText = data["text"],
+                           let date = data["date"],
+                           let creator = data["creator"],
+                           let blurb = data["blurb"],
+                           let givenRating = data["rating"] {
                             //Filter by selected genre
                             for genre in genres {
                                 if let category = data["category"]{
                                     if category as! String == genre {
-                                        self.posts.append(Post(user: nil, date: date as! Double, postText: postText as! String, category: category as! String, creator: creator as! String))
+                                        self.posts.append(Post(user: nil, date: date as! Double, postText: postText as! String, category: category as! String, creator: creator as! String, blurb: blurb as! String, rating: givenRating as! Double))
                                         
 //                                    print(self.posts)
                                     }
@@ -166,15 +204,30 @@ class ProfileViewController: UIViewController {
         
     }
     
+    
     @IBAction func addFriendPressed(_ sender: UIButton) {
         print("Current user is \(Auth.auth().currentUser!.email!)")
-        print("Adding friend \(userEmail.text!)")
+        print("Adding friend \(username.text!)")
+                
+        db.collection("\(Auth.auth().currentUser!.email!)_Friends").addDocument(data: ["date" : Date().timeIntervalSince1970, "email": email, "name": usernameString])
         
-        db.collection("\(Auth.auth().currentUser!.email!)_Friends").addDocument(data: ["date" : Date().timeIntervalSince1970, "email": userEmail.text!])
         self.dismiss(animated: true) {
             
         }
     }
+    
+    @IBAction func signOutPressed(_ sender: Any) {
+        print("SignOut Pressed")
+        do {
+            try Auth.auth().signOut()
+            
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        performSegue(withIdentifier: "signOutSegue", sender: self)
+        
+    }
+    
 }
 
 //MARK: - Collection View
@@ -272,13 +325,16 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailView", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailView", for: indexPath) as! PostDetailView
+        cell.blurbTextView.text = posts[indexPath.section].blurb
+        cell.ratingValue.text = "\(posts[indexPath.section].rating)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 320
+        return 120
     }
+    
 }
 
 extension ProfileViewController: PopoverDelegate {

@@ -15,4 +15,6 @@ struct Post: Equatable {
     var postText : String
     var category: String
     var creator: String
+    var blurb: String
+    var rating: Double
 }

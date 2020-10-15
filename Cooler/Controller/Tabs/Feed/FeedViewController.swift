@@ -8,12 +8,13 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 class FeedViewController: UIViewController {
     
     let db = Firestore.firestore()
     
-    var friends : [String] = []
+    var friends : [[String]] = [[]]
     
     var posts : [Post] = []
     
@@ -49,7 +50,7 @@ class FeedViewController: UIViewController {
     }
     
     func getFriends() {
-       
+        
         db.collection("\(Auth.auth().currentUser!.email!)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.friends = []
             
@@ -59,8 +60,8 @@ class FeedViewController: UIViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let friend = data["email"] {
-                            self.friends.append(friend as! String)
+                        if let friendEmail = data["email"], let friendName = data["name"] {
+                            self.friends.append([friendEmail as! String, friendName as! String])
                         }
                     }
                     print(self.friends)
@@ -72,11 +73,11 @@ class FeedViewController: UIViewController {
     
     func getPosts() {
 //        print("getting posts for \(self.friends)")
-        print(friends)
+//        print(friends)
         self.posts = []
 
         for friend in friends {
-            db.collection("\(friend)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+            db.collection("\(friend[0])_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
                 
                 if let e = error {
                     print("There was an issue retrieving data from Firestore, \(e)")
@@ -84,9 +85,14 @@ class FeedViewController: UIViewController {
                     if let snapshotDocuments = querySnapshot?.documents {
                         for doc in snapshotDocuments {
                             let data = doc.data()
-                            if let date = data["date"], let text = data["text"], let category = data["category"], let creator = data["creator"] {
+                            if let date = data["date"],
+                               let text = data["text"],
+                               let category = data["category"],
+                               let creator = data["creator"],
+                               let blurb = data["blurb"],
+                               let givenRating = data["rating"] {
                                 
-                                let post = Post(user: friend, date: (date as! Double), postText: (text as! String), category: category as! String, creator: creator as! String)
+                                let post = Post(user: friend[1], date: (date as! Double), postText: (text as! String), category: category as! String, creator: creator as! String, blurb: blurb as! String, rating: givenRating as! Double)
                                 
                                 self.posts.append(post)
                                 self.assignValuesToPostOpen()
@@ -107,23 +113,25 @@ class FeedViewController: UIViewController {
     }
 }
 
+//MARK: - Table View
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        }
         return 110
     }
     
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            let cell = Bundle.main.loadNibNamed("AddFriendsTableViewCell", owner: self, options: nil)?.first as! AddFriendsTableViewCell
-            cell.parentVC = self
+            let cell = UIView()
             return cell
         }
-        
-        else if section <= posts.count - 1{
+
+        else if section <= posts.count{
             let cell = Bundle.main.loadNibNamed("FriendsPostsTableViewCell", owner: self, options: nil)?.first as! FriendsPostsTableViewCell
             cell.parentFeedVC = self
-            
             
                 let user = posts[section-1].user
                 cell.userEmail!.setTitle(user, for: .normal)
@@ -150,16 +158,16 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-
-        return posts.count + 2
+        return posts.count + 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
-            return 0
+            return 1
         }
         
-        else if section <= posts.count - 1 {
+        else if section <= posts.count {
             let post = posts[section-1]
+            
             if postOpen[post.postText] == false{
                 return 0
             }
@@ -175,12 +183,26 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = feedTableView.dequeueReusableCell(withIdentifier: "PostDetailView")!
+        if indexPath.section == 0 {
+            let cell = feedTableView.dequeueReusableCell(withIdentifier: "AddFriendsTableViewCell") as! AddFriendsTableViewCell
+            cell.parentVC = self
+            return cell
+        }
+        
+        let cell = feedTableView.dequeueReusableCell(withIdentifier: "PostDetailView")! as! PostDetailView
+        cell.blurbTextView.text = posts[indexPath.section-1].blurb
+        cell.ratingValue.text = "\(posts[indexPath.section-1].rating)"
         return cell
 
     }
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 320
+        if indexPath.section == 0 {
+            return 110
+        }
+        else {
+            return 120
+
+        }
     }
     
     

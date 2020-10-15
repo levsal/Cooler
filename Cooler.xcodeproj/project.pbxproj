@@ -33,6 +33,8 @@
 		BE3FF9372528323600F9B5E5 /* CategoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FF92A25277CA700F9B5E5 /* CategoriesCollectionViewCell.swift */; };
 		BE3FF943252965EF00F9B5E5 /* AddFriendsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FF8E125257EBD00F9B5E5 /* AddFriendsCollectionViewCell.swift */; };
 		BE3FF94F252969F300F9B5E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF94D252969F300F9B5E5 /* Main.storyboard */; };
+		BE5FF4852538B3370075C390 /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5FF4842538B3360075C390 /* FindFriendsViewController.swift */; };
+		BE5FF4882538CC9E0075C390 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5FF4872538CC9D0075C390 /* Friend.swift */; };
 		BEAD57AB2530F96700261E8F /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD57A92530F96700261E8F /* PostDetailView.swift */; };
 		BEAD57AC2530F96700261E8F /* PostDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAD57AA2530F96700261E8F /* PostDetailView.xib */; };
 		BEAD57AF25312D9400261E8F /* PositionCorrectingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */; };
@@ -75,6 +77,8 @@
 		BE3FF92A25277CA700F9B5E5 /* CategoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		BE3FF92B25277CA800F9B5E5 /* CategoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoriesCollectionViewCell.xib; sourceTree = "<group>"; };
 		BE3FF94E252969F300F9B5E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BE5FF4842538B3360075C390 /* FindFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
+		BE5FF4872538CC9D0075C390 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		BEAD57A92530F96700261E8F /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		BEAD57AA2530F96700261E8F /* PostDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDetailView.xib; sourceTree = "<group>"; };
 		BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCorrectingTableView.swift; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				BE3FF8FC2526948100F9B5E5 /* Post.swift */,
+				BE5FF4872538CC9D0075C390 /* Friend.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -191,6 +196,14 @@
 				BE3FF8D425257E8A00F9B5E5 /* TBCViewController.swift */,
 			);
 			path = "Tab Bar Controller";
+			sourceTree = "<group>";
+		};
+		BE5FF4832538B2DB0075C390 /* Find Friends */ = {
+			isa = PBXGroup;
+			children = (
+				BE5FF4842538B3360075C390 /* FindFriendsViewController.swift */,
+			);
+			path = "Find Friends";
 			sourceTree = "<group>";
 		};
 		BE82145D25183186009174CD /* Add Friends Cell */ = {
@@ -262,6 +275,7 @@
 		BEEEC48825073B6800A4732B /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				BE5FF4832538B2DB0075C390 /* Find Friends */,
 				BE4289B5250DA8A90088B4A9 /* Tab Bar Controller */,
 				BE4289B1250D50FA0088B4A9 /* Profile */,
 				BE4289B4250D511A0088B4A9 /* Feed */,
@@ -402,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE3FF8D525257E8A00F9B5E5 /* TBCViewController.swift in Sources */,
+				BE5FF4852538B3370075C390 /* FindFriendsViewController.swift in Sources */,
 				BE3FF8D925257E9600F9B5E5 /* PostViewController.swift in Sources */,
 				BE3FF8DA25257E9600F9B5E5 /* ProfileViewController.swift in Sources */,
 				BEEEC46D250081F900A4732B /* WelcomeViewController.swift in Sources */,
@@ -415,6 +430,7 @@
 				BEEEC4852501860900A4732B /* LogInViewController.swift in Sources */,
 				BE3FF8E425257EBD00F9B5E5 /* AddFriendsTableViewCell.swift in Sources */,
 				BEEEC46B250081F900A4732B /* SceneDelegate.swift in Sources */,
+				BE5FF4882538CC9E0075C390 /* Friend.swift in Sources */,
 				BE3FF8EB25257EC600F9B5E5 /* FriendsPostsTableViewCell.swift in Sources */,
 				BE3FF8DE25257EA300F9B5E5 /* FeedViewController.swift in Sources */,
 			);
