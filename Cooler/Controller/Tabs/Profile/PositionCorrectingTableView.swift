@@ -14,6 +14,7 @@ class PositionCorrectingTableView: UITableView {
     var offset : CGPoint = CGPoint(x: 0, y: 0)
     
     override func reloadData() {
+    
         offset = contentOffset
 //        print(offset)
         super.reloadData()

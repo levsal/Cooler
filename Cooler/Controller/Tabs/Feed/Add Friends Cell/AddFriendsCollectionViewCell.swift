@@ -11,7 +11,10 @@ import UIKit
 class AddFriendsCollectionViewCell: UICollectionViewCell {
     
     var email = ""
-    @IBOutlet weak var userEmail: UIButton!
+
+    @IBOutlet weak var profilePic: UIImageView!
+    
+    @IBOutlet weak var userEmail: UILabel!
     
     weak var parentCell : AddFriendsTableViewCell?
     
@@ -20,30 +23,32 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        profileVC.parentVC = self
         
-        // Initialization code
-    }
-    @IBAction func userEmailPressed(_ sender: UIButton) {
-        //Upon showing popup, change user email and reperform necessary functions
-        setUpProfile()
-    }
-    
-    func setUpProfile() {
-        
-        profileVC.isHost = false
-        profileVC.getName(user: email) //Determines usernameString
-        
-        parentCell?.parentVC?.present(profileVC, animated: true)
-        
-        profileVC.username.text = profileVC.usernameString
-        profileVC.addFriendButton.isHidden = false
+        profilePic.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        profilePic.widthAnchor.constraint(equalToConstant: 70).isActive = true
 
+        print(profilePic.frame.height)
+        print(profilePic.frame.width)
+
+//        profilePic.layer.borderWidth = 2
+        profilePic.layer.cornerRadius = profilePic.frame.height/2
+        
+
+    }
+
+
+    func setUpProfile() {
+        profileVC.isHost = false
         profileVC.email = email
+//        profileVC.getProfilePic()
+        profileVC.loadProfilePage(email: email)
         
-        
-        
+        parentCell?.parentVC!.present(profileVC, animated: true)
+                profileVC.addFriendButton.isHidden = false
         profileVC.loadPosts(from: profileVC.selectedCategories)
-        profileVC.getFriends(of: (email))
+
+        profileVC.profilePic.image = profilePic.image
     }
     
 }

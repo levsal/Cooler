@@ -8,17 +8,20 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 import FirebaseFirestore
 
 
 
-class AddFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class AddFriendsTableViewCell: UITableViewCell{
     
     let db = Firestore.firestore()
     
-    var users : [[String]]? = [["", ""]]
+    var potentialFriends : [[String]]? = [["","",""]]
     
-    var parentVC: UIViewController?
+    var firstCollectionViewLoad = true
+    
+    var parentVC: FeedViewController?
     
     @IBOutlet var collectionView: UICollectionView!
     
@@ -26,34 +29,74 @@ class AddFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         super.awakeFromNib()
         // Initialization code
         collectionView.register(UINib(nibName: "AddFriendsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "AddFriendsCollectionViewCell")
+        
         collectionView.delegate = self
         collectionView.dataSource = self
-        
         collectionView.showsHorizontalScrollIndicator = false
-        fetchUsers()
     }
     
     func fetchUsers() {
-        db.collection("Users").order(by: "date").addSnapshotListener { (querySnapshot, error) in
-            self.users = []
-            if let e = error {
-                print("There was an issue retrieving data from Firestore, \(e)")
-            } else {
-                if let snapshotDocuments = querySnapshot?.documents {
-                    for doc in snapshotDocuments {
-                        let data = doc.data()
-                        if let userEmail = data["email"], let username = data["name"] {
-                            self.users?.append([userEmail as! String, username as! String])
-                            self.collectionView.reloadData()
+        print("FUC")
+        
+        if let parentFriends = parentVC?.friends {
+            
+            if let blankIndex = self.potentialFriends?.firstIndex(of: ["","",""]){
+                self.potentialFriends?.remove(at: blankIndex)
+            }
+            
+            for friend in parentFriends{
+//                print(friend)
+                db.collection("\(friend[0])_Friends").addSnapshotListener { (querySnapshot, error) in
+                    if let e = error {
+                        print("There was an issue retrieving potential friends from Firestore, \(e)")
+                    } else {
+                        if let snapshotDocuments = querySnapshot?.documents {
+                            for doc in snapshotDocuments {
+                                let data = doc.data()
+                                
+                                if let userEmail = data["email"],
+                                   let username = data["name"] {
+                                    
+                                    if parentFriends.contains([userEmail as! String, username as! String]) || userEmail as! String == (Auth.auth().currentUser?.email)! {
+                                        //                                            print("Already handled")
+                                    }
+                                    else {
+                                        self.db.collection("Users").document(userEmail as! String).addSnapshotListener { (docSnapshot, error) in
+                                            if let documentSnapshot = docSnapshot {
+                                                let data = documentSnapshot.data()
+                                                if let url = data!["picURL"] as? String{
+                                                    if self.potentialFriends!.contains([userEmail as! String, username as! String, url]) {
+                                                       
+                                                    }
+                                                    
+                                                    else {
+                                                        self.potentialFriends!.append([userEmail as! String, username as! String, url])
+                                                        self.collectionView.reloadData()
+                                                        print(self.potentialFriends)
+
+                                                    }
+                                                    
+                                                }
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                            
                         }
+//                        self.collectionView.reloadData()
                     }
+                    
                 }
             }
+            
         }
-
+        
+        
     }
-    
-    
+
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -63,23 +106,48 @@ class AddFriendsTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     
 }
 
-extension AddFriendsTableViewCell: UICollectionViewDataSource {
+extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80, height: 80)
+        return CGSize(width: 100, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return users!.count
+        return potentialFriends!.count
+//        return users!.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddFriendsCollectionViewCell", for: indexPath) as! AddFriendsCollectionViewCell
-        cell.email = (users?[indexPath.row][0])!
-//        cell.name = (users?[indexPath.row][1])!
-        cell.userEmail.setTitle(users?[indexPath.row][1], for: .normal)
+        
         cell.parentCell = self
+//        cell.profilePic.contentMode = .scaleAspectFit
+        
+//        print(potentialFriends![indexPath.row][0])
+        cell.email = potentialFriends![indexPath.row][0]
+        cell.userEmail.text = potentialFriends![indexPath.row][1]
+       
+        //Get Profile Pic
+        DispatchQueue.main.async {
+            cell.profilePic.loadAndCacheImage(urlString: self.potentialFriends![indexPath.row][2])
+
+        }
+
+
+        
         return cell
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let addFriendsCell = collectionView.cellForItem(at: indexPath)! as! AddFriendsCollectionViewCell
+        
+        addFriendsCell.setUpProfile()
+
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
 }

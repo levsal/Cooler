@@ -22,28 +22,24 @@
                 <rect key="frame" x="0.0" y="0.0" width="177" height="45"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Bb-P7-J92">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Albums" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhm-Ut-oSN">
                         <rect key="frame" x="0.0" y="0.0" width="177" height="45"/>
                         <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
-                        <state key="normal" title="Albums">
-                            <color key="titleColor" red="0.57355820970000004" green="0.67942767780000002" blue="0.96620899439999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        </state>
-                        <connections>
-                            <action selector="categoryPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="VTo-5f-m9s"/>
-                        </connections>
-                    </button>
+                        <color key="textColor" red="0.57355820970000004" green="0.67942767780000002" blue="0.96620899439999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="7Bb-P7-J92" secondAttribute="trailing" id="Xhy-Co-bUy"/>
-                <constraint firstAttribute="bottom" secondItem="7Bb-P7-J92" secondAttribute="bottom" id="ab0-qV-sgr"/>
-                <constraint firstItem="7Bb-P7-J92" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lcA-wc-thI"/>
-                <constraint firstItem="7Bb-P7-J92" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="plb-vU-jFq"/>
+                <constraint firstAttribute="bottom" secondItem="hhm-Ut-oSN" secondAttribute="bottom" id="6UZ-si-cyS"/>
+                <constraint firstItem="hhm-Ut-oSN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Ftv-Hn-cjB"/>
+                <constraint firstAttribute="trailing" secondItem="hhm-Ut-oSN" secondAttribute="trailing" id="nim-8m-jgt"/>
+                <constraint firstItem="hhm-Ut-oSN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oet-OU-zH9"/>
             </constraints>
             <size key="customSize" width="177" height="45"/>
             <connections>
-                <outlet property="category" destination="7Bb-P7-J92" id="rYy-K4-CNJ"/>
+                <outlet property="category" destination="hhm-Ut-oSN" id="Iwc-KK-JGV"/>
             </connections>
             <point key="canvasLocation" x="36.956521739130437" y="78.683035714285708"/>
         </collectionViewCell>

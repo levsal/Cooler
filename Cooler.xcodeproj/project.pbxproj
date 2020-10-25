@@ -35,6 +35,9 @@
 		BE3FF94F252969F300F9B5E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE3FF94D252969F300F9B5E5 /* Main.storyboard */; };
 		BE5FF4852538B3370075C390 /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5FF4842538B3360075C390 /* FindFriendsViewController.swift */; };
 		BE5FF4882538CC9E0075C390 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5FF4872538CC9D0075C390 /* Friend.swift */; };
+		BE9CD2B62541BC7300D142C4 /* UIImageCacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CD2B52541BC7300D142C4 /* UIImageCacher.swift */; };
+		BE9CD2BA2544FA5800D142C4 /* FindFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CD2B82544FA5700D142C4 /* FindFriendsTableViewCell.swift */; };
+		BE9CD2BB2544FA5800D142C4 /* FindFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE9CD2B92544FA5700D142C4 /* FindFriendsTableViewCell.xib */; };
 		BEAD57AB2530F96700261E8F /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD57A92530F96700261E8F /* PostDetailView.swift */; };
 		BEAD57AC2530F96700261E8F /* PostDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAD57AA2530F96700261E8F /* PostDetailView.xib */; };
 		BEAD57AF25312D9400261E8F /* PositionCorrectingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */; };
@@ -79,6 +82,9 @@
 		BE3FF94E252969F300F9B5E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BE5FF4842538B3360075C390 /* FindFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		BE5FF4872538CC9D0075C390 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		BE9CD2B52541BC7300D142C4 /* UIImageCacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageCacher.swift; sourceTree = "<group>"; };
+		BE9CD2B82544FA5700D142C4 /* FindFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFriendsTableViewCell.swift; sourceTree = "<group>"; };
+		BE9CD2B92544FA5700D142C4 /* FindFriendsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindFriendsTableViewCell.xib; sourceTree = "<group>"; };
 		BEAD57A92530F96700261E8F /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		BEAD57AA2530F96700261E8F /* PostDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDetailView.xib; sourceTree = "<group>"; };
 		BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCorrectingTableView.swift; sourceTree = "<group>"; };
@@ -156,6 +162,7 @@
 			children = (
 				BE3FF8FC2526948100F9B5E5 /* Post.swift */,
 				BE5FF4872538CC9D0075C390 /* Friend.swift */,
+				BE9CD2B52541BC7300D142C4 /* UIImageCacher.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -202,6 +209,8 @@
 			isa = PBXGroup;
 			children = (
 				BE5FF4842538B3360075C390 /* FindFriendsViewController.swift */,
+				BE9CD2B82544FA5700D142C4 /* FindFriendsTableViewCell.swift */,
+				BE9CD2B92544FA5700D142C4 /* FindFriendsTableViewCell.xib */,
 			);
 			path = "Find Friends";
 			sourceTree = "<group>";
@@ -354,6 +363,7 @@
 				BE3FF9172526D8A200F9B5E5 /* OpenSans-BoldItalic.ttf in Resources */,
 				BE3FF8F82525819F00F9B5E5 /* AddFriendsCollectionViewCell.xib in Resources */,
 				BE3FF8F9252581A200F9B5E5 /* FriendsPostsTableViewCell.xib in Resources */,
+				BE9CD2BB2544FA5800D142C4 /* FindFriendsTableViewCell.xib in Resources */,
 				BE3FF9352528323000F9B5E5 /* CategoriesCollectionViewCell.xib in Resources */,
 				BE3FF90F2526D8A200F9B5E5 /* OpenSans-Bold.ttf in Resources */,
 				BEEEC472250081FC00A4732B /* Assets.xcassets in Resources */,
@@ -423,9 +433,11 @@
 				BE3FF8FD2526948200F9B5E5 /* Post.swift in Sources */,
 				BEAD57AF25312D9400261E8F /* PositionCorrectingTableView.swift in Sources */,
 				BEEEC469250081F900A4732B /* AppDelegate.swift in Sources */,
+				BE9CD2B62541BC7300D142C4 /* UIImageCacher.swift in Sources */,
 				BEAD57AB2530F96700261E8F /* PostDetailView.swift in Sources */,
 				BE3FF943252965EF00F9B5E5 /* AddFriendsCollectionViewCell.swift in Sources */,
 				BEEEC483250185F700A4732B /* SignUpViewController.swift in Sources */,
+				BE9CD2BA2544FA5800D142C4 /* FindFriendsTableViewCell.swift in Sources */,
 				BE3FF9372528323600F9B5E5 /* CategoriesCollectionViewCell.swift in Sources */,
 				BEEEC4852501860900A4732B /* LogInViewController.swift in Sources */,
 				BE3FF8E425257EBD00F9B5E5 /* AddFriendsTableViewCell.swift in Sources */,

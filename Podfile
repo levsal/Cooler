@@ -8,5 +8,6 @@ target 'Cooler' do
   # Pods for Cooler
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
 
 end

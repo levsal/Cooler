@@ -31,6 +31,7 @@ class PostViewController: UIViewController {
     @IBOutlet weak var creatorTextView: UITextView!
     @IBOutlet weak var blurbTextView: UITextView!
     
+    @IBOutlet weak var postButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,9 @@ class PostViewController: UIViewController {
         creatorTextView.layer.borderColor = UIColor.black.cgColor
         blurbTextView.layer.borderWidth = 1
         blurbTextView.layer.borderColor = UIColor.black.cgColor
+        
+       
+        
         //        postTextView.layer.cornerRadius = postTextView.layer.frame.width/40
     }
     
@@ -72,9 +76,17 @@ class PostViewController: UIViewController {
             let givenRating = Double(ratingPicker.selectedRow(inComponent: 0))/10.0
             let dateReversed = -Date().timeIntervalSince1970
             
-            delegate.appendToArray(post: Post(user: nil, date: dateReversed, postText: postText!, category: selectedCategory, creator: creatorText!, blurb: blurbText!, rating: givenRating))
+                let date = Date()
+                let formatter = DateFormatter()
+                formatter.dateStyle = .short
+                formatter.timeStyle = .none
+
+            let dateTime = formatter.string(from: date)
+                        
             
-            db.collection("\((delegate.email))_Posts").addDocument(data: ["text": postText! as String, "date": dateReversed, "category": categories[categoryPicker.selectedRow(inComponent: 0)], "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating]){ (error) in
+            delegate.appendToArray(post: Post(date: dateReversed, dateString: dateTime, postText: postText!, category: selectedCategory, creator: creatorText!, blurb: blurbText!, rating: givenRating))
+            
+            db.collection("\((delegate.email))_Posts").document(postText!).setData(["text": postText! as String, "date": dateReversed, "category": categories[categoryPicker.selectedRow(inComponent: 0)], "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
                 
                 if let e = error{
                     print("There was an issue saving data to Firestore, \(e)")
@@ -85,6 +97,7 @@ class PostViewController: UIViewController {
             delegate.postTableView.reloadData()
             postTextView.text = ""
             creatorTextView.text = ""
+            blurbTextView.text = ""
             self.dismiss(animated: true) {
                 
             }

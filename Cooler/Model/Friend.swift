@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 struct Friend : Equatable {
-    var email : String = "Err"
-    var name : String = "Err"
+    var email : String?
+    var name : String?
     var date : Double?
+    var picURL : String?
 }

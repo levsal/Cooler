@@ -13,7 +13,7 @@ class WelcomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Auth.auth().currentUser?.email)
+//        print(Auth.auth().currentUser?.email)
         // Do any additional setup after loading the view.
     }
     

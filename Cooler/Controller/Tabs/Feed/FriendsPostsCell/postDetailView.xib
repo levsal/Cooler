@@ -36,7 +36,7 @@
                                 <fontDescription key="fontDescription" name="OpenSans-SemiBoldItalic" family="Open Sans" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZQ-9b-dq0" userLabel="Rating">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZQ-9b-dq0" userLabel="Rating">
                                 <rect key="frame" x="244" y="0.0" width="66" height="64"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cpq-sZ-cIv">
@@ -82,6 +82,7 @@
                 <outlet property="blurbTextView" destination="hYe-Yg-GcP" id="ScI-2o-0nW"/>
                 <outlet property="ratingCircle" destination="cpq-sZ-cIv" id="IOb-tu-lfo"/>
                 <outlet property="ratingValue" destination="DMZ-mh-Gc0" id="I2A-sP-c0K"/>
+                <outlet property="stackView" destination="XCe-Pp-1ys" id="JFk-d2-j68"/>
             </connections>
             <point key="canvasLocation" x="95.652173913043484" y="113.50446428571428"/>
         </tableViewCell>
