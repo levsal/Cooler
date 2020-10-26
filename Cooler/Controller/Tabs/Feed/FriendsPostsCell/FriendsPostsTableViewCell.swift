@@ -20,6 +20,11 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var editStack: UIStackView!
     
+    var date : Double?
+    var category : String?
+    var rating : Double?
+    var email : String?
+    
     var parentProfileVC : ProfileViewController?
     var parentFeedVC : FeedViewController?
     var parentFindFriendsVC : FindFriendsViewController?
@@ -29,6 +34,10 @@ class FriendsPostsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         editStack.isHidden = true
+        editButton.isHidden = true
+
+
+
 //        editButton.isHidden = true
        
 //        editButton.isHidden = false
@@ -43,8 +52,12 @@ class FriendsPostsTableViewCell: UITableViewCell {
     }
     
     @IBAction func profileTriggerPressed(_ sender: UIButton) {
+        parentFeedVC!.segueFriendEmail = email
         parentFeedVC?.performSegue(withIdentifier: "FeedToProfile", sender: parentFeedVC)
     }
+    
+    
+    
     
     
     @IBAction func postTriggerPressed(_ sender: UIButton) {
@@ -95,8 +108,13 @@ class FriendsPostsTableViewCell: UITableViewCell {
    
     @IBAction func editPressed(_ sender: UIButton) {
         let postVC: PostViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "postViewController") as! PostViewController
+        
         parentProfileVC?.present(postVC, animated: true)
         postVC.delegate = parentProfileVC
+        
+        
+        postVC.preservedPostText = friendsPostTextView.text
+        postVC.preservedDate = date
         
         postVC.postTextView.textColor = .black
         postVC.postTextView.text = friendsPostTextView.text
@@ -105,9 +123,16 @@ class FriendsPostsTableViewCell: UITableViewCell {
         postVC.creatorTextView.text = creatorTextView.text
         
         
-        
-//        postVC.categoryPicker.selectRow(<#T##row: Int##Int#>, inComponent: <#T##Int#>, animated: <#T##Bool#>)
-//        postVC.ratingPicker.selectRow(<#T##row: Int##Int#>, inComponent: <#T##Int#>, animated: <#T##Bool#>)
+        print(postVC.categoryPickerDictionary)
+        if let categoryInt = postVC.categoryPickerDictionary[category!] {
+            postVC.categoryPicker.selectRow(categoryInt, inComponent: 0, animated: false)
+
+        }
+
+        if let ratingInt = postVC.ratingPickerDictionary[rating!] {
+            print(ratingInt)
+            postVC.ratingPicker.selectRow(ratingInt, inComponent: 0, animated: false)
+        }
         
         
         for post in parentProfileVC!.posts {
@@ -125,7 +150,8 @@ class FriendsPostsTableViewCell: UITableViewCell {
         if sender.titleLabel?.text == "Delete"{
             sender.setTitle("Confirm", for: .normal)
         }
-        if sender.titleLabel?.text == "Confirm"{
+        
+        else if sender.titleLabel?.text == "Confirm"{
             print("\(String(describing: Auth.auth().currentUser?.email))_Posts")
             parentProfileVC?.db.collection("\((Auth.auth().currentUser?.email!)!)_Posts").document(friendsPostTextView.text).delete()
         }

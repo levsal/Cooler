@@ -123,6 +123,8 @@ extension FindFriendsViewController : UISearchBarDelegate {
             profileVC.email = segueEmail
             profileVC.loadProfilePage(email: profileVC.email)//
             profileVC.signOutButtonTitle = "Back To Search"
+            profileVC.postButton.image = nil
+            profileVC.postButton.title = ""
             profileVC.addFriendHidden = false
         }
     }
@@ -140,7 +142,7 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
 
         cell.parentFindFriendsVC = self
         cell.name.text = friends[indexPath.row].name
-        if friends[indexPath.row].picURL != nil {
+        if friends[indexPath.row].picURL != nil && ((friends[indexPath.row].picURL?.contains(friends[indexPath.row].email!)) == true) {
             cell.profilePic.loadAndCacheImage(urlString: (friends[indexPath.row].picURL)!)
 
         }

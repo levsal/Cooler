@@ -36,7 +36,6 @@ class AddFriendsTableViewCell: UITableViewCell{
     }
     
     func fetchUsers() {
-        print("FUC")
         
         if let parentFriends = parentVC?.friends {
             

@@ -12,18 +12,36 @@ import UIKit
 
 let imageCache = NSCache<NSString, UIImage>()
 
-extension UIImageView{
+extension UIImageView : NSDiscardableContent{
+    public func beginContentAccess() -> Bool {
+        return true
+    }
+    
+    public func endContentAccess() {
+        
+    }
+    
+    public func discardContentIfPossible() {
+        
+    }
+    
+    public func isContentDiscarded() -> Bool {
+        return false
+    }
+    
     
     func loadAndCacheImage(urlString: String){
         
+        self.image = nil
+        
         if let cachedImage = imageCache.object(forKey: urlString as NSString) {
-            print("Already cached")
             self.image = cachedImage
             return
         }
         
+        print("Fetching image for first time")
+        
         if let url = URL(string: urlString) {
-            print("Googoogaga")
             URLSession.shared.dataTask(with: url) { (data, _, error) in
                 if error != nil {
                     print(error!)

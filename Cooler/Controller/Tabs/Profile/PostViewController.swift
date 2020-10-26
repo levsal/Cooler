@@ -21,6 +21,12 @@ class PostViewController: UIViewController {
     
     var selectedCategory : String?
     
+    var preservedPostText : String?
+    var preservedDate : Double?
+    
+    var categoryPickerDictionary : [String : Int] = [:]
+    var ratingPickerDictionary : [Double : Int] = [:]
+    
     @IBOutlet weak var categoryHeader: UILabel!
     
     @IBOutlet weak var categoryPicker: UIPickerView!
@@ -38,7 +44,7 @@ class PostViewController: UIViewController {
         let attributedString = NSMutableAttributedString.init(string: "Categories")
         attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
         categoryHeader.attributedText = attributedString
-        
+                
         categoryPicker.dataSource = self
         categoryPicker.delegate = self
         ratingPicker.dataSource = self
@@ -65,43 +71,75 @@ class PostViewController: UIViewController {
     }
     
     //MARK: - Post Pressed
-    @IBAction func postButtonPressed(_ sender: Any) {
+    @IBAction func postButtonPressed(_ sender: UIButton) {
         
-        if postTextView.text != "" && postTextView.text != nil && postTextView.text != "Work" && creatorTextView.text != "" && creatorTextView.text != nil && creatorTextView.text != "Creator" && blurbTextView.text != "" && blurbTextView.text != nil && blurbTextView.text != "Blurb" {
-            
-            let postText = postTextView.text
-            let creatorText = creatorTextView.text
-            let blurbText = blurbTextView.text
-            let selectedCategory = categories[categoryPicker.selectedRow(inComponent: 0)]
-            let givenRating = Double(ratingPicker.selectedRow(inComponent: 0))/10.0
-            let dateReversed = -Date().timeIntervalSince1970
-            
-                let date = Date()
-                let formatter = DateFormatter()
-                formatter.dateStyle = .short
-                formatter.timeStyle = .none
-
-            let dateTime = formatter.string(from: date)
-                        
-            
-            delegate.appendToArray(post: Post(date: dateReversed, dateString: dateTime, postText: postText!, category: selectedCategory, creator: creatorText!, blurb: blurbText!, rating: givenRating))
-            
-            db.collection("\((delegate.email))_Posts").document(postText!).setData(["text": postText! as String, "date": dateReversed, "category": categories[categoryPicker.selectedRow(inComponent: 0)], "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
+            if postTextView.text != "" && postTextView.text != nil && postTextView.text != "Work" && creatorTextView.text != "" && creatorTextView.text != nil && creatorTextView.text != "Creator" && blurbTextView.text != "" && blurbTextView.text != nil && blurbTextView.text != "Blurb" {
                 
-                if let e = error{
-                    print("There was an issue saving data to Firestore, \(e)")
-                } else{
+                let postText = postTextView.text
+                let creatorText = creatorTextView.text
+                let blurbText = blurbTextView.text
+                let selectedCategory = categories[categoryPicker.selectedRow(inComponent: 0)]
+                let givenRating = Double(ratingPicker.selectedRow(inComponent: 0))/10.0
+                let dateReversed = -Date().timeIntervalSince1970
+                
+                    let date = Date()
+                    let formatter = DateFormatter()
+                    formatter.dateStyle = .short
+                    formatter.timeStyle = .none
+
+                let dateTime = formatter.string(from: date)
+                            
+                
+//                delegate.appendToArray(post: Post(date: dateReversed, dateString: dateTime, postText: postText!, category: selectedCategory, creator: creatorText!, blurb: blurbText!, rating: givenRating))
+                
+                if sender.titleLabel?.text == "Post"{
+                    db.collection("\((delegate.email))_Posts").document(postText!).setData(["text": postText! as String, "date": dateReversed, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
+                        
+                        if let e = error{
+                            print("There was an issue saving data to Firestore, \(e)")
+                        } else{
+                            
+                        }
+                    }
+                }
+                else if sender.titleLabel!.text == "Finish Edit"{
+                    if preservedPostText == postText {
+                        db.collection("\((delegate.email))_Posts").document(preservedPostText!).updateData(["text": postText! as String, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
+                            
+                            if let e = error{
+                                print("There was an issue saving data to Firestore, \(e)")
+                            } else{
+                                
+                            }
+                        }
+                    }
+                    else {
+                        db.collection("\(delegate.email)_Posts").document(postText!).setData(["text": postText! as String, "date": preservedDate!, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
+                            
+                            if let e = error {
+                                print("There was an issue saving data to Firestore, \(e)")
+                            } else{
+                                
+                            }
+                        }
+                        db.collection("\(delegate.email)_Posts").document(preservedPostText!).delete()
+                        
+                    }
+                    
+                }
+               
+                
+                
+                delegate.postTableView.reloadData()
+                postTextView.text = ""
+                creatorTextView.text = ""
+                blurbTextView.text = ""
+                self.dismiss(animated: true) {
                     
                 }
             }
-            delegate.postTableView.reloadData()
-            postTextView.text = ""
-            creatorTextView.text = ""
-            blurbTextView.text = ""
-            self.dismiss(animated: true) {
-                
-            }
-        }
+        
+
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -152,7 +190,7 @@ extension PostViewController: UITextViewDelegate{
     
     extension PostViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         func numberOfComponents(in pickerView: UIPickerView) -> Int {
-          return 1
+            return 1
         }
         
         func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -165,16 +203,19 @@ extension PostViewController: UITextViewDelegate{
         }
         
         func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            if pickerView == categoryPicker{
+            if pickerView == categoryPicker {
+
+                categoryPickerDictionary[categories[row]] = row
+                print(categoryPickerDictionary)
                 return categories[row]
             }
             else {
+                ratingPickerDictionary[Double(row)/10.0] = row
                 return "\(Double(row)/10.0)"
             }
         }
         
         func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-            
             var pickerLabel = view as? UILabel
             if (pickerLabel == nil)
             {
@@ -189,7 +230,7 @@ extension PostViewController: UITextViewDelegate{
             }
             else {
                 pickerLabel?.text = "\(Double(row)/10.0)"
-                pickerLabel?.textColor = .red
+                pickerLabel?.textColor = #colorLiteral(red: 0, green: 0.5120117664, blue: 0.1549791396, alpha: 1)
             }
             return pickerLabel!
         }

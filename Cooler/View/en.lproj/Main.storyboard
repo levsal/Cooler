@@ -504,6 +504,7 @@
                         <outlet property="addFriendButton" destination="yW9-NP-RWP" id="GHq-ej-JWr"/>
                         <outlet property="categoryCollectionView" destination="Nao-1o-HRF" id="7yo-hg-QpC"/>
                         <outlet property="friendsCount" destination="f58-hR-30f" id="bzT-W9-EAk"/>
+                        <outlet property="postButton" destination="6pO-my-Cot" id="SLr-V3-tHQ"/>
                         <outlet property="postTableView" destination="kUh-8E-uSz" id="yDK-da-x44"/>
                         <outlet property="postsCount" destination="H1f-Yo-yen" id="4f7-4d-7GV"/>
                         <outlet property="profilePic" destination="K6K-Kb-R7q" id="7HV-a8-mXd"/>

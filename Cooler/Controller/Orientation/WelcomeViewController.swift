@@ -11,8 +11,13 @@ import Firebase
 
 class WelcomeViewController: UIViewController {
 
+    let db = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        db.clearPersistence { (error) in
+//
+//        }
 //        print(Auth.auth().currentUser?.email)
         // Do any additional setup after loading the view.
     }

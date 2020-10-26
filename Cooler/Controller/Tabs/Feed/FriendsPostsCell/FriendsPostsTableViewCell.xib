@@ -110,8 +110,8 @@
                             <action selector="editButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fzB-Pm-z2T"/>
                         </connections>
                     </button>
-                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="LQJ-sp-5ha" userLabel="Edit/DeleteStack">
-                        <rect key="frame" x="229" y="97" width="78" height="32"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LQJ-sp-5ha" userLabel="Edit/DeleteStack">
+                        <rect key="frame" x="225" y="97" width="82" height="32"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jo3-Yj-gAS">
                                 <rect key="frame" x="0.0" y="0.0" width="30" height="32"/>
@@ -123,7 +123,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKt-NN-fIE">
-                                <rect key="frame" x="34" y="0.0" width="44" height="32"/>
+                                <rect key="frame" x="38" y="0.0" width="44" height="32"/>
                                 <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Delete"/>

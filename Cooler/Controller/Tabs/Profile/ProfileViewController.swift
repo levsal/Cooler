@@ -31,6 +31,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     var picURL = ""
     
     @IBOutlet weak var signOutButton: UIBarButtonItem!
+    @IBOutlet weak var postButton: UIBarButtonItem!
     var signOutButtonTitle = "Sign Out"
     
     @IBOutlet weak var addFriendButton: UIButton!
@@ -69,7 +70,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     override func viewDidLoad() {
         super.viewDidLoad()
         
- 
+
         //Populate Selected Categories with User's Categories, Minus the Pluralization
         for category in categories {
             selectedCategories.append(String(category.dropLast()))
@@ -161,7 +162,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     
     @IBAction func postButtonPressed(_ sender: UIBarButtonItem) {
-        present(postVC, animated: true)
+        if postButton.title != "" {
+            present(postVC, animated: true)
+
+        }
     }
     
     func loadPosts(from genres: [String]){
@@ -244,6 +248,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     
     @IBAction func addFriendPressed(_ sender: UIButton) {
+
         print("Current user is \(Auth.auth().currentUser!.email!)")
         print("Adding friend \(username.text!)")
         
@@ -289,12 +294,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             
             storageRef.downloadURL { (url, error) in
                 guard let url = url, error == nil else{
+                   print("Gotta return")
                     return
                 }
                 let urlString = url.absoluteString
                 self.db.collection("Users").document((Auth.auth().currentUser?.email)!).updateData(["picURL" : urlString])
-                
-                }
+            }
         
         
         picker.dismiss(animated: true) {
@@ -446,6 +451,14 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.userEmail.isHidden = true
             cell.dateString.isHidden = false
+            
+            cell.date = posts[section].date
+            cell.category = posts[section].category
+            cell.rating = posts[section].rating
+            
+            if isHost{
+                cell.editButton.isHidden = false
+            }
             cell.userEmail.heightAnchor.constraint(equalToConstant: 0).isActive = true
             
             return cell
@@ -487,27 +500,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailView", for: indexPath) as! PostDetailView
         cell.blurbTextView.text = posts[indexPath.section].blurb
         cell.ratingValue.text = "\(posts[indexPath.section].rating)"
-//        let rating = posts[indexPath.section].rating
-//        var ratingColor = UIColor()
-//        
-//        if rating<3.0 {
-//            ratingColor = #colorLiteral(red: 1, green: 0.1353616714, blue: 0.05722223222, alpha: 1)
-//        }
-//        else if rating < 6.0 {
-//            ratingColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
-//        }
-//        else if rating < 9.0 {
-//            ratingColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
-//        }
-//        else if rating < 10.0 {
-//            ratingColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-//        }
-//        else {
-//            ratingColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-//
-//        }
-//        cell.ratingValue.textColor = ratingColor
-//        cell.ratingCircle.tintColor = ratingColor
         
         return cell
     }

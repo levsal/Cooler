@@ -24,6 +24,9 @@ class FeedViewController: UIViewController {
     var categoryIcons = ["Album": UIImage(systemName: "music.note"), "Movie": UIImage(systemName: "film"), "TV Show": UIImage(systemName: "tv"), "Book": UIImage(systemName: "book"), "N/A": UIImage(systemName: "scribble")]
     
     var postOpen : [String: Bool] = [:]
+    
+    var segueFriendEmail : String?
+    
         
     @IBOutlet weak var feedTableView: PositionCorrectingTableView!
     
@@ -137,6 +140,19 @@ class FeedViewController: UIViewController {
         
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "FeedToProfile" {
+            let profileVC = segue.destination as! ProfileViewController
+            profileVC.isHost = false
+            profileVC.email = segueFriendEmail!
+            profileVC.loadProfilePage(email: segueFriendEmail!)//
+            profileVC.signOutButtonTitle = "Back To Feed"
+            profileVC.postButton.image = nil
+            profileVC.postButton.title = ""
+            profileVC.addFriendHidden = false
+        }
+    }
 }
 
 //MARK: - Table View
@@ -203,6 +219,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let dateString = posts[section-1].dateString
             cell.dateString.text = dateString
             
+            cell.email = posts[section-1].userEmail
 //            print(posts)
 //            print[posts[section-1].category])
             
