@@ -38,6 +38,7 @@
 		BE9CD2B62541BC7300D142C4 /* UIImageCacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CD2B52541BC7300D142C4 /* UIImageCacher.swift */; };
 		BE9CD2BA2544FA5800D142C4 /* FindFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CD2B82544FA5700D142C4 /* FindFriendsTableViewCell.swift */; };
 		BE9CD2BB2544FA5800D142C4 /* FindFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE9CD2B92544FA5700D142C4 /* FindFriendsTableViewCell.xib */; };
+		BE9CD2C3254741B200D142C4 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CD2C2254741B100D142C4 /* ImageCache.swift */; };
 		BEAD57AB2530F96700261E8F /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD57A92530F96700261E8F /* PostDetailView.swift */; };
 		BEAD57AC2530F96700261E8F /* PostDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAD57AA2530F96700261E8F /* PostDetailView.xib */; };
 		BEAD57AF25312D9400261E8F /* PositionCorrectingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */; };
@@ -85,6 +86,7 @@
 		BE9CD2B52541BC7300D142C4 /* UIImageCacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageCacher.swift; sourceTree = "<group>"; };
 		BE9CD2B82544FA5700D142C4 /* FindFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		BE9CD2B92544FA5700D142C4 /* FindFriendsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindFriendsTableViewCell.xib; sourceTree = "<group>"; };
+		BE9CD2C2254741B100D142C4 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		BEAD57A92530F96700261E8F /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		BEAD57AA2530F96700261E8F /* PostDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDetailView.xib; sourceTree = "<group>"; };
 		BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCorrectingTableView.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				BE3FF8FC2526948100F9B5E5 /* Post.swift */,
 				BE5FF4872538CC9D0075C390 /* Friend.swift */,
+				BE9CD2C2254741B100D142C4 /* ImageCache.swift */,
 				BE9CD2B52541BC7300D142C4 /* UIImageCacher.swift */,
 			);
 			path = Model;
@@ -437,6 +440,7 @@
 				BEAD57AB2530F96700261E8F /* PostDetailView.swift in Sources */,
 				BE3FF943252965EF00F9B5E5 /* AddFriendsCollectionViewCell.swift in Sources */,
 				BEEEC483250185F700A4732B /* SignUpViewController.swift in Sources */,
+				BE9CD2C3254741B200D142C4 /* ImageCache.swift in Sources */,
 				BE9CD2BA2544FA5800D142C4 /* FindFriendsTableViewCell.swift in Sources */,
 				BE3FF9372528323600F9B5E5 /* CategoriesCollectionViewCell.swift in Sources */,
 				BEEEC4852501860900A4732B /* LogInViewController.swift in Sources */,
@@ -599,7 +603,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Levi.Cooler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -618,7 +622,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Levi.Cooler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -17,7 +17,8 @@ class FeedViewController: UIViewController {
     var friends : [[String]] = [[]]
     
     var posts : [Post] = []
-            
+    @IBOutlet weak var emptyFeedViewLabel: UILabel!
+    
     var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), "Movie": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1), "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
     var categoryColorsSingularPale = ["Album": #colorLiteral(red: 0.7195122838, green: 0.7771759033, blue: 0.9829060435, alpha: 1), "Movie": #colorLiteral(red: 0.8376982212, green: 0.8472841382, blue: 0.4527434111, alpha: 1), "TV Show": #colorLiteral(red: 0.6429418921, green: 0.8634710908, blue: 0.6248642206, alpha: 1), "Book": #colorLiteral(red: 0.886295557, green: 0.6721803546, blue: 0.6509570479, alpha: 1), "N/A": #colorLiteral(red: 0.3980969191, green: 0.4254524708, blue: 0.4201924801, alpha: 1)]
 
@@ -57,11 +58,13 @@ class FeedViewController: UIViewController {
         }
     }
     
-    func getFriends() {
-        
+
+    func getFriends(){
         db.collection("\(Auth.auth().currentUser!.email!)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+            self.feedTableView.reloadData()
             self.friends = []
-            
+            print("Getting friends")
+
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
             } else {
@@ -85,9 +88,11 @@ class FeedViewController: UIViewController {
     }
    
     func getPosts() {
-
+        print("Getting posts")
         self.posts = []
         
+        self.feedTableView.reloadData()
+
         for friend in friends {
             db.collection("\(friend[0])_Posts").order(by: "date").addSnapshotListener{ [self] (querySnapshot, error) in
                 
@@ -150,6 +155,14 @@ class FeedViewController: UIViewController {
             profileVC.signOutButtonTitle = "Back To Feed"
             profileVC.postButton.image = nil
             profileVC.postButton.title = ""
+            
+            for friend in friends {
+                if segueFriendEmail == friend[0]{
+                    print("Googoogaga")
+                    profileVC.friendStatusButton = "Remove Friend"
+                }
+            }
+            
             profileVC.addFriendHidden = false
         }
     }
@@ -241,6 +254,15 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if posts.count == 0 {
+            emptyFeedViewLabel.isHidden = false
+            feedTableView.isHidden = true
+        }
+        else {
+            emptyFeedViewLabel.isHidden = true
+            feedTableView.isHidden = false
+        }
+        
         return posts.count + 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -270,7 +292,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
 
             let cell = feedTableView.dequeueReusableCell(withIdentifier: "AddFriendsTableViewCell") as! AddFriendsTableViewCell
             
-            cell.parentVC = self
+            cell.parentFeedVC = self
             
             if friends != [[]] {
                 cell.fetchUsers()

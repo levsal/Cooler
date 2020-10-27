@@ -39,7 +39,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Levi Saltzman" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xvm-ab-UY3">
                                 <rect key="frame" x="0.0" y="0.0" width="194" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="bGK-j9-Cnw"/>
+                                    <constraint firstAttribute="height" priority="750" constant="40" id="bGK-j9-Cnw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -48,7 +48,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generally a viber" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fv8-gJ-LEi">
                                 <rect key="frame" x="0.0" y="40" width="194" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="pHt-mt-xjA"/>
+                                    <constraint firstAttribute="height" priority="750" constant="40" id="pHt-mt-xjA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="12"/>
                                 <nil key="textColor"/>
@@ -56,7 +56,7 @@
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="80" id="Fuh-xZ-2le"/>
+                            <constraint firstAttribute="height" priority="750" constant="80" id="Fuh-xZ-2le"/>
                         </constraints>
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UXh-4D-GdT" userLabel="Segue Trigger">

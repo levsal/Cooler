@@ -42,8 +42,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
        
 //        editButton.isHidden = false
         
-        profilePic.layer.borderWidth = 2
-        profilePic.layer.cornerRadius = profilePic.frame.height/5
+//        profilePic.layer.borderWidth = 2
     }
     
     
@@ -53,6 +52,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
     
     @IBAction func profileTriggerPressed(_ sender: UIButton) {
         parentFeedVC!.segueFriendEmail = email
+
         parentFeedVC?.performSegue(withIdentifier: "FeedToProfile", sender: parentFeedVC)
     }
     
@@ -124,6 +124,12 @@ class FriendsPostsTableViewCell: UITableViewCell {
         
         
         print(postVC.categoryPickerDictionary)
+        for category in 0...postVC.categories.count-1 {
+            postVC.categoryPickerDictionary[postVC.categories[category]] = category
+        }
+        for rating in 0...100 {
+            postVC.ratingPickerDictionary[Double(rating)/10.0] = rating
+        }
         if let categoryInt = postVC.categoryPickerDictionary[category!] {
             postVC.categoryPicker.selectRow(categoryInt, inComponent: 0, animated: false)
 

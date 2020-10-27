@@ -21,8 +21,9 @@ class AddFriendsTableViewCell: UITableViewCell{
     
     var firstCollectionViewLoad = true
     
-    var parentVC: FeedViewController?
+    var parentFeedVC: FeedViewController?
     
+    @IBOutlet weak var emptyCollectionViewLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
     
     override func awakeFromNib() {
@@ -33,18 +34,23 @@ class AddFriendsTableViewCell: UITableViewCell{
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
+
     }
+
     
     func fetchUsers() {
+
         
-        if let parentFriends = parentVC?.friends {
+        if let parentFriends = parentFeedVC?.friends {
+            print(parentFriends)
             
             if let blankIndex = self.potentialFriends?.firstIndex(of: ["","",""]){
                 self.potentialFriends?.remove(at: blankIndex)
             }
+
             
             for friend in parentFriends{
-//                print(friend)
+                //                print(friend)
                 db.collection("\(friend[0])_Friends").addSnapshotListener { (querySnapshot, error) in
                     if let e = error {
                         print("There was an issue retrieving potential friends from Firestore, \(e)")
@@ -65,14 +71,14 @@ class AddFriendsTableViewCell: UITableViewCell{
                                                 let data = documentSnapshot.data()
                                                 if let url = data!["picURL"] as? String{
                                                     if self.potentialFriends!.contains([userEmail as! String, username as! String, url]) {
-                                                       
+                                                        
                                                     }
                                                     
                                                     else {
                                                         self.potentialFriends!.append([userEmail as! String, username as! String, url])
                                                         self.collectionView.reloadData()
                                                         print(self.potentialFriends)
-
+                                                        
                                                     }
                                                     
                                                 }
@@ -84,7 +90,7 @@ class AddFriendsTableViewCell: UITableViewCell{
                             }
                             
                         }
-//                        self.collectionView.reloadData()
+                        //                        self.collectionView.reloadData()
                     }
                     
                 }
@@ -94,8 +100,8 @@ class AddFriendsTableViewCell: UITableViewCell{
         
         
     }
-
-
+    
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -112,27 +118,37 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if potentialFriends == [["","",""]] || potentialFriends == [] {
+            emptyCollectionViewLabel.isHidden = false
+            collectionView.isHidden = true
+        }
+        else {
+            emptyCollectionViewLabel.isHidden = true
+            collectionView.isHidden = false
+        }
         return potentialFriends!.count
-//        return users!.count
+        //        return users!.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddFriendsCollectionViewCell", for: indexPath) as! AddFriendsCollectionViewCell
         
         cell.parentCell = self
-//        cell.profilePic.contentMode = .scaleAspectFit
+        //        cell.profilePic.contentMode = .scaleAspectFit
         
-//        print(potentialFriends![indexPath.row][0])
+        print("Row: \(indexPath.row) \(potentialFriends![indexPath.row][0]) \(potentialFriends![indexPath.row][1]) \(potentialFriends![indexPath.row][2])")
         cell.email = potentialFriends![indexPath.row][0]
         cell.userEmail.text = potentialFriends![indexPath.row][1]
-       
+        cell.picURL = potentialFriends![indexPath.row][2]
+
         //Get Profile Pic
         DispatchQueue.main.async {
             cell.profilePic.loadAndCacheImage(urlString: self.potentialFriends![indexPath.row][2])
-
+            
         }
-
-
+        
+        
         
         return cell
     }
@@ -143,10 +159,10 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
         let addFriendsCell = collectionView.cellForItem(at: indexPath)! as! AddFriendsCollectionViewCell
         
         addFriendsCell.setUpProfile()
-
+        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
+    
 }

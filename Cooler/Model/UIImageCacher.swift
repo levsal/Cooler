@@ -10,25 +10,9 @@ import FirebaseStorage
 import Foundation
 import UIKit
 
-let imageCache = NSCache<NSString, UIImage>()
+let imageCache = NSCache <NSString, UIImage>()
 
-extension UIImageView : NSDiscardableContent{
-    public func beginContentAccess() -> Bool {
-        return true
-    }
-    
-    public func endContentAccess() {
-        
-    }
-    
-    public func discardContentIfPossible() {
-        
-    }
-    
-    public func isContentDiscarded() -> Bool {
-        return false
-    }
-    
+extension UIImageView {
     
     func loadAndCacheImage(urlString: String){
         
@@ -39,9 +23,8 @@ extension UIImageView : NSDiscardableContent{
             return
         }
         
-        print("Fetching image for first time")
         
-        if let url = URL(string: urlString) {
+        else if let url = URL(string: urlString) {
             URLSession.shared.dataTask(with: url) { (data, _, error) in
                 if error != nil {
                     print(error!)

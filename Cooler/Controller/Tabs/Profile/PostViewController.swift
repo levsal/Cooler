@@ -17,7 +17,8 @@ class PostViewController: UIViewController {
     var delegate: ProfileViewController!
     
     var categories = ["Album", "Movie", "TV Show", "Book"]
-    var categoryColors = [#colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1), #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)]
+
+    var categoryColors = [#colorLiteral(red: 0.7195122838, green: 0.7771759033, blue: 0.9829060435, alpha: 1), #colorLiteral(red: 0.9840890765, green: 0.9478709102, blue: 0.5600411892, alpha: 1), #colorLiteral(red: 0.7062328458, green: 0.9582253098, blue: 0.6986720562, alpha: 1), #colorLiteral(red: 0.9942241311, green: 0.751460135, blue: 0.7323454618, alpha: 1)]
     
     var selectedCategory : String?
     
@@ -65,8 +66,8 @@ class PostViewController: UIViewController {
         blurbTextView.layer.borderWidth = 1
         blurbTextView.layer.borderColor = UIColor.black.cgColor
         
-       
-        
+
+
         //        postTextView.layer.cornerRadius = postTextView.layer.frame.width/40
     }
     
@@ -190,7 +191,18 @@ extension PostViewController: UITextViewDelegate{
     
     extension PostViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         func numberOfComponents(in pickerView: UIPickerView) -> Int {
+            
             return 1
+        }
+        
+        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+            if pickerView == categoryPicker{
+                postTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
+                creatorTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
+                blurbTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
+            }
+
+
         }
         
         func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -216,6 +228,9 @@ extension PostViewController: UITextViewDelegate{
         }
         
         func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+            
+            
+            
             var pickerLabel = view as? UILabel
             if (pickerLabel == nil)
             {

@@ -11,6 +11,7 @@ import UIKit
 class AddFriendsCollectionViewCell: UICollectionViewCell {
     
     var email = ""
+    var picURL = ""
 
     @IBOutlet weak var profilePic: UIImageView!
     
@@ -19,7 +20,6 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
     weak var parentCell : AddFriendsTableViewCell?
     
     let profileVC: ProfileViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,7 +32,7 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
         print(profilePic.frame.width)
 
 //        profilePic.layer.borderWidth = 2
-        profilePic.layer.cornerRadius = profilePic.frame.height/2
+//        profilePic.layer.cornerRadius = profilePic.frame.height/2
         
 
     }
@@ -40,11 +40,13 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
 
     func setUpProfile() {
         profileVC.isHost = false
+        profileVC.picFromCell = true
         profileVC.email = email
 //        profileVC.getProfilePic()
         profileVC.loadProfilePage(email: email)
+        profileVC.picURL = picURL
         
-        parentCell?.parentVC!.present(profileVC, animated: true)
+        parentCell?.parentFeedVC!.present(profileVC, animated: true)
                 profileVC.addFriendButton.isHidden = false
         profileVC.loadPosts(from: profileVC.selectedCategories)
 

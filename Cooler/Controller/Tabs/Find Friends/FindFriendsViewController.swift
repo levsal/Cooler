@@ -20,6 +20,7 @@ class FindFriendsViewController: UIViewController {
     var segueEmail = ""
     var segueName = ""
     
+    @IBOutlet weak var emptyTableViewLabel: UILabel!
     @IBOutlet weak var usersSearchBar: UISearchBar!
     
     @IBOutlet weak var usersTableView: PositionCorrectingTableView!
@@ -42,7 +43,7 @@ class FindFriendsViewController: UIViewController {
     func getFriends() {
         
         db.collection("\(Auth.auth().currentUser!.email!)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
-            self.friends = []
+            self.existingFriends = []
             
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
@@ -52,6 +53,7 @@ class FindFriendsViewController: UIViewController {
                         let data = doc.data()
                         if let friendEmail = data["email"], let friendName = data["name"] {
                             self.existingFriends.append(Friend(email: friendEmail as? String, name: friendName as? String))
+                            self.usersTableView.reloadData()
                         }
                     }
                 }
@@ -116,7 +118,7 @@ extension FindFriendsViewController : UISearchBarDelegate {
             for friend in existingFriends {
                 if segueEmail == friend.email{
                     print("Googoogaga")
-//                    profileVC.addFriendButton.setTitle("Remove Friend", for: .normal)
+                    profileVC.friendStatusButton = "Remove Friend"
                 }
             }
             profileVC.isHost = false
@@ -133,6 +135,14 @@ extension FindFriendsViewController : UISearchBarDelegate {
 extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if friends.count == 0 {
+            emptyTableViewLabel.isHidden = false
+            usersTableView.isHidden = true
+        }
+        else {
+            emptyTableViewLabel.isHidden = true
+            usersTableView.isHidden = false
+        }
         return friends.count
     }
     
@@ -142,9 +152,12 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
 
         cell.parentFindFriendsVC = self
         cell.name.text = friends[indexPath.row].name
-        if friends[indexPath.row].picURL != nil && ((friends[indexPath.row].picURL?.contains(friends[indexPath.row].email!)) == true) {
-            cell.profilePic.loadAndCacheImage(urlString: (friends[indexPath.row].picURL)!)
 
+        if friends[indexPath.row].picURL != nil {
+            cell.profilePic.loadAndCacheImage(urlString: (friends[indexPath.row].picURL)!)
+        }
+        else {
+            cell.profilePic.image = UIImage(systemName: "person.fill")
         }
         
         return cell

@@ -22,6 +22,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     var parentVC : AddFriendsCollectionViewCell?
     
+    @IBOutlet weak var emptyTableViewLabel: UILabel!
+    
     @IBOutlet weak var profilePic: UIImageView!
     
     @IBOutlet weak var username: UILabel!
@@ -35,6 +37,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     var signOutButtonTitle = "Sign Out"
     
     @IBOutlet weak var addFriendButton: UIButton!
+    var friendStatusButton : String = "Add Friend"
     
     @IBOutlet weak var friendsCount: UIButton!
     var friendsCountValue = ""
@@ -58,6 +61,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     var isHost : Bool = true
     var resetSelecteds = true
+    var picFromCell = false
     
     var posts: [Post] = []
     var friends : [String] = []
@@ -69,8 +73,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addFriendButton.setTitle(friendStatusButton, for: .normal)
         
-
+        
         //Populate Selected Categories with User's Categories, Minus the Pluralization
         for category in categories {
             selectedCategories.append(String(category.dropLast()))
@@ -95,26 +100,40 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             loadProfilePage(email: email)
         }
         loadPosts(from: selectedCategories)
+        
+//        Get Profile Pic
+        if !picFromCell {
+            self.db.collection("Users").document(self.email).addSnapshotListener { (docSnapshot, error) in
+            if let e = error{
+                print("Error fetching User doc, \(e)")
+            }
+            else {
+                if let documentSnapshot = docSnapshot {
+                    let data = documentSnapshot.data()
+                    if let url = data?["picURL"] {
+                        self.picURL = url as! String
 
-        //Get Profile Pic
-        self.db.collection("Users").document(self.email).addSnapshotListener { (docSnapshot, error) in
-            if let documentSnapshot = docSnapshot {
-                let data = documentSnapshot.data()
-                if let url = data?["picURL"] {
-                    self.picURL = url as! String
-                    
-                    self.profilePic.loadAndCacheImage(urlString: self.picURL)
+                        self.profilePic.loadAndCacheImage(urlString: self.picURL)
+                    }
+                    else {
+                        self.picURL = "DISTORTO"
+                    }
                 }
             }
         }
+            
 
+
+        }
+        
+        
         categoryCollectionView.dataSource = self
         categoryCollectionView.delegate = self
         postTableView?.dataSource = self
         postTableView.delegate = self
         postTableView.separatorColor = UIColor.clear
         postVC.delegate = self
-}
+    }
     func loadProfilePage(email : String){
         getName(user: email)
         getFriends(of: email)
@@ -164,7 +183,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     @IBAction func postButtonPressed(_ sender: UIBarButtonItem) {
         if postButton.title != "" {
             present(postVC, animated: true)
-
+            
         }
     }
     
@@ -172,7 +191,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         db.collection("\(email)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.posts = []
-//            print(self.posts)
+            //            print(self.posts)
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
             } else {
@@ -221,7 +240,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         db.collection("\(email)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.friends = []
-            
+
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
             } else {
@@ -229,7 +248,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                     
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let friend = data["email"] {
+                        if let friend = data["email"]
+                        {
                             self.friends.append(friend as! String)
                         }
                     }
@@ -248,24 +268,48 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     
     @IBAction func addFriendPressed(_ sender: UIButton) {
+        
+        if sender.titleLabel!.text == "Add Friend" {
+            
+            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).setData(["date" : Date().timeIntervalSince1970, "email": email, "name": usernameString])
 
-        print("Current user is \(Auth.auth().currentUser!.email!)")
-        print("Adding friend \(username.text!)")
-        
-        db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).setData(["date" : Date().timeIntervalSince1970, "email": email, "name": usernameString])
-        let index = parentVC?.parentCell?.potentialFriends?.firstIndex(of: [email, usernameString, picURL])
-        parentVC?.parentCell?.potentialFriends?.remove(at: index!)
-//        parentVC?.parentCell?.fetchUsers()
-        parentVC?.parentCell?.collectionView.reloadData()
-        
-//        parentVC?.parentCell?.potentialFriends = []
-//        parentVC?.parentCell?.fetchUsers()
-//        parentVC?.parentCell?.collectionView.reloadData()
-        print(parentVC?.parentCell?.potentialFriends)
-        
-        self.dismiss(animated: true) {
+            
+            print([email,usernameString, picURL])
+            print("Potential Friends Are \(String(describing: parentVC?.parentCell?.potentialFriends!))")
+
+            parentVC?.parentCell?.collectionView.reloadData()
+
+            parentVC?.parentCell?.parentFeedVC?.feedTableView.reloadData()
+            let index = parentVC?.parentCell?.potentialFriends!.firstIndex(of: [email, usernameString, picURL])
+            print("Index is \(String(describing: index))")
+            parentVC?.parentCell?.potentialFriends?.remove(at: index!)
+
+
+            
+            if parentVC == nil {
+                sender.setTitle("Remove Friend", for: .normal)
+            }
+        }
+        else if sender.titleLabel!.text == "Remove Friend" {
+            parentVC?.parentCell?.parentFeedVC?.feedTableView.reloadData()
+            parentVC?.parentCell?.collectionView.reloadData()
+            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).delete()
+            
+            print("Potential Friends Are \(String(describing: parentVC?.parentCell?.potentialFriends!))")
+
+            if parentVC == nil{
+                sender.setTitle("Add Friend", for: .normal)
+                
+            }
             
         }
+        
+        if parentVC != nil {
+            self.dismiss(animated: true) {
+                
+            }
+        }
+        
     }
     
     //MARK: - Image Picker Controller
@@ -285,30 +329,33 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         guard let image = info[.editedImage] as? UIImage else {
             return
         }
-        self.profilePic.image = image
-
+        
+        
         let storageRef = Storage.storage().reference().child("\(( Auth.auth().currentUser?.email!)!)_ProfilePic")
         
         if let uploadData = image.pngData(){
             storageRef.putData(uploadData)
-            
-            storageRef.downloadURL { (url, error) in
-                guard let url = url, error == nil else{
-                   print("Gotta return")
-                    return
+            DispatchQueue.main.async {
+                storageRef.downloadURL { (url, error) in
+                    guard let url = url, error == nil else{
+                        print("Gotta return")
+                        return
+                    }
+                    let urlString = url.absoluteString
+                    self.db.collection("Users").document((Auth.auth().currentUser?.email)!).updateData(["picURL" : urlString])
                 }
-                let urlString = url.absoluteString
-                self.db.collection("Users").document((Auth.auth().currentUser?.email)!).updateData(["picURL" : urlString])
+                
+                self.profilePic.image = image
             }
-        
-        
-        picker.dismiss(animated: true) {
+         
             
+            picker.dismiss(animated: true) {
+                
+            }
+            print(image)
         }
-        print(image)
     }
-}
-
+    
     //MARK: - Sign Out
     
     @IBAction func signOutPressed(_ sender: UIBarButtonItem) {
@@ -382,31 +429,27 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
             attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
             categoryCell.category.attributedText = attributedString
             
-            //Make Plural Category Header Singular
+            //Make Pluralized Category Header Singular
             let genre = (categoryCell.category.text!).dropLast()
             selectedCategories = [String(genre)]
             
             //Reload Posts Based on Selected Category/Lack of Selection
-            //            print(selectedCategories)
             loadPosts(from: (selectedCategories))
             categoryCell.underlined = true
         }
         else {
+            
             //Underline Category
             attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 0, range: NSRange.init(location: 0, length: attributedString.length))
             categoryCell.category.attributedText = attributedString
             
-            //            let exitingGenre = (sender.titleLabel?.text!)!.dropLast()
             selectedCategories = []
             for category in categories {
                 selectedCategories.append(String(category.dropLast()))
             }
-            //            print(selectedCategories)
-            //          parentVC!.selectedCategories.filter { $0 != exitingGenre }
-            
+
             loadPosts(from: (selectedCategories))
             categoryCell.underlined = false
-            //            parentVC?.categoryCollectionView.reloadData()
         }
         
     }
@@ -470,6 +513,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if posts.count == 0 {
+            postTableView.isHidden = true
+            emptyTableViewLabel.isHidden = false
+        }
+        else{
+            emptyTableViewLabel.isHidden = true
+            postTableView.isHidden = false
+
+        }
         return posts.count + 2
     }
     
