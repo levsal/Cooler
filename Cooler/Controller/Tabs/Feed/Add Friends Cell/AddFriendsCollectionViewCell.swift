@@ -25,14 +25,14 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         profileVC.parentVC = self
         
-        profilePic.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        profilePic.widthAnchor.constraint(equalToConstant: 70).isActive = true
-
-        print(profilePic.frame.height)
-        print(profilePic.frame.width)
-
-//        profilePic.layer.borderWidth = 2
-//        profilePic.layer.cornerRadius = profilePic.frame.height/2
+//        profilePic.heightAnchor.constraint(equalToConstant: 70).isActive = true
+//        profilePic.widthAnchor.constraint(equalToConstant: 70).isActive = true
+//
+//        print(profilePic.frame.height)
+//        print(profilePic.frame.width)
+//
+////        profilePic.layer.borderWidth = 2
+////        profilePic.layer.cornerRadius = profilePic.frame.height/2
         
 
     }

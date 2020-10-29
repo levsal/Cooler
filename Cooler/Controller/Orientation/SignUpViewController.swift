@@ -41,8 +41,8 @@ class SignUpViewController: UIViewController {
                             self.welcomeMessage.text = e.localizedDescription
                             print(e.localizedDescription)
                         } else {
-                            //Navigate to the chat
 
+                            
                             self.db.collection("Users").document((Auth.auth().currentUser?.email!)!).setData(["email": "\((Auth.auth().currentUser?.email)!)", "date": -Date().timeIntervalSince1970, "name" : name])
                             self.performSegue(withIdentifier: "signUpToTabs", sender: self)
                         }

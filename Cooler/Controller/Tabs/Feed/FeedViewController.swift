@@ -237,7 +237,14 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
 //            print[posts[section-1].category])
             
             if let image = categoryIcons[posts[section-1].category]! {
+
+                cell.profilePic.widthAnchor.constraint(equalToConstant: 35).isActive = true
+                print(cell.profilePic.frame.width)
+                print(cell.profilePic.frame.height)
+
+                cell.profilePic.layer.cornerRadius = 5
                 cell.categoryIcon.image = image
+
             }
             
             //Color Corresponding to Category

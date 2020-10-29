@@ -15,11 +15,7 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        db.clearPersistence { (error) in
-//
-//        }
-//        print(Auth.auth().currentUser?.email)
-        // Do any additional setup after loading the view.
+
     }
     
     //MARK: - Segues

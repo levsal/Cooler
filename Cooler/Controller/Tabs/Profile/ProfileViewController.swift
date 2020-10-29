@@ -28,8 +28,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     @IBOutlet weak var username: UILabel!
     
+    @IBOutlet weak var bioTextField: UITextField!
+    
     var email = ""
     var usernameString = ""
+    var bio = ""
     var picURL = ""
     
     @IBOutlet weak var signOutButton: UIBarButtonItem!
@@ -62,6 +65,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     var isHost : Bool = true
     var resetSelecteds = true
     var picFromCell = false
+    var firstLoad = true
     
     var posts: [Post] = []
     var friends : [String] = []
@@ -92,6 +96,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         signOutButton.title = signOutButtonTitle
         username.text = usernameString
+        bioTextField.text = bio
         postsCount.setTitle(postsCountValue, for: .normal)
         friendsCount.setTitle(friendsCountValue, for: .normal)
         
@@ -131,6 +136,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         categoryCollectionView.delegate = self
         postTableView?.dataSource = self
         postTableView.delegate = self
+        
+        if isHost{
+            bioTextField.delegate = self
+            bioTextField.isUserInteractionEnabled = true
+        }
+        else {
+            bioTextField.isUserInteractionEnabled = false
+        }
+        
+        
         postTableView.separatorColor = UIColor.clear
         postVC.delegate = self
     }
@@ -152,6 +167,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                                 self.usernameString = name
                                 if let uName = self.username {
                                     uName.text = name
+                                }
+                                if let bioText = data["bio"] as? String{
+                                    print(bioText)
+                                    self.bio = bioText
+                                    if let bioField = self.bioTextField {
+                                        bioField.text = bioText
+                                    }
                                 }
                             }
                         }
@@ -513,7 +535,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if posts.count == 0 {
+        
+        if posts.count == 0 && firstLoad == false{
             postTableView.isHidden = true
             emptyTableViewLabel.isHidden = false
         }
@@ -522,6 +545,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             postTableView.isHidden = false
 
         }
+        firstLoad = false
         return posts.count + 2
     }
     
@@ -562,9 +586,20 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+extension ProfileViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        bioTextField.resignFirstResponder()
+    }
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        db.collection("Users").document(email).updateData(["bio" : bioTextField.text!])
+    }
+}
+
 extension ProfileViewController: PopoverDelegate {
     func appendToArray(post: Post) {
         posts.append(post)
     }
 }
+
+
 

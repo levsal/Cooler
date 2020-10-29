@@ -145,8 +145,9 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
         //Get Profile Pic
         DispatchQueue.main.async {
             cell.profilePic.loadAndCacheImage(urlString: self.potentialFriends![indexPath.row][2])
-            
         }
+        cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
+
         
         
         

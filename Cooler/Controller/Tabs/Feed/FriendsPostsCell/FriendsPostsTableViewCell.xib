@@ -64,24 +64,17 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxo-MQ-15l" userLabel="ProfileTrigger">
-                        <rect key="frame" x="5" y="3" width="135" height="35"/>
+                        <rect key="frame" x="5" y="3" width="119" height="35"/>
                     </button>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="a9M-nF-N9o">
-                        <rect key="frame" x="5" y="3" width="135" height="35"/>
+                        <rect key="frame" x="5" y="3" width="119" height="35"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="89s-fs-R99">
-                                <rect key="frame" x="0.0" y="1.5" width="35" height="32.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" priority="750" constant="35" id="Vdl-NY-KAN"/>
-                                    <constraint firstAttribute="height" priority="750" constant="35" id="ZVc-0v-qKb"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="1.5" width="19" height="32.5"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAG-qZ-3nV" userLabel="Username">
-                                <rect key="frame" x="43" y="0.0" width="92" height="35"/>
+                                <rect key="frame" x="27" y="0.0" width="92" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="750" constant="35" id="UyK-Eu-KIw"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="13"/>
                                 <state key="normal" title="Name Johnson">
                                     <color key="titleColor" red="0.2475045397" green="0.57609633979999997" blue="0.1226872941" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -91,6 +84,11 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="750" constant="35" id="fyc-Ls-wck"/>
+                            <constraint firstItem="lAG-qZ-3nV" firstAttribute="top" secondItem="a9M-nF-N9o" secondAttribute="top" id="lFQ-Ru-HaU"/>
+                            <constraint firstItem="89s-fs-R99" firstAttribute="top" secondItem="a9M-nF-N9o" secondAttribute="top" id="o9r-Yk-PWk"/>
+                        </constraints>
                     </stackView>
                     <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZN3-GR-Qfq">
                         <rect key="frame" x="285" y="28" width="30" height="10"/>

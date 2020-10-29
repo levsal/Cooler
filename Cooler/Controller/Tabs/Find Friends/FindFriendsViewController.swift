@@ -85,6 +85,7 @@ extension FindFriendsViewController : UISearchBarDelegate {
                             if name.count >= textLength && textLength > 0 {
                                 
                                 let picURL = data["picURL"] as? String
+                                let bio = data["bio"] as? String
 
                                 let index = name.index(name.startIndex, offsetBy: textLength)
                                 let nameSnippet = name.prefix(upTo: index)
@@ -93,7 +94,8 @@ extension FindFriendsViewController : UISearchBarDelegate {
                                     self.friends.append(Friend(email: email,
                                                                name: name,
                                                                date: date,
-                                                               picURL: picURL))
+                                                               picURL: picURL,
+                                                               bio: bio))
                                     print(nameSnippet)
                                 }
                             }
@@ -159,7 +161,13 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
         else {
             cell.profilePic.image = UIImage(systemName: "person.fill")
         }
-        
+        if friends[indexPath.row].bio != nil{
+            cell.bio.text = friends[indexPath.row].bio
+        }
+        else {
+            cell.bio.text = ""
+        }
+
         return cell
     }
     
