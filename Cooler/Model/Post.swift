@@ -12,6 +12,7 @@ import UIKit
 struct Post: Equatable {
     var userEmail : String?
     var username: String?
+    var profilePicURL : String?
     var date : Double
     var dateString : String
     var postText : String

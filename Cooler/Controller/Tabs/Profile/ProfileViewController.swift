@@ -41,6 +41,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     @IBOutlet weak var addFriendButton: UIButton!
     var friendStatusButton : String = "Add Friend"
+    var friendStatusColor : UIColor = #colorLiteral(red: 0, green: 0.5851971507, blue: 0, alpha: 1)
     
     @IBOutlet weak var friendsCount: UIButton!
     var friendsCountValue = ""
@@ -66,6 +67,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     var resetSelecteds = true
     var picFromCell = false
     var firstLoad = true
+    var firstPicLoad = true
     
     var posts: [Post] = []
     var friends : [String] = []
@@ -78,7 +80,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     override func viewDidLoad() {
         super.viewDidLoad()
         addFriendButton.setTitle(friendStatusButton, for: .normal)
-        
+        addFriendButton.setTitleColor(friendStatusColor, for: .normal)
         
         //Populate Selected Categories with User's Categories, Minus the Pluralization
         for category in categories {
@@ -106,13 +108,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         }
         loadPosts(from: selectedCategories)
         
-//        Get Profile Pic
+//        Get Profile Pic if the pick isnt being passed from a selected Post cell
         if !picFromCell {
             self.db.collection("Users").document(self.email).addSnapshotListener { (docSnapshot, error) in
             if let e = error{
                 print("Error fetching User doc, \(e)")
             }
-            else {
+            else if self.firstPicLoad {
                 if let documentSnapshot = docSnapshot {
                     let data = documentSnapshot.data()
                     if let url = data?["picURL"] {
@@ -124,6 +126,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                         self.picURL = "DISTORTO"
                     }
                 }
+                self.firstPicLoad = false
             }
         }
             
@@ -207,6 +210,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             present(postVC, animated: true)
             
         }
+    }
+    
+    @IBAction func friendsButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "ProfileToFindFriends", sender: self)
     }
     
     func loadPosts(from genres: [String]){
@@ -293,7 +300,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         if sender.titleLabel!.text == "Add Friend" {
             
-            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).setData(["date" : Date().timeIntervalSince1970, "email": email, "name": usernameString])
+            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).setData(["date" : Date().timeIntervalSince1970, "email": email, "name": usernameString, "picURL" : picURL])
 
             
             print([email,usernameString, picURL])
@@ -310,6 +317,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             
             if parentVC == nil {
                 sender.setTitle("Remove Friend", for: .normal)
+                sender.setTitleColor(#colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1), for: .normal)
             }
         }
         else if sender.titleLabel!.text == "Remove Friend" {
@@ -321,7 +329,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
 
             if parentVC == nil{
                 sender.setTitle("Add Friend", for: .normal)
-                
+                sender.setTitleColor(#colorLiteral(red: 0, green: 0.5851971507, blue: 0, alpha: 1), for: .normal)
+
             }
             
         }
@@ -341,7 +350,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             let pickerController = UIImagePickerController()
             pickerController.delegate = self
             pickerController.allowsEditing = true
-            pickerController.mediaTypes = ["public.image", "public.movie"]
+            pickerController.mediaTypes = ["public.image"]
             pickerController.sourceType = .photoLibrary
             present(pickerController, animated: true)
         }
@@ -352,12 +361,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             return
         }
         
+        let storageRef = Storage.storage().reference().child("\((Auth.auth().currentUser?.email!)!)_ProfilePic")
         
-        let storageRef = Storage.storage().reference().child("\(( Auth.auth().currentUser?.email!)!)_ProfilePic")
-        
-        if let uploadData = image.pngData(){
-            storageRef.putData(uploadData)
+        if let uploadData = image.jpegData(compressionQuality:0.1){
             DispatchQueue.main.async {
+                storageRef.putData(uploadData)
+
                 storageRef.downloadURL { (url, error) in
                     guard let url = url, error == nil else{
                         print("Gotta return")
@@ -367,10 +376,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                     self.db.collection("Users").document((Auth.auth().currentUser?.email)!).updateData(["picURL" : urlString])
                 }
                 
-                self.profilePic.image = image
             }
          
-            
+            self.profilePic.image = image
+
             picker.dismiss(animated: true) {
                 
             }
@@ -494,10 +503,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 90
     }
-    
-    //    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    //        return 0
-    //    }
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if section <= posts.count - 1 {
@@ -524,7 +530,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             if isHost{
                 cell.editButton.isHidden = false
             }
+            
             cell.userEmail.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            cell.profilePic.heightAnchor.constraint(equalToConstant: 0).isActive = true
+
             
             return cell
         }
@@ -576,9 +585,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailView", for: indexPath) as! PostDetailView
         cell.blurbTextView.text = posts[indexPath.section].blurb
         cell.ratingValue.text = "\(posts[indexPath.section].rating)"
-        
+        cell.profileVC = self
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120

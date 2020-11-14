@@ -21,24 +21,28 @@ class FeedViewController: UIViewController {
     
     var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), "Movie": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1), "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
     var categoryColorsSingularPale = ["Album": #colorLiteral(red: 0.7195122838, green: 0.7771759033, blue: 0.9829060435, alpha: 1), "Movie": #colorLiteral(red: 0.8376982212, green: 0.8472841382, blue: 0.4527434111, alpha: 1), "TV Show": #colorLiteral(red: 0.6429418921, green: 0.8634710908, blue: 0.6248642206, alpha: 1), "Book": #colorLiteral(red: 0.886295557, green: 0.6721803546, blue: 0.6509570479, alpha: 1), "N/A": #colorLiteral(red: 0.3980969191, green: 0.4254524708, blue: 0.4201924801, alpha: 1)]
-
+    
     var categoryIcons = ["Album": UIImage(systemName: "music.note"), "Movie": UIImage(systemName: "film"), "TV Show": UIImage(systemName: "tv"), "Book": UIImage(systemName: "book"), "N/A": UIImage(systemName: "scribble")]
     
     var postOpen : [String: Bool] = [:]
     
     var segueFriendEmail : String?
-    
         
     @IBOutlet weak var feedTableView: PositionCorrectingTableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        db.clearPersistence { (error) in
-//            if let e = error {
-//                print("Error clearing persistent storage, \(e)")
-//            }
-//        }
+ 
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.font: UIFont(name: "OpenSans-Bold", size: 24.0)!,
+             NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0.5851971507, blue: 0, alpha: 1)]
+
+    //        self.navigationController!.navigationBar.layer.shadowColor = UIColor.black.cgColor
+//        self.navigationController!.navigationBar.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+//        self.navigationController!.navigationBar.layer.shadowRadius = 4.0
+//        self.navigationController!.navigationBar.layer.shadowOpacity = 1.0
+
         
         feedTableView.register(UINib(nibName: "AddFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "AddFriendsTableViewCell")
         feedTableView.register(UINib(nibName: "FriendsPostsTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendsPostsTableViewCell")
@@ -58,24 +62,23 @@ class FeedViewController: UIViewController {
         }
     }
     
-
+    
     func getFriends(){
         db.collection("\(Auth.auth().currentUser!.email!)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.feedTableView.reloadData()
             self.friends = []
-            print("Getting friends")
-
+            
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
             } else {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let friendEmail = data["email"], let friendName = data["name"] {
-                            self.friends.append([friendEmail as! String, friendName as! String])
+                        if let friendEmail = data["email"], let friendName = data["name"], let picURL = data["picURL"] {
+                            self.friends.append([friendEmail as! String, friendName as! String, picURL as! String])
                         }
                     }
-                    print(self.friends)
+
                     self.getPosts()
                 }
             }
@@ -86,13 +89,13 @@ class FeedViewController: UIViewController {
     @IBAction func button(_ sender: UIButton) {
         getPosts()
     }
-   
+    
     func getPosts() {
-        print("Getting posts")
+        //        print("Getting posts")
         self.posts = []
         
         self.feedTableView.reloadData()
-
+        
         for friend in friends {
             db.collection("\(friend[0])_Posts").order(by: "date").addSnapshotListener{ [self] (querySnapshot, error) in
                 
@@ -101,10 +104,9 @@ class FeedViewController: UIViewController {
                 } else {
                     if let snapshotDocuments = querySnapshot?.documents {
                         
-                        //Remove posts by relevant friend
+                        //Remove posts by relevant friend before reloading them
                         for post in self.posts{
                             if post.username == friend[1]{
-                                print("Post's user is friend")
                                 let index = self.posts.firstIndex(of: post)
                                 self.posts.remove(at: index!)
                             }
@@ -119,28 +121,54 @@ class FeedViewController: UIViewController {
                                let creator = data["creator"],
                                let blurb = data["blurb"],
                                let givenRating = data["rating"] {
-                                
-                                let post = Post(userEmail: friend[0], username: friend[1], date: (date as! Double), dateString: dateString as! String, postText: (text as! String), category: category as! String, creator: creator as! String, blurb: blurb as! String, rating: givenRating as! Double)
-                                
+                                let post = Post(userEmail: friend[0],
+                                                username: friend[1],
+                                                profilePicURL: friend[2],
+                                                date: (date as! Double),
+                                                dateString: dateString as! String,
+                                                postText: (text as! String),
+                                                category: category as! String,
+                                                creator: creator as! String, blurb: blurb as! String, rating: givenRating as! Double)
                                 self.posts.append(post)
                                 self.assignValuesToPostOpen()
+
+                                self.feedTableView.reloadData()
+//                               db.collection("Users").document(friend[0]).addSnapshotListener { (docSnapshot, error) in
+//                                    if let e = error {
+//                                        print("Error finding user document, \(e)")
+//                                    }
+//                                    else {
+//                                        if let documentSnapshot = docSnapshot {
+//                                            let data = documentSnapshot.data()
+//                                            if let url = data!["picURL"]{
+//
+//                                                print("Looks like we made it")
+//                                                print(post)
+//
+//
+//                                            }
+//                                        }
+//                                    }
+//
+                                
+//                                print("LOOK HOW FAR")
+//                                print(posts)
+//                                
+//                                self.assignValuesToPostOpen()
                                 
                             }
                         }
                         self.posts = self.posts.sorted { $0.date < $1.date }
-//                        self.feedTableView.reloadData()
                         
                     }
                 }
-                self.feedTableView.reloadData()
-
+//                self.feedTableView.reloadData()
+                
             }
-//            self.feedTableView.reloadData()
-
+            
             
         }
-//        self.feedTableView.reloadData()
-
+        
         
         
         
@@ -158,8 +186,10 @@ class FeedViewController: UIViewController {
             
             for friend in friends {
                 if segueFriendEmail == friend[0]{
-                    print("Googoogaga")
                     profileVC.friendStatusButton = "Remove Friend"
+                    profileVC.friendStatusColor = #colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1)
+
+
                 }
             }
             
@@ -183,14 +213,14 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         return 130
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0
-        }
-        else {
-            return 5
-        }
-    }
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        if section == 0 {
+//            return 0
+//        }
+//        else {
+//            return 5
+//        }
+//    }
     
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -199,26 +229,33 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
             
         }
-
+        
         else if section <= posts.count{
             let cell = Bundle.main.loadNibNamed("FriendsPostsTableViewCell", owner: self, options: nil)?.first as! FriendsPostsTableViewCell
             
             cell.parentFeedVC = self
             
-            let userEmail = posts[section-1].userEmail
-            db.collection("Users").document(userEmail!).addSnapshotListener { (docSnapshot, error) in
-                if let e = error {
-                    print("Error finding user document, \(e)")
-                }
-                else {
-                    if let documentSnapshot = docSnapshot {
-                        let data = documentSnapshot.data()
-                        if let url = data!["picURL"]{
-                            cell.profilePic.loadAndCacheImage(urlString: url as! String)
-                        }
-                    }
-                }
-            }
+            
+            
+            cell.profilePic.loadAndCacheImage(urlString: posts[section-1].profilePicURL!)
+            
+//            let userEmail = posts[section-1].userEmail
+//            DispatchQueue.main.async {
+//                self.db.collection("Users").document(userEmail!).addSnapshotListener { (docSnapshot, error) in
+//                    if let e = error {
+//                        print("Error finding user document, \(e)")
+//                    }
+//                    else {
+//                        if let documentSnapshot = docSnapshot {
+//                            let data = documentSnapshot.data()
+//                            if let url = data!["picURL"]{
+//                                cell.profilePic.loadAndCacheImage(urlString: url as! String)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+            
             
             let username = posts[section-1].username
             cell.userEmail!.setTitle(username, for: .normal)
@@ -233,24 +270,28 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             cell.dateString.text = dateString
             
             cell.email = posts[section-1].userEmail
-//            print(posts)
-//            print[posts[section-1].category])
+            //            print(posts)
+            //            print[posts[section-1].category])
             
             if let image = categoryIcons[posts[section-1].category]! {
-
-                cell.profilePic.widthAnchor.constraint(equalToConstant: 35).isActive = true
-                print(cell.profilePic.frame.width)
-                print(cell.profilePic.frame.height)
-
-                cell.profilePic.layer.cornerRadius = 5
+                
+                
                 cell.categoryIcon.image = image
+            }
+            cell.profilePic.widthAnchor.constraint(equalToConstant: 35).isActive = true
+            cell.profilePic.heightAnchor.constraint(equalToConstant: 35).isActive = true
 
+            cell.profilePic.layer.cornerRadius = 5
+//            cell.profilePic.layer.borderWidth = 1
+            
+            DispatchQueue.main.async {
+                cell.profilePic.loadAndCacheImage(urlString: self.posts[section-1].profilePicURL!)
             }
             
             //Color Corresponding to Category
             cell.friendsPostTextView.backgroundColor = categoryColorsSingular[posts[section-1].category]
             cell.creatorTextView.backgroundColor = categoryColorsSingularPale[posts[section-1].category]
-
+            
             return cell
         }
         else {
@@ -296,7 +337,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-
+            
             let cell = feedTableView.dequeueReusableCell(withIdentifier: "AddFriendsTableViewCell") as! AddFriendsTableViewCell
             
             cell.parentFeedVC = self
@@ -311,9 +352,9 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = feedTableView.dequeueReusableCell(withIdentifier: "PostDetailView")! as! PostDetailView
         cell.blurbTextView.text = posts[indexPath.section-1].blurb
         cell.ratingValue.text = "\(posts[indexPath.section-1].rating)"
-
+        
         return cell
-
+        
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
@@ -321,17 +362,17 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         }
         else {
             return 120
-
+            
         }
     }
-   
+    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 120
         }
         else {
             return 120
-
+            
         }
     }
     

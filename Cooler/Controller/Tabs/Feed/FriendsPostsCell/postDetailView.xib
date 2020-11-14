@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,7 +31,6 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Fictionally speaking, this work's fictional writing is great" translatesAutoresizingMaskIntoConstraints="NO" id="hYe-Yg-GcP" userLabel="Blurb">
                                 <rect key="frame" x="0.0" y="0.0" width="244" height="123"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" name="OpenSans-SemiBoldItalic" family="Open Sans" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -54,7 +53,6 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="cpq-sZ-cIv" firstAttribute="leading" secondItem="hZQ-9b-dq0" secondAttribute="leading" id="XHB-lq-faG"/>
                                     <constraint firstAttribute="width" constant="66" id="XnN-se-Zoq"/>
@@ -66,7 +64,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="hYe-Yg-GcP" secondAttribute="bottom" id="9Ri-Ld-z2m"/>
-                            <constraint firstAttribute="height" priority="750" constant="120" id="y5D-wa-4Tp"/>
+                            <constraint firstAttribute="height" priority="750" constant="120" identifier="stackViewHeight" id="y5D-wa-4Tp"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -83,6 +81,7 @@
                 <outlet property="ratingCircle" destination="cpq-sZ-cIv" id="IOb-tu-lfo"/>
                 <outlet property="ratingValue" destination="DMZ-mh-Gc0" id="I2A-sP-c0K"/>
                 <outlet property="stackView" destination="XCe-Pp-1ys" id="JFk-d2-j68"/>
+                <outlet property="viewHeight" destination="y5D-wa-4Tp" id="J3v-ua-zcD"/>
             </connections>
             <point key="canvasLocation" x="95.652173913043484" y="113.50446428571428"/>
         </tableViewCell>
@@ -91,9 +90,6 @@
         <image name="circle" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

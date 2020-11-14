@@ -19,6 +19,8 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var editStack: UIStackView!
+    @IBOutlet weak var titleStack: UIStackView!
+    
     
     var date : Double?
     var category : String?
@@ -35,14 +37,9 @@ class FriendsPostsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         editStack.isHidden = true
         editButton.isHidden = true
+//        titleStack.layer.borderWidth = 0.8
+//        titleStack.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 
-
-
-//        editButton.isHidden = true
-       
-//        editButton.isHidden = false
-        
-//        profilePic.layer.borderWidth = 2
     }
     
     
@@ -73,7 +70,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
         }
         else if parentProfileVC?.postOpen[work!] == true{
             parentProfileVC?.postOpen[work!] = false
-            
+                        
             parentProfileVC?.postTableView.reloadData()
             parentProfileVC?.postTableView.layoutIfNeeded()
 
@@ -89,7 +86,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
         }
         else if parentFeedVC?.postOpen[work!] == true{
             parentFeedVC?.postOpen[work!] = false
-            
+                        
             parentFeedVC?.feedTableView.reloadData()
             parentFeedVC?.feedTableView.layoutIfNeeded()
             
@@ -99,6 +96,8 @@ class FriendsPostsTableViewCell: UITableViewCell {
         self.layoutIfNeeded()
         parentProfileVC?.postTableView.setContentOffset((parentProfileVC?.postTableView.offset)!, animated: false)
         parentFeedVC?.feedTableView.setContentOffset((parentFeedVC?.feedTableView.offset)!, animated: false)
+        
+        
         
     }
     @IBAction func editButtonPressed(_ sender: UIButton) {

@@ -27,5 +27,7 @@ class WelcomeViewController: UIViewController {
         performSegue(withIdentifier: "welcomeToLogIn", sender: self)
     }
     
+   
+    
 }
 

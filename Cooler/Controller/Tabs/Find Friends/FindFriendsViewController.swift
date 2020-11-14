@@ -121,6 +121,7 @@ extension FindFriendsViewController : UISearchBarDelegate {
                 if segueEmail == friend.email{
                     print("Googoogaga")
                     profileVC.friendStatusButton = "Remove Friend"
+                    profileVC.friendStatusColor = #colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1)
                 }
             }
             profileVC.isHost = false

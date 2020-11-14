@@ -14,10 +14,14 @@ class PostDetailView: UITableViewCell {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var ratingCircle: UIImageView!
     
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
+    
+    var profileVC : ProfileViewController?
+    var feedVC : FeedViewController?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-//        stackView.layer.borderWidth = 2
-//        stackView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -42,7 +42,7 @@ class AddFriendsTableViewCell: UITableViewCell{
 
         
         if let parentFriends = parentFeedVC?.friends {
-            print(parentFriends)
+//            print(parentFriends)
             
             if let blankIndex = self.potentialFriends?.firstIndex(of: ["","",""]){
                 self.potentialFriends?.remove(at: blankIndex)
@@ -60,37 +60,39 @@ class AddFriendsTableViewCell: UITableViewCell{
                                 let data = doc.data()
                                 
                                 if let userEmail = data["email"],
-                                   let username = data["name"] {
+                                   let username = data["name"],
+                                   let picURL = data["picURL"]{
                                     
-                                    if parentFriends.contains([userEmail as! String, username as! String]) || userEmail as! String == (Auth.auth().currentUser?.email)! {
-                                        //                                            print("Already handled")
+                                    if parentFriends.contains([userEmail as! String, username as! String, picURL as! String]) || self.potentialFriends!.contains([userEmail as! String, username as! String, picURL as! String]) || userEmail as! String == (Auth.auth().currentUser?.email)! {
+                                        print("Already handled")
                                     }
                                     else {
-                                        self.db.collection("Users").document(userEmail as! String).addSnapshotListener { (docSnapshot, error) in
-                                            if let documentSnapshot = docSnapshot {
-                                                let data = documentSnapshot.data()
-                                                if let url = data!["picURL"] as? String{
-                                                    if self.potentialFriends!.contains([userEmail as! String, username as! String, url]) {
-                                                        
-                                                    }
-                                                    
-                                                    else {
-                                                        self.potentialFriends!.append([userEmail as! String, username as! String, url])
-                                                        self.collectionView.reloadData()
-                                                        print(self.potentialFriends)
-                                                        
-                                                    }
-                                                    
-                                                }
-                                            }
-                                        }
+                                        self.potentialFriends!.append([userEmail as! String, username as! String, picURL as! String])
+                                        self.collectionView.reloadData()
+//                                        self.db.collection("Users").document(userEmail as! String).addSnapshotListener { (docSnapshot, error) in
+//                                            if let documentSnapshot = docSnapshot {
+//                                                let data = documentSnapshot.data()
+//                                                if let url = data!["picURL"] as? String{
+//                                                    if self.potentialFriends!.contains([userEmail as! String, username as! String, url]) {
+//                                                    }
+//
+//                                                    else {
+//                                                        self.potentialFriends!.append([userEmail as! String, username as! String, url])
+//                                                        self.collectionView.reloadData()
+//                                                        print(self.potentialFriends)
+//
+//                                                    }
+//
+//                                                }
+//                                            }
+//                                        }
+                                        
                                         
                                     }
                                 }
                             }
                             
                         }
-                        //                        self.collectionView.reloadData()
                     }
                     
                 }
@@ -124,11 +126,11 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
             collectionView.isHidden = true
         }
         else {
+//            print(potentialFriends)
             emptyCollectionViewLabel.isHidden = true
             collectionView.isHidden = false
         }
         return potentialFriends!.count
-        //        return users!.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -137,7 +139,7 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
         cell.parentCell = self
         //        cell.profilePic.contentMode = .scaleAspectFit
         
-        print("Row: \(indexPath.row) \(potentialFriends![indexPath.row][0]) \(potentialFriends![indexPath.row][1]) \(potentialFriends![indexPath.row][2])")
+//        print("Row: \(indexPath.row) \(potentialFriends![indexPath.row][0]) \(potentialFriends![indexPath.row][1]) \(potentialFriends![indexPath.row][2])")
         cell.email = potentialFriends![indexPath.row][0]
         cell.userEmail.text = potentialFriends![indexPath.row][1]
         cell.picURL = potentialFriends![indexPath.row][2]
