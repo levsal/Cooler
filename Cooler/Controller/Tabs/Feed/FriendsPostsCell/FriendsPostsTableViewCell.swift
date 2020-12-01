@@ -19,7 +19,12 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var editStack: UIStackView!
-    @IBOutlet weak var titleStack: UIStackView!
+    @IBOutlet weak var titleStack: UIStackView! 
+    @IBOutlet var userView: UIView!
+    @IBOutlet var stackHeight: NSLayoutConstraint!
+    @IBOutlet var iconOffset: NSLayoutConstraint!
+    @IBOutlet var iconHeight: NSLayoutConstraint!
+    @IBOutlet var iconWidth: NSLayoutConstraint!
     
     
     var date : Double?
@@ -37,8 +42,10 @@ class FriendsPostsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         editStack.isHidden = true
         editButton.isHidden = true
-//        titleStack.layer.borderWidth = 0.8
-//        titleStack.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        
+//        titleStack.layer.cornerRadius = 10
+//        friendsPostTextView.layer.cornerRadius = 10
+        
 
     }
     

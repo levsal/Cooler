@@ -25,7 +25,8 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         profileVC.parentVC = self
         
-//        profilePic.layer.borderWidth = 2
+        profilePic.layer.borderWidth = 1
+        profilePic.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
 
     }

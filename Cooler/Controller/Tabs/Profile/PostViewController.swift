@@ -29,6 +29,7 @@ class PostViewController: UIViewController {
     var ratingPickerDictionary : [Double : Int] = [:]
     
     @IBOutlet weak var categoryHeader: UILabel!
+    @IBOutlet weak var ratingHeader: UILabel!
     
     @IBOutlet weak var categoryPicker: UIPickerView!
     @IBOutlet weak var ratingPicker: UIPickerView!
@@ -42,9 +43,13 @@ class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let attributedString = NSMutableAttributedString.init(string: "Categories")
-        attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
-        categoryHeader.attributedText = attributedString
+        let categoryString = NSMutableAttributedString.init(string: "Category")
+        categoryString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: categoryString.length))
+        categoryHeader.attributedText = categoryString
+        
+        let ratingString = NSMutableAttributedString.init(string: "Rating")
+        ratingString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: ratingString.length))
+        ratingHeader.attributedText = ratingString
                 
         categoryPicker.dataSource = self
         categoryPicker.delegate = self
@@ -59,12 +64,12 @@ class PostViewController: UIViewController {
         creatorTextView.textColor = .lightGray
         blurbTextView.textColor = .lightGray
         
-        postTextView.layer.borderWidth = 1
-        postTextView.layer.borderColor = UIColor.black.cgColor
-        creatorTextView.layer.borderWidth = 1
-        creatorTextView.layer.borderColor = UIColor.black.cgColor
-        blurbTextView.layer.borderWidth = 1
-        blurbTextView.layer.borderColor = UIColor.black.cgColor
+//        postTextView.layer.borderWidth = 1
+//        postTextView.layer.borderColor = UIColor.black.cgColor
+//        creatorTextView.layer.borderWidth = 1
+//        creatorTextView.layer.borderColor = UIColor.black.cgColor
+//        blurbTextView.layer.borderWidth = 1
+//        blurbTextView.layer.borderColor = UIColor.black.cgColor
         
 
 
@@ -74,7 +79,14 @@ class PostViewController: UIViewController {
     //MARK: - Post Pressed
     @IBAction func postButtonPressed(_ sender: UIButton) {
         
-            if postTextView.text != "" && postTextView.text != nil && postTextView.text != "Work" && creatorTextView.text != "" && creatorTextView.text != nil && creatorTextView.text != "Creator" && blurbTextView.text != "" && blurbTextView.text != nil && blurbTextView.text != "Blurb" {
+            if postTextView.text != "" && postTextView.text != nil &&
+                postTextView.text != "Title" &&
+                creatorTextView.text != "" &&
+                creatorTextView.text != nil &&
+                creatorTextView.text != "Creator" &&
+                blurbTextView.text != "" &&
+                blurbTextView.text != nil &&
+                blurbTextView.text != "Blurb" {
                 
                 let postText = postTextView.text
                 let creatorText = creatorTextView.text
@@ -98,8 +110,6 @@ class PostViewController: UIViewController {
                         
                         if let e = error{
                             print("There was an issue saving data to Firestore, \(e)")
-                        } else{
-                            
                         }
                     }
                 }
@@ -152,7 +162,7 @@ class PostViewController: UIViewController {
 
 extension PostViewController: UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView == postTextView, postTextView.text == "Work" {
+        if textView == postTextView, postTextView.text == "Title" {
             postTextView.text = ""
             postTextView.textColor = .black
         }
@@ -171,7 +181,7 @@ extension PostViewController: UITextViewDelegate{
         if textView == postTextView {
             if postTextView.text == "" {
                 postTextView.textColor = .lightGray
-                postTextView.text = "Work"
+                postTextView.text = "Title"
             }
         }
         else if textView == creatorTextView {
@@ -196,11 +206,11 @@ extension PostViewController: UITextViewDelegate{
         }
         
         func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-            if pickerView == categoryPicker{
-                postTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
-                creatorTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
-                blurbTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
-            }
+//            if pickerView == categoryPicker{
+//                postTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
+//                creatorTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
+//                blurbTextView.backgroundColor = categoryColors[pickerView.selectedRow(inComponent: 0)]
+//            }
 
 
         }

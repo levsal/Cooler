@@ -20,6 +20,8 @@ class FindFriendsViewController: UIViewController {
     var segueEmail = ""
     var segueName = ""
     
+    var fromProfile = false
+    
     @IBOutlet weak var emptyTableViewLabel: UILabel!
     @IBOutlet weak var usersSearchBar: UISearchBar!
     
@@ -28,7 +30,13 @@ class FindFriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getFriends()
+        if fromProfile {
+//            usersSearchBar.isHidden = true
+        }
+        else{
+            getFriends()
+        }
+        
         
         usersSearchBar.delegate = self
         usersTableView.dataSource = self
@@ -149,6 +157,13 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
         return friends.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = usersTableView.dequeueReusableCell(withIdentifier: "FindFriendsTableViewCell", for: indexPath) as! FindFriendsTableViewCell
@@ -157,7 +172,17 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
         cell.name.text = friends[indexPath.row].name
 
         if friends[indexPath.row].picURL != nil {
+            cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
+            print(cell.name.frame.height)
+            print(cell.bio.frame.height)
+            
+            print(cell.profilePic.frame.height)
+            print(cell.profilePic.frame.width)
+            
             cell.profilePic.loadAndCacheImage(urlString: (friends[indexPath.row].picURL)!)
+            print(cell.profilePic.frame.height)
+            print(cell.profilePic.frame.width)
+
         }
         else {
             cell.profilePic.image = UIImage(systemName: "person.fill")
@@ -168,6 +193,7 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
         else {
             cell.bio.text = ""
         }
+        
 
         return cell
     }

@@ -27,22 +27,16 @@ class FeedViewController: UIViewController {
     var postOpen : [String: Bool] = [:]
     
     var segueFriendEmail : String?
-        
+    
     @IBOutlet weak var feedTableView: PositionCorrectingTableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
- 
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.font: UIFont(name: "OpenSans-Bold", size: 24.0)!,
-             NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0.5851971507, blue: 0, alpha: 1)]
-
-    //        self.navigationController!.navigationBar.layer.shadowColor = UIColor.black.cgColor
-//        self.navigationController!.navigationBar.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-//        self.navigationController!.navigationBar.layer.shadowRadius = 4.0
-//        self.navigationController!.navigationBar.layer.shadowOpacity = 1.0
-
+        
+//        self.navigationController?.navigationBar.titleTextAttributes =
+//            [NSAttributedString.Key.font: UIFont(name: "OpenSans-Bold", size: 24.0)!,
+//             NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0.5851971507, blue: 0, alpha: 1)]
         
         feedTableView.register(UINib(nibName: "AddFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "AddFriendsTableViewCell")
         feedTableView.register(UINib(nibName: "FriendsPostsTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendsPostsTableViewCell")
@@ -50,6 +44,7 @@ class FeedViewController: UIViewController {
         
         feedTableView.dataSource = self
         feedTableView.delegate = self
+       
         feedTableView.separatorColor = UIColor.clear
         
         //Create Friends List
@@ -65,7 +60,7 @@ class FeedViewController: UIViewController {
     
     func getFriends(){
         db.collection("\(Auth.auth().currentUser!.email!)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
-            self.feedTableView.reloadData()
+            //            self.feedTableView.reloadData()
             self.friends = []
             
             if let e = error {
@@ -74,24 +69,21 @@ class FeedViewController: UIViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let friendEmail = data["email"], let friendName = data["name"], let picURL = data["picURL"] {
+                        if let friendEmail = data["email"],
+                           let friendName = data["name"],
+                           let picURL = data["picURL"] {
                             self.friends.append([friendEmail as! String, friendName as! String, picURL as! String])
                         }
                     }
-
+                    
                     self.getPosts()
                 }
             }
         }
     }
     
-    
-    @IBAction func button(_ sender: UIButton) {
-        getPosts()
-    }
-    
     func getPosts() {
-        //        print("Getting posts")
+
         self.posts = []
         
         self.feedTableView.reloadData()
@@ -131,47 +123,23 @@ class FeedViewController: UIViewController {
                                                 creator: creator as! String, blurb: blurb as! String, rating: givenRating as! Double)
                                 self.posts.append(post)
                                 self.assignValuesToPostOpen()
-
-                                self.feedTableView.reloadData()
-//                               db.collection("Users").document(friend[0]).addSnapshotListener { (docSnapshot, error) in
-//                                    if let e = error {
-//                                        print("Error finding user document, \(e)")
-//                                    }
-//                                    else {
-//                                        if let documentSnapshot = docSnapshot {
-//                                            let data = documentSnapshot.data()
-//                                            if let url = data!["picURL"]{
-//
-//                                                print("Looks like we made it")
-//                                                print(post)
-//
-//
-//                                            }
-//                                        }
-//                                    }
-//
-                                
-//                                print("LOOK HOW FAR")
-//                                print(posts)
-//                                
-//                                self.assignValuesToPostOpen()
+                                self.posts = self.posts.sorted { $0.date < $1.date }
+                                for post in self.posts {
+                                    print(post.date + 16000000000)
+                                }
                                 
                             }
                         }
-                        self.posts = self.posts.sorted { $0.date < $1.date }
+                        self.feedTableView.reloadData()
+
                         
                     }
                 }
-//                self.feedTableView.reloadData()
                 
             }
             
             
         }
-        
-        
-        
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -188,8 +156,8 @@ class FeedViewController: UIViewController {
                 if segueFriendEmail == friend[0]{
                     profileVC.friendStatusButton = "Remove Friend"
                     profileVC.friendStatusColor = #colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1)
-
-
+                    
+                    
                 }
             }
             
@@ -200,34 +168,24 @@ class FeedViewController: UIViewController {
 
 //MARK: - Table View
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 5
         }
-        return 130
+        return 135
     }
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 5
         }
-        return 130
+        return 135
     }
-    
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        if section == 0 {
-//            return 0
-//        }
-//        else {
-//            return 5
-//        }
-//    }
-    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let cell = UIView()
             return cell
-            
         }
         
         else if section <= posts.count{
@@ -235,26 +193,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.parentFeedVC = self
             
-            
-            
             cell.profilePic.loadAndCacheImage(urlString: posts[section-1].profilePicURL!)
-            
-//            let userEmail = posts[section-1].userEmail
-//            DispatchQueue.main.async {
-//                self.db.collection("Users").document(userEmail!).addSnapshotListener { (docSnapshot, error) in
-//                    if let e = error {
-//                        print("Error finding user document, \(e)")
-//                    }
-//                    else {
-//                        if let documentSnapshot = docSnapshot {
-//                            let data = documentSnapshot.data()
-//                            if let url = data!["picURL"]{
-//                                cell.profilePic.loadAndCacheImage(urlString: url as! String)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             
             
             let username = posts[section-1].username
@@ -274,23 +213,28 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             //            print[posts[section-1].category])
             
             if let image = categoryIcons[posts[section-1].category]! {
-                
-                
                 cell.categoryIcon.image = image
             }
-            cell.profilePic.widthAnchor.constraint(equalToConstant: 35).isActive = true
-            cell.profilePic.heightAnchor.constraint(equalToConstant: 35).isActive = true
-
-            cell.profilePic.layer.cornerRadius = 5
-//            cell.profilePic.layer.borderWidth = 1
+            
+            cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
+            //            cell.profilePic.layer.borderWidth = 1
             
             DispatchQueue.main.async {
                 cell.profilePic.loadAndCacheImage(urlString: self.posts[section-1].profilePicURL!)
             }
             
             //Color Corresponding to Category
-            cell.friendsPostTextView.backgroundColor = categoryColorsSingular[posts[section-1].category]
-            cell.creatorTextView.backgroundColor = categoryColorsSingularPale[posts[section-1].category]
+//            cell.friendsPostTextView.backgroundColor = categoryColorsSingular[posts[section-1].category]
+//            cell.creatorTextView.backgroundColor = categoryColorsSingularPale[posts[section-1].category]
+            cell.userView.backgroundColor = categoryColorsSingular[posts[section-1].category]
+            cell.categoryIcon.tintColor = categoryColorsSingular[posts[section-1].category]
+            
+            
+            cell.profilePic.layer.borderWidth = 1
+            cell.profilePic.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            
+            cell.titleStack.layer.borderWidth = 2
+            cell.titleStack.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             
             return cell
         }
@@ -336,6 +280,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if indexPath.section == 0 {
             
             let cell = feedTableView.dequeueReusableCell(withIdentifier: "AddFriendsTableViewCell") as! AddFriendsTableViewCell

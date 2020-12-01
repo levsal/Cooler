@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3DEABF08C91F92D57F7AA40F /* Pods_Cooler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A80370F2BD337BDE819D0F88 /* Pods_Cooler.framework */; };
+		BE3ACFE02576A89F000BBFF9 /* UserSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3ACFDF2576A89E000BBFF9 /* UserSettingsViewController.swift */; };
+		BE3ACFE62576AAF9000BBFF9 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3ACFE42576AAF9000BBFF9 /* SettingsTableViewCell.swift */; };
+		BE3ACFE72576AAF9000BBFF9 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE3ACFE52576AAF9000BBFF9 /* SettingsTableViewCell.xib */; };
 		BE3FF8D525257E8A00F9B5E5 /* TBCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FF8D425257E8A00F9B5E5 /* TBCViewController.swift */; };
 		BE3FF8D925257E9600F9B5E5 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FF8D725257E9600F9B5E5 /* PostViewController.swift */; };
 		BE3FF8DA25257E9600F9B5E5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FF8D825257E9600F9B5E5 /* ProfileViewController.swift */; };
@@ -56,6 +59,9 @@
 		828583950298E2F2A0B64819 /* Pods-Cooler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.debug.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.debug.xcconfig"; sourceTree = "<group>"; };
 		A6D6413E73ABC88DC1477ECF /* Pods-Cooler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.release.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.release.xcconfig"; sourceTree = "<group>"; };
 		A80370F2BD337BDE819D0F88 /* Pods_Cooler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cooler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE3ACFDF2576A89E000BBFF9 /* UserSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsViewController.swift; sourceTree = "<group>"; };
+		BE3ACFE42576AAF9000BBFF9 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		BE3ACFE52576AAF9000BBFF9 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		BE3FF8D425257E8A00F9B5E5 /* TBCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBCViewController.swift; sourceTree = "<group>"; };
 		BE3FF8D725257E9600F9B5E5 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		BE3FF8D825257E9600F9B5E5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +137,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE3ACFE22576AAD0000BBFF9 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BE3ACFDF2576A89E000BBFF9 /* UserSettingsViewController.swift */,
+				BE3ACFE42576AAF9000BBFF9 /* SettingsTableViewCell.swift */,
+				BE3ACFE52576AAF9000BBFF9 /* SettingsTableViewCell.xib */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		BE3D20B1252573790031B3EB /* FriendsPostsCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +201,7 @@
 				BE3FF8D825257E9600F9B5E5 /* ProfileViewController.swift */,
 				BE3FF8D725257E9600F9B5E5 /* PostViewController.swift */,
 				BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */,
+				BE3ACFE22576AAD0000BBFF9 /* Settings */,
 				BE3FF92F25278A3F00F9B5E5 /* Category Header */,
 			);
 			path = Profile;
@@ -361,6 +378,7 @@
 				BE3FF9152526D8A200F9B5E5 /* OpenSans-Light.ttf in Resources */,
 				BE3FF9192526D8A200F9B5E5 /* OpenSans-SemiBoldItalic.ttf in Resources */,
 				BE3FF9102526D8A200F9B5E5 /* OpenSans-Italic.ttf in Resources */,
+				BE3ACFE72576AAF9000BBFF9 /* SettingsTableViewCell.xib in Resources */,
 				BE3FF9122526D8A200F9B5E5 /* OpenSans-SemiBold.ttf in Resources */,
 				BE3FF9162526D8A200F9B5E5 /* OpenSans-LightItalic.ttf in Resources */,
 				BE3FF9172526D8A200F9B5E5 /* OpenSans-BoldItalic.ttf in Resources */,
@@ -434,6 +452,7 @@
 				BE3FF8DA25257E9600F9B5E5 /* ProfileViewController.swift in Sources */,
 				BEEEC46D250081F900A4732B /* WelcomeViewController.swift in Sources */,
 				BE3FF8FD2526948200F9B5E5 /* Post.swift in Sources */,
+				BE3ACFE02576A89F000BBFF9 /* UserSettingsViewController.swift in Sources */,
 				BEAD57AF25312D9400261E8F /* PositionCorrectingTableView.swift in Sources */,
 				BEEEC469250081F900A4732B /* AppDelegate.swift in Sources */,
 				BE9CD2B62541BC7300D142C4 /* UIImageCacher.swift in Sources */,
@@ -447,6 +466,7 @@
 				BE3FF8E425257EBD00F9B5E5 /* AddFriendsTableViewCell.swift in Sources */,
 				BEEEC46B250081F900A4732B /* SceneDelegate.swift in Sources */,
 				BE5FF4882538CC9E0075C390 /* Friend.swift in Sources */,
+				BE3ACFE62576AAF9000BBFF9 /* SettingsTableViewCell.swift in Sources */,
 				BE3FF8EB25257EC600F9B5E5 /* FriendsPostsTableViewCell.swift in Sources */,
 				BE3FF8DE25257EA300F9B5E5 /* FeedViewController.swift in Sources */,
 			);
@@ -602,6 +622,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Levi.Cooler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -621,6 +643,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Levi.Cooler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

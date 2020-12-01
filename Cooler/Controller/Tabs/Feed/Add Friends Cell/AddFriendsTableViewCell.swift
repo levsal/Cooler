@@ -39,55 +39,67 @@ class AddFriendsTableViewCell: UITableViewCell{
 
     
     func fetchUsers() {
-
-        
         if let parentFriends = parentFeedVC?.friends {
-//            print(parentFriends)
             
+            //PRINT FRIEND NAMES
+
             if let blankIndex = self.potentialFriends?.firstIndex(of: ["","",""]){
                 self.potentialFriends?.remove(at: blankIndex)
             }
 
             
-            for friend in parentFriends{
-                //                print(friend)
+            for friend in parentFriends {
+//                print(friend[1] + "'s run")
+                
                 db.collection("\(friend[0])_Friends").addSnapshotListener { (querySnapshot, error) in
                     if let e = error {
                         print("There was an issue retrieving potential friends from Firestore, \(e)")
                     } else {
                         if let snapshotDocuments = querySnapshot?.documents {
                             for doc in snapshotDocuments {
+                                
                                 let data = doc.data()
                                 
                                 if let userEmail = data["email"],
                                    let username = data["name"],
                                    let picURL = data["picURL"]{
                                     
-                                    if parentFriends.contains([userEmail as! String, username as! String, picURL as! String]) || self.potentialFriends!.contains([userEmail as! String, username as! String, picURL as! String]) || userEmail as! String == (Auth.auth().currentUser?.email)! {
-                                        print("Already handled")
+                                    
+//                                    print(parentFriends)
+//                                    print([userEmail as! String, username as! String, picURL as! String])
+                                    
+                                    var alreadyFriend = false
+                                    for friend in parentFriends{
+                                        let name = friend[1]
+                                        if name == username as! String {
+                                            alreadyFriend = true
+                                        }
                                     }
+                                    
+                                    var alreadyPotential = false
+                                    for friend in self.potentialFriends!{
+                                        let name = friend[1]
+                                        if name == username as! String {
+                                            alreadyPotential = true
+                                        }
+                                    }
+                                    
+                                    var currentUser = false
+                                    if userEmail as! String == (Auth.auth().currentUser?.email)!{
+                                        currentUser = true
+                                    }
+                                    
+                                    
+                                    if alreadyFriend || alreadyPotential || currentUser {
+                                        
+                                        print("\(username as! String) already potentialized")
+                                    }
+                                    
                                     else {
+                                        print("Potentializing " + (username as! String) + " from " + friend[1] + "'s run")
                                         self.potentialFriends!.append([userEmail as! String, username as! String, picURL as! String])
                                         self.collectionView.reloadData()
-//                                        self.db.collection("Users").document(userEmail as! String).addSnapshotListener { (docSnapshot, error) in
-//                                            if let documentSnapshot = docSnapshot {
-//                                                let data = documentSnapshot.data()
-//                                                if let url = data!["picURL"] as? String{
-//                                                    if self.potentialFriends!.contains([userEmail as! String, username as! String, url]) {
-//                                                    }
-//
-//                                                    else {
-//                                                        self.potentialFriends!.append([userEmail as! String, username as! String, url])
-//                                                        self.collectionView.reloadData()
-//                                                        print(self.potentialFriends)
-//
-//                                                    }
-//
-//                                                }
-//                                            }
-//                                        }
-                                        
-                                        
+                                        //                                        self.parentFeedVC?.feedTableView.reloadData()
                                     }
                                 }
                             }
@@ -96,8 +108,7 @@ class AddFriendsTableViewCell: UITableViewCell{
                     }
                     
                 }
-            }
-            
+            }            
         }
         
         
@@ -150,9 +161,6 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
         }
         cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
 
-        
-        
-        
         return cell
     }
     
