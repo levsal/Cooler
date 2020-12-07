@@ -134,7 +134,6 @@ extension FindFriendsViewController : UISearchBarDelegate {
             }
             profileVC.isHost = false
             profileVC.email = segueEmail
-            profileVC.loadProfilePage(email: profileVC.email)//
             profileVC.signOutButtonTitle = "Back To Search"
             profileVC.postButton.image = nil
             profileVC.postButton.title = ""

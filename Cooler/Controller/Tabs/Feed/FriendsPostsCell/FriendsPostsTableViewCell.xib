@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -34,18 +33,18 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAN-7f-jc2" userLabel="User View">
                                 <rect key="frame" x="0.0" y="0.0" width="310" height="45"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="A fictional post" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xjc-Xk-NA0">
                                 <rect key="frame" x="0.0" y="45" width="310" height="45"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.13213832483147203" green="0.13213832483147203" blue="0.13213832483147203" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="A fictional artist" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="I88-lJ-Fgo">
                                 <rect key="frame" x="0.0" y="90" width="310" height="45"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.13213832483147203" green="0.13213832483147203" blue="0.13213832483147203" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -56,7 +55,7 @@
                         </constraints>
                     </stackView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tv" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="DH2-nR-che">
-                        <rect key="frame" x="260" y="54" width="36" height="35"/>
+                        <rect key="frame" x="259" y="54" width="36" height="35"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="AbG-Mo-0Kk"/>
@@ -70,8 +69,11 @@
                             <action selector="postTriggerPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Pu0-gK-sCx"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXl-ng-Z6R" userLabel="Ellipsis">
-                        <rect key="frame" x="271" y="94" width="30" height="45"/>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXl-ng-Z6R" userLabel="Ellipsis">
+                        <rect key="frame" x="259" y="89" width="36" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="heu-rQ-cFo"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="24"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="..."/>
@@ -113,7 +115,7 @@
                         <color key="highlightedColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAG-qZ-3nV" userLabel="Username">
-                        <rect key="frame" x="53" y="4" width="70" height="40"/>
+                        <rect key="frame" x="53" y="6.5" width="70" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="750" constant="40" id="Ysg-tu-xRd"/>
@@ -135,7 +137,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="kD1-Ro-2kM" secondAttribute="trailing" constant="5" id="3xB-au-va3"/>
                     <constraint firstAttribute="bottom" secondItem="uCX-QG-f50" secondAttribute="bottom" id="4Uv-0W-fKs"/>
@@ -145,18 +147,18 @@
                     <constraint firstItem="kD1-Ro-2kM" firstAttribute="top" secondItem="89s-fs-R99" secondAttribute="top" constant="-5" id="88D-bx-9pR"/>
                     <constraint firstItem="ZN3-GR-Qfq" firstAttribute="top" secondItem="kD1-Ro-2kM" secondAttribute="top" constant="16" id="9F2-WA-yug"/>
                     <constraint firstItem="kD1-Ro-2kM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="9oT-Xm-YRE"/>
-                    <constraint firstItem="kD1-Ro-2kM" firstAttribute="trailing" secondItem="DH2-nR-che" secondAttribute="trailing" constant="19" id="CtH-g2-q1V"/>
+                    <constraint firstItem="kD1-Ro-2kM" firstAttribute="trailing" secondItem="DH2-nR-che" secondAttribute="trailing" constant="20" id="CtH-g2-q1V"/>
                     <constraint firstAttribute="bottom" secondItem="VXl-ng-Z6R" secondAttribute="bottom" id="Jgw-V6-Uzk"/>
                     <constraint firstItem="89s-fs-R99" firstAttribute="leading" secondItem="kD1-Ro-2kM" secondAttribute="leading" constant="5" id="OlV-5P-PBd"/>
                     <constraint firstAttribute="trailing" secondItem="LQJ-sp-5ha" secondAttribute="trailing" constant="13" id="TPV-L5-Hld"/>
                     <constraint firstItem="kD1-Ro-2kM" firstAttribute="trailing" secondItem="ZN3-GR-Qfq" secondAttribute="trailing" constant="8" id="UHv-Db-BTe"/>
                     <constraint firstItem="kD1-Ro-2kM" firstAttribute="trailing" secondItem="uCX-QG-f50" secondAttribute="trailing" id="X46-93-Lvk"/>
-                    <constraint firstItem="kD1-Ro-2kM" firstAttribute="trailingMargin" secondItem="VXl-ng-Z6R" secondAttribute="trailing" constant="14" id="e1w-21-8Ce"/>
                     <constraint firstItem="lAG-qZ-3nV" firstAttribute="leading" secondItem="89s-fs-R99" secondAttribute="trailing" constant="8" symbolic="YES" id="eZv-Di-zjT"/>
                     <constraint firstItem="uCX-QG-f50" firstAttribute="leading" secondItem="kD1-Ro-2kM" secondAttribute="leading" id="h4y-l9-otV"/>
                     <constraint firstAttribute="bottom" secondItem="kD1-Ro-2kM" secondAttribute="bottom" id="lV8-6B-f21"/>
                     <constraint firstItem="DH2-nR-che" firstAttribute="top" secondItem="kD1-Ro-2kM" secondAttribute="bottom" constant="-85.5" id="lgL-rk-IcK"/>
-                    <constraint firstItem="lAG-qZ-3nV" firstAttribute="top" secondItem="kD1-Ro-2kM" secondAttribute="top" id="pFA-E5-o1w"/>
+                    <constraint firstAttribute="trailing" secondItem="VXl-ng-Z6R" secondAttribute="trailing" constant="25" id="p1C-qK-8X6"/>
+                    <constraint firstItem="lAG-qZ-3nV" firstAttribute="top" secondItem="kD1-Ro-2kM" secondAttribute="top" constant="2.5" id="pFA-E5-o1w"/>
                     <constraint firstItem="uCX-QG-f50" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="yvB-Do-PQk"/>
                 </constraints>
             </tableViewCellContentView>
@@ -173,6 +175,8 @@
                 <outlet property="iconWidth" destination="AbG-Mo-0Kk" id="tPx-Er-bGb"/>
                 <outlet property="profilePic" destination="89s-fs-R99" id="IyD-ND-BWc"/>
                 <outlet property="stackHeight" destination="aif-Et-bnx" id="eNK-rK-UmC"/>
+                <outlet property="stackToBottom" destination="lV8-6B-f21" id="mZY-Xa-BrN"/>
+                <outlet property="stackToTop" destination="62n-UJ-09Y" id="UaB-k7-6me"/>
                 <outlet property="titleStack" destination="kD1-Ro-2kM" id="KVW-f0-kcn"/>
                 <outlet property="userEmail" destination="lAG-qZ-3nV" id="czk-G7-3Wl"/>
                 <outlet property="userView" destination="cAN-7f-jc2" id="2nR-kj-FGt"/>
@@ -182,8 +186,5 @@
     </objects>
     <resources>
         <image name="tv" catalog="system" width="128" height="97"/>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

@@ -51,7 +51,7 @@ class AddFriendsTableViewCell: UITableViewCell{
             for friend in parentFriends {
 //                print(friend[1] + "'s run")
                 
-                db.collection("\(friend[0])_Friends").addSnapshotListener { (querySnapshot, error) in
+                db.collection("\(friend[0])_Friends").addSnapshotListener { [self] (querySnapshot, error) in
                     if let e = error {
                         print("There was an issue retrieving potential friends from Firestore, \(e)")
                     } else {
@@ -85,21 +85,20 @@ class AddFriendsTableViewCell: UITableViewCell{
                                     }
                                     
                                     var currentUser = false
-                                    if userEmail as! String == (Auth.auth().currentUser?.email)!{
+                                    if userEmail as! String == self.parentFeedVC!.currentUser {
                                         currentUser = true
                                     }
                                     
                                     
                                     if alreadyFriend || alreadyPotential || currentUser {
                                         
-                                        print("\(username as! String) already potentialized")
+//                                        print("\(username as! String) already potentialized")
                                     }
                                     
                                     else {
-                                        print("Potentializing " + (username as! String) + " from " + friend[1] + "'s run")
+//                                        print("Potentializing " + (username as! String) + " from " + friend[1] + "'s run")
                                         self.potentialFriends!.append([userEmail as! String, username as! String, picURL as! String])
                                         self.collectionView.reloadData()
-                                        //                                        self.parentFeedVC?.feedTableView.reloadData()
                                     }
                                 }
                             }

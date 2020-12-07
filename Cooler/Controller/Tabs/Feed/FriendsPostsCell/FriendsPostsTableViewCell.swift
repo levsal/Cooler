@@ -11,6 +11,8 @@ import Firebase
 
 class FriendsPostsTableViewCell: UITableViewCell {
     
+    let db = Firestore.firestore()
+    
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var userEmail: UIButton!
     @IBOutlet weak var dateString: UILabel!
@@ -31,10 +33,16 @@ class FriendsPostsTableViewCell: UITableViewCell {
     var category : String?
     var rating : Double?
     var email : String?
+    var icon : UIImage?
     
     var parentProfileVC : ProfileViewController?
     var parentFeedVC : FeedViewController?
     var parentFindFriendsVC : FindFriendsViewController?
+    var parentUserSettingsVC : UserSettingsViewController?
+    
+    
+    @IBOutlet var stackToTop: NSLayoutConstraint!
+    @IBOutlet var stackToBottom: NSLayoutConstraint!
     
     var sectionNumber = 1
     
@@ -43,7 +51,8 @@ class FriendsPostsTableViewCell: UITableViewCell {
         editStack.isHidden = true
         editButton.isHidden = true
         
-//        titleStack.layer.cornerRadius = 10
+//        titleStack.layer.borderWidth = 2
+//        titleStack.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 //        friendsPostTextView.layer.cornerRadius = 10
         
 
@@ -105,6 +114,25 @@ class FriendsPostsTableViewCell: UITableViewCell {
         parentFeedVC?.feedTableView.setContentOffset((parentFeedVC?.feedTableView.offset)!, animated: false)
         
         
+        //User Settings
+        if parentUserSettingsVC != nil {
+            if categoryIcon.image != UIImage(systemName: "checkmark") {
+                categoryIcon.image = UIImage(systemName: "checkmark")
+                parentUserSettingsVC!.parentProfileVC?.categories.append(friendsPostTextView.text)
+                db.collection("Users").document((Auth.auth().currentUser?.email!)!).updateData(["Artforms" : parentUserSettingsVC!.parentProfileVC!.categories])
+            }
+            else {
+                categoryIcon.image = icon
+                let exitingCategoryIndex = parentUserSettingsVC?.parentProfileVC?.categories.firstIndex(of: friendsPostTextView.text)
+                parentUserSettingsVC!.parentProfileVC?.categories.remove(at: exitingCategoryIndex!)
+                db.collection("Users").document((Auth.auth().currentUser?.email!)!).updateData(["Artforms" : parentUserSettingsVC!.parentProfileVC!.categories])
+            }
+            parentUserSettingsVC?.parentProfileVC?.selectedCategories = []
+            parentUserSettingsVC?.parentProfileVC?.resetSelecteds = true
+            parentUserSettingsVC?.parentProfileVC?.resetSelectedCategories()
+            parentUserSettingsVC?.parentProfileVC?.categoryCollectionView.reloadData()
+        }
+        
         
     }
     @IBAction func editButtonPressed(_ sender: UIButton) {
@@ -114,7 +142,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
    
     @IBAction func editPressed(_ sender: UIButton) {
         let postVC: PostViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "postViewController") as! PostViewController
-        
+        postVC.delegate = parentProfileVC
         parentProfileVC?.present(postVC, animated: true)
         postVC.delegate = parentProfileVC
         
@@ -122,10 +150,10 @@ class FriendsPostsTableViewCell: UITableViewCell {
         postVC.preservedPostText = friendsPostTextView.text
         postVC.preservedDate = date
         
-        postVC.postTextView.textColor = .black
+        postVC.postTextView.textColor = .white
         postVC.postTextView.text = friendsPostTextView.text
         
-        postVC.creatorTextView.textColor = .black
+        postVC.creatorTextView.textColor = .white
         postVC.creatorTextView.text = creatorTextView.text
         
         
@@ -149,7 +177,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
         
         for post in parentProfileVC!.posts {
             if post.postText == friendsPostTextView.text {
-                postVC.blurbTextView.textColor = .black
+                postVC.blurbTextView.textColor = .white
                 postVC.blurbTextView.text = post.blurb
             }
         }

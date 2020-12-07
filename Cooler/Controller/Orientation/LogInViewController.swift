@@ -26,7 +26,7 @@ class LogInViewController: UIViewController {
                 if let e = error{
                     print(e)
                 }
-                else{                    
+                else {
                     self!.performSegue(withIdentifier: "logInToTabs", sender: self)
                 }
             }

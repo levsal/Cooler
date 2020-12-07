@@ -43,7 +43,13 @@ class SignUpViewController: UIViewController {
                         } else {
 
                             
-                            self.db.collection("Users").document((Auth.auth().currentUser?.email!)!).setData(["email": "\((Auth.auth().currentUser?.email)!)", "date": -Date().timeIntervalSince1970, "name" : name, "picURL" : "https://firebasestorage.googleapis.com/v0/b/cooler-e529a.appspot.com/o/a@b.com_ProfilePic?alt=media&token=fcc65527-ff9a-4d14-ae71-3e780faf7f14"])
+                            self.db.collection("Users").document((Auth.auth().currentUser?.email!)!).setData(
+                                
+                                ["email": "\((Auth.auth().currentUser?.email)!)",
+                                "date": -Date().timeIntervalSince1970,
+                                "name" : name,
+                                "picURL" : "https://firebasestorage.googleapis.com/v0/b/cooler-e529a.appspot.com/o/a@b.com_ProfilePic?alt=media&token=fcc65527-ff9a-4d14-ae71-3e780faf7f14",
+                                "Artforms" : ["Albums", "Movies", "TV Shows", "Books"]])
                             
                             self.performSegue(withIdentifier: "signUpToTabs", sender: self)
                         }

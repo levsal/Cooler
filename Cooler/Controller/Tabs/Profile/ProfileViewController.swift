@@ -53,15 +53,33 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     @IBOutlet weak var categoryCollectionView: UICollectionView!
     @IBOutlet weak var postTableView: PositionCorrectingTableView!
     
-    var categories : [String] = ["Albums", "Movies", "TV Shows", "Books"]
+    var categories : [String] = []
     
     var selectedCategories : [String] = []
     
-    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5019607843, green: 0.6078431373, blue: 0.9921568627, alpha: 1), "Movie": #colorLiteral(red: 0.8745098039, green: 0.7058823529, blue: 0.1333333333, alpha: 1), "TV Show": #colorLiteral(red: 0.4823529412, green: 0.7882352941, blue: 0.431372549, alpha: 1), "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
+    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5019607843, green: 0.6078431373, blue: 0.9921568627, alpha: 1),
+                                  "Movie": #colorLiteral(red: 0.8745098039, green: 0.7058823529, blue: 0.1333333333, alpha: 1),
+                                  "TV Show": #colorLiteral(red: 0.4823529412, green: 0.7882352941, blue: 0.431372549, alpha: 1),
+                                  "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
+                                  "Artist": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
+                                  "Song" : #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
+                                  "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
     var categoryColorsSingularPale = ["Album": #colorLiteral(red: 0.7195122838, green: 0.7771759033, blue: 0.9829060435, alpha: 1), "Movie": #colorLiteral(red: 0.8376982212, green: 0.8472841382, blue: 0.4527434111, alpha: 1), "TV Show": #colorLiteral(red: 0.6429418921, green: 0.8634710908, blue: 0.6248642206, alpha: 1), "Book": #colorLiteral(red: 0.886295557, green: 0.6721803546, blue: 0.6509570479, alpha: 1), "N/A": #colorLiteral(red: 0.3980969191, green: 0.4254524708, blue: 0.4201924801, alpha: 1)]
-    var categoryColorsPlural = ["Albums": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), "Movies": #colorLiteral(red: 0.8745098039, green: 0.7058823529, blue: 0.1333333333, alpha: 1), "TV Shows": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1), "Books": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
+    var categoryColorsPlural = ["Albums": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1),
+                                "Movies": #colorLiteral(red: 0.8745098039, green: 0.7058823529, blue: 0.1333333333, alpha: 1),
+                                "TV Shows": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1),
+                                "Books": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
+                                "Artists": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
+                                "Songs" : #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
+                                "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
     
-    var categoryIcons = ["Album": UIImage(systemName: "music.note"), "Movie": UIImage(systemName: "film"), "TV Show": UIImage(systemName: "tv"), "Book": UIImage(systemName: "book"), "N/A": UIImage(systemName: "scribble")]
+    var categoryIcons = ["Album": UIImage(systemName: "music.note"),
+                         "Movie": UIImage(systemName: "film"),
+                         "TV Show": UIImage(systemName: "tv"),
+                         "Book": UIImage(systemName: "book"),
+                         "Artist": UIImage(systemName: "person"),
+                         "Song" : UIImage(systemName: "music.quarternote.3"),
+                         "N/A": UIImage(systemName: "scribble")]
     
     var postOpen : [String: Bool] = [:]
     
@@ -84,10 +102,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         addFriendButton.setTitle(friendStatusButton, for: .normal)
         addFriendButton.setTitleColor(friendStatusColor, for: .normal)
         
-        //Populate Selected Categories with User's Categories, Minus the Pluralization
-        for category in categories {
-            selectedCategories.append(String(category.dropLast()))
-        }
         
         //Aesthetic Adjustments
         profilePic.layer.cornerRadius = profilePic.layer.frame.height/2
@@ -108,12 +122,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         if isHost {
             email = (Auth.auth().currentUser?.email!)!
-            loadProfilePage(email: email)
             settings.isHidden = false
         }
+        
+        loadProfilePage(email: email)
+
         loadPosts(from: selectedCategories)
         
-        //        Get Profile Pic if the pick isnt being passed from a selected Post cell
+        //        Get Profile Pic if the pic isn't being passed from a selected Post cell
         if !picFromCell {
             self.db.collection("Users").document(self.email).addSnapshotListener { (docSnapshot, error) in
                 if let e = error{
@@ -153,10 +169,51 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         postTableView.separatorColor = UIColor.clear
         postVC.delegate = self
+        
+        self.categoryCollectionView.reloadData()
+
+    }
+    
+    
+    
+    func getCategories() {
+        db.collection("Users").addSnapshotListener { [self] (querySnapshot, error) in
+            if let e = error {
+                print("Error finding user's categories, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let email = data["email"]{
+                            if email as! String == self.email {
+                                if let categories = data["Artforms"] {
+//                                    print(categories)
+                                    self.categories = categories as? [String] ?? []
+                                   
+                                    //Populate Selected Categories with User's Categories, Minus the Pluralization
+                                    for category in self.categories {
+                                        selectedCategories.append(String(category.dropLast()))
+                                    }
+                                    print(self.categories)
+                                    print(self.selectedCategories)
+                                    
+                                    
+                                    self.categoryCollectionView.reloadData()
+                                    self.loadPosts(from: self.selectedCategories)
+                                    self.postTableView.reloadData()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     func loadProfilePage(email : String){
         getName(user: email)
         getFriends(of: email)
+        getCategories()
+        
     }
     
     func getName(user: String) {
@@ -174,7 +231,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                                     uName.text = name
                                 }
                                 if let bioText = data["bio"] as? String{
-                                    print(bioText)
                                     self.bio = bioText
                                     if let bioField = self.bioTextField {
                                         bioField.text = bioText
@@ -209,6 +265,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     @IBAction func postButtonPressed(_ sender: UIBarButtonItem) {
         if postButton.title != "" {
+
             present(postVC, animated: true)
             
         }
@@ -266,9 +323,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                 }
             }
         }
-        
-        
-        
     }
     
     func getFriends(of email : String) {
@@ -312,13 +366,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             
             
             print([email,usernameString, picURL])
-            print("Potential Friends Are \(String(describing: parentVC?.parentCell?.potentialFriends!))")
+//            print("Potential Friends Are \(String(describing: parentVC?.parentCell?.potentialFriends!))")
             
             parentVC?.parentCell?.collectionView.reloadData()
             
             parentVC?.parentCell?.parentFeedVC?.feedTableView.reloadData()
             let index = parentVC?.parentCell?.potentialFriends!.firstIndex(of: [email, usernameString, picURL])
-            print("Index is \(String(describing: index))")
+//            print("Index is \(String(describing: index))")
             parentVC?.parentCell?.potentialFriends?.remove(at: index!)
             
             
@@ -333,7 +387,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             parentVC?.parentCell?.collectionView.reloadData()
             db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).delete()
             
-            print("Potential Friends Are \(String(describing: parentVC?.parentCell?.potentialFriends!))")
+//            print("Potential Friends Are \(String(describing: parentVC?.parentCell?.potentialFriends!))")
             
             if parentVC == nil{
                 sender.setTitle("Add Friend", for: .normal)
@@ -349,6 +403,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             }
         }
         
+    }
+    
+    
+    @IBAction func settingsPressed(_ sender: UIButton) {
+        let userSettingsVC: UserSettingsViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "userSettingsViewController") as! UserSettingsViewController
+        userSettingsVC.parentProfileVC = self
+        present(userSettingsVC, animated: true)
     }
     
     //MARK: - Image Picker Controller
@@ -371,27 +432,46 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         let storageRef = Storage.storage().reference().child("\((Auth.auth().currentUser?.email)!)_ProfilePic")
         
+        
         if let uploadData = image.jpegData(compressionQuality:0.2){
             DispatchQueue.main.async {
                 storageRef.putData(uploadData)
                 
                 storageRef.downloadURL { (url, error) in
                     guard let url = url, error == nil else{
-                        print("Gotta return")
+//                        print("Gotta return")
                         return
                     }
                     let urlString = url.absoluteString
-                    self.db.collection("Users").document((Auth.auth().currentUser?.email)!).updateData(["picURL" : urlString])
+                    self.db.collection("Users").document(self.email).updateData(["picURL" : urlString])
+                    //Update Profile Pic for All Users
+                    self.db.collection("Users").addSnapshotListener { (querySnapshot, error) in
+                        if let e = error {
+                            print("Error finding user's name, \(e)")
+                        } else {
+                            if let snapshotDocuments = querySnapshot?.documents {
+                                for doc in snapshotDocuments {
+                                    let data = doc.data()
+                                    if let userEmail = data["email"] as? String {
+                                        print("\(userEmail)_Friends")
+
+                                        self.db.collection("\(userEmail)_Friends").document(self.email).updateData(["picURL": urlString])
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 
             }
-            
+
             self.profilePic.image = image
+           
             
             picker.dismiss(animated: true) {
                 
             }
-            print(image)
+            
         }
     }
     
@@ -468,6 +548,7 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
             attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
             categoryCell.category.attributedText = attributedString
             
+            
             //Make Pluralized Category Header Singular
             let genre = (categoryCell.category.text!).dropLast()
             selectedCategories = [String(genre)]
@@ -475,6 +556,8 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
             //Reload Posts Based on Selected Category/Lack of Selection
             loadPosts(from: (selectedCategories))
             categoryCell.underlined = true
+            
+
         }
         else {
             
@@ -489,13 +572,17 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
             
             loadPosts(from: (selectedCategories))
             categoryCell.underlined = false
+            
         }
         
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: CGFloat((collectionView.frame.size.width / CGFloat(categories.count))), height: CGFloat(20))
+        return CGSize(width:
+                        CGFloat(collectionView.frame.size.width / CGFloat(4) - CGFloat(10)),
+                      height:
+                        CGFloat(20))
         
     }
     
@@ -523,15 +610,16 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             cell.friendsPostTextView.text = posts[section].postText
             cell.creatorTextView.text = posts[section].creator
             
-            cell.friendsPostTextView.backgroundColor = categoryColorsSingular[posts[section].category]
-            cell.creatorTextView.backgroundColor = categoryColorsSingularPale[posts[section].category]
-            cell.creatorTextView.textColor = .black
+//            cell.friendsPostTextView.backgroundColor = categoryColorsSingular[posts[section].category]
+//            cell.creatorTextView.backgroundColor = categoryColorsSingularPale[posts[section].category]
+//            cell.creatorTextView.textColor = .black
             
             cell.categoryIcon.image = categoryIcons[posts[section].category]!!
+            cell.categoryIcon.tintColor = categoryColorsSingular[posts[section].category]
 //            cell.stackHeight.constant = 120
-            cell.iconWidth.constant = 25
-            cell.iconHeight.constant = 25
-            cell.iconOffset.constant = -80
+//            cell.iconWidth.constant = 25
+//            cell.iconHeight.constant = 25
+//            cell.iconOffset.constant = -80
             
 //            cell.contentView.backgroundColor = .white
             

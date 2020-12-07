@@ -14,15 +14,29 @@ class FeedViewController: UIViewController {
     
     let db = Firestore.firestore()
     
+    var currentUser = ""
+    
     var friends : [[String]] = [[]]
     
     var posts : [Post] = []
     @IBOutlet weak var emptyFeedViewLabel: UILabel!
     
-    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1), "Movie": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1), "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1), "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
+    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1),
+                                  "Movie": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1),
+                                  "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1),
+                                  "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
+                                  "Artist": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
+                                  "Song": #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
+                                  "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
     var categoryColorsSingularPale = ["Album": #colorLiteral(red: 0.7195122838, green: 0.7771759033, blue: 0.9829060435, alpha: 1), "Movie": #colorLiteral(red: 0.8376982212, green: 0.8472841382, blue: 0.4527434111, alpha: 1), "TV Show": #colorLiteral(red: 0.6429418921, green: 0.8634710908, blue: 0.6248642206, alpha: 1), "Book": #colorLiteral(red: 0.886295557, green: 0.6721803546, blue: 0.6509570479, alpha: 1), "N/A": #colorLiteral(red: 0.3980969191, green: 0.4254524708, blue: 0.4201924801, alpha: 1)]
     
-    var categoryIcons = ["Album": UIImage(systemName: "music.note"), "Movie": UIImage(systemName: "film"), "TV Show": UIImage(systemName: "tv"), "Book": UIImage(systemName: "book"), "N/A": UIImage(systemName: "scribble")]
+    var categoryIcons = ["Album": UIImage(systemName: "music.note"),
+                         "Movie": UIImage(systemName: "film"),
+                         "TV Show": UIImage(systemName: "tv"),
+                         "Book": UIImage(systemName: "book"),
+                         "Artist": UIImage(systemName: "person"),
+                         "Song" : UIImage(systemName: "music.quarternote.3"),
+                         "N/A": UIImage(systemName: "scribble")]
     
     var postOpen : [String: Bool] = [:]
     
@@ -32,6 +46,8 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currentUser = (Auth.auth().currentUser?.email)!
         
         
 //        self.navigationController?.navigationBar.titleTextAttributes =
@@ -125,7 +141,7 @@ class FeedViewController: UIViewController {
                                 self.assignValuesToPostOpen()
                                 self.posts = self.posts.sorted { $0.date < $1.date }
                                 for post in self.posts {
-                                    print(post.date + 16000000000)
+//                                    print(post.date + 16000000000)
                                 }
                                 
                             }
@@ -147,7 +163,7 @@ class FeedViewController: UIViewController {
             let profileVC = segue.destination as! ProfileViewController
             profileVC.isHost = false
             profileVC.email = segueFriendEmail!
-            profileVC.loadProfilePage(email: segueFriendEmail!)//
+//            profileVC.loadProfilePage(email: segueFriendEmail!)//
             profileVC.signOutButtonTitle = "Back To Feed"
             profileVC.postButton.image = nil
             profileVC.postButton.title = ""
@@ -230,11 +246,12 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             cell.categoryIcon.tintColor = categoryColorsSingular[posts[section-1].category]
             
             
-            cell.profilePic.layer.borderWidth = 1
-            cell.profilePic.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-            
-            cell.titleStack.layer.borderWidth = 2
-            cell.titleStack.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//            cell.profilePic.layer.borderWidth = 1
+//            cell.profilePic.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+//            
+//            cell.titleStack.layer.borderWidth = 1
+//            cell.titleStack.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//            cell.layer.cornerRadius = 10
             
             return cell
         }
