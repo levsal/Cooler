@@ -15,8 +15,9 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
+        
     }
-    
     //MARK: - Segues
     @IBAction func signUpButton(_ sender: UIButton) {
         performSegue(withIdentifier: "welcomeToSignUp", sender: self)

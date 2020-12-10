@@ -12,8 +12,10 @@ class TBCViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBar.barStyle = .black
+        self.tabBar.tintColor = .white
         self.dismiss(animated: false, completion: nil)
-
+        
     }
 }
 

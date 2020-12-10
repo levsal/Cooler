@@ -31,6 +31,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     @IBOutlet weak var bioTextField: UITextField!
     
     @IBOutlet var settings: UIButton!
+    @IBOutlet var list: UIButton!
     
     var email = ""
     var usernameString = ""
@@ -88,6 +89,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     var picFromCell = false
     var firstLoad = true
     var firstPicLoad = true
+    var needCategories = true
     
     var posts: [Post] = []
     var friends : [Friend] = []
@@ -99,6 +101,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     override func viewDidLoad() {
         super.viewDidLoad()
+     
+//        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
+
         addFriendButton.setTitle(friendStatusButton, for: .normal)
         addFriendButton.setTitleColor(friendStatusColor, for: .normal)
         
@@ -119,10 +125,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         friendsCount.setTitle(friendsCountValue, for: .normal)
         
         settings.isHidden = true
+        list.isHidden = true
         
         if isHost {
             email = (Auth.auth().currentUser?.email!)!
             settings.isHidden = false
+            list.isHidden = false
         }
         
         loadProfilePage(email: email)
@@ -181,26 +189,28 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             if let e = error {
                 print("Error finding user's categories, \(e)")
             } else {
-                if let snapshotDocuments = querySnapshot?.documents {
-                    for doc in snapshotDocuments {
-                        let data = doc.data()
-                        if let email = data["email"]{
-                            if email as! String == self.email {
-                                if let categories = data["Artforms"] {
-//                                    print(categories)
-                                    self.categories = categories as? [String] ?? []
-                                   
-                                    //Populate Selected Categories with User's Categories, Minus the Pluralization
-                                    for category in self.categories {
-                                        selectedCategories.append(String(category.dropLast()))
+                while(selectedCategories == []){
+                    if let snapshotDocuments = querySnapshot?.documents {
+                        for doc in snapshotDocuments {
+                            let data = doc.data()
+                            if let email = data["email"]{
+                                if email as! String == self.email {
+                                    if let categories = data["Artforms"] {
+                                        //                                    print(categories)
+                                        self.categories = categories as? [String] ?? []
+                                        
+                                        //Populate Selected Categories with User's Categories, Minus the Pluralization
+                                        for category in self.categories {
+                                            selectedCategories.append(String(category.dropLast()))
+                                        }
+                                        print(self.categories)
+                                        print(self.selectedCategories)
+                                        
+                                        
+                                        self.categoryCollectionView.reloadData()
+                                        self.loadPosts(from: self.selectedCategories)
+                                        self.postTableView.reloadData()
                                     }
-                                    print(self.categories)
-                                    print(self.selectedCategories)
-                                    
-                                    
-                                    self.categoryCollectionView.reloadData()
-                                    self.loadPosts(from: self.selectedCategories)
-                                    self.postTableView.reloadData()
                                 }
                             }
                         }
@@ -208,6 +218,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                 }
             }
         }
+        
+
     }
     func loadProfilePage(email : String){
         getName(user: email)
@@ -281,7 +293,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     func loadPosts(from genres: [String]){
         
-        db.collection("\(email)_Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+        db.collection("Users").document(email).collection("Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.posts = []
             //            print(self.posts)
             if let e = error {
@@ -327,7 +339,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     func getFriends(of email : String) {
         
-        db.collection("\(email)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+        db.collection("Users").document(email).collection("Friends").order(by: "date").addSnapshotListener { [self] (querySnapshot, error) in
             self.friends = []
             
             if let e = error {
@@ -344,6 +356,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                             self.friends.append(Friend(email: (email as! String), name: (name as! String), date: nil, picURL: (picURL as! String), bio: nil))
                         }
                     }
+
                     
                     self.friendsCountValue = "Friends: " + String(self.friends.count)
                     if let fCount = self.friendsCount {
@@ -355,6 +368,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         }
         
         
+        
     }
     
     
@@ -362,7 +376,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         if sender.titleLabel!.text == "Add Friend" {
             
-            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).setData(["date" : Date().timeIntervalSince1970, "email": email, "name": usernameString, "picURL" : picURL])
+            db.collection("Users").document(Auth.auth().currentUser!.email!).collection("Friends").document(email).setData(["date" : Date().timeIntervalSince1970, "email": email, "name": usernameString, "picURL" : picURL])
+            
+//            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).setData(["date" : Date().timeIntervalSince1970, "email": email, "name": usernameString, "picURL" : picURL])
             
             
             print([email,usernameString, picURL])
@@ -385,7 +401,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         else if sender.titleLabel!.text == "Remove Friend" {
             parentVC?.parentCell?.parentFeedVC?.feedTableView.reloadData()
             parentVC?.parentCell?.collectionView.reloadData()
-            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).delete()
+            db.collection("Users").document(Auth.auth().currentUser!.email!).collection("Friends").document(email).delete()
+            
+//            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).delete()
             
 //            print("Potential Friends Are \(String(describing: parentVC?.parentCell?.potentialFriends!))")
             
@@ -405,6 +423,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
     }
     
+ 
+    @IBAction func listPressed(_ sender: UIButton) {
+        let listVC: ListViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "listViewController") as! ListViewController
+        
+        listVC.parentProfileVC = self
+        
+        present(listVC, animated: true)
+    }
     
     @IBAction func settingsPressed(_ sender: UIButton) {
         let userSettingsVC: UserSettingsViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "userSettingsViewController") as! UserSettingsViewController
@@ -455,7 +481,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                                     if let userEmail = data["email"] as? String {
                                         print("\(userEmail)_Friends")
 
-                                        self.db.collection("\(userEmail)_Friends").document(self.email).updateData(["picURL": urlString])
+                                        self.db.collection("Users").document((userEmail)).collection("Friends").document(self.email).updateData(["picURL": urlString])
                                     }
                                 }
                             }
@@ -579,10 +605,18 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if categories.count <= 4 {
+            return CGSize(width:
+                            CGFloat(collectionView.frame.size.width / CGFloat(categories.count)),
+                          height:
+                            CGFloat(24))
+        }
         return CGSize(width:
                         CGFloat(collectionView.frame.size.width / CGFloat(4) - CGFloat(10)),
                       height:
-                        CGFloat(20))
+                        CGFloat(24))
+       
         
     }
     
@@ -616,6 +650,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.categoryIcon.image = categoryIcons[posts[section].category]!!
             cell.categoryIcon.tintColor = categoryColorsSingular[posts[section].category]
+//            cell.categoryTag.backgroundColor = categoryColorsSingular[posts[section].category]
+
 //            cell.stackHeight.constant = 120
 //            cell.iconWidth.constant = 25
 //            cell.iconHeight.constant = 25

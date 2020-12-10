@@ -19,6 +19,9 @@ class FeedViewController: UIViewController {
     var friends : [[String]] = [[]]
     
     var posts : [Post] = []
+    
+    var list : [Post] = []
+    
     @IBOutlet weak var emptyFeedViewLabel: UILabel!
     
     var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1),
@@ -47,6 +50,10 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
+
+
+        
         currentUser = (Auth.auth().currentUser?.email)!
         
         
@@ -65,6 +72,7 @@ class FeedViewController: UIViewController {
         
         //Create Friends List
         getFriends()
+        getList()
         
     }
     func assignValuesToPostOpen() {
@@ -75,7 +83,7 @@ class FeedViewController: UIViewController {
     
     
     func getFriends(){
-        db.collection("\(Auth.auth().currentUser!.email!)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+        db.collection("Users").document((Auth.auth().currentUser?.email)!).collection("Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             //            self.feedTableView.reloadData()
             self.friends = []
             
@@ -105,7 +113,7 @@ class FeedViewController: UIViewController {
         self.feedTableView.reloadData()
         
         for friend in friends {
-            db.collection("\(friend[0])_Posts").order(by: "date").addSnapshotListener{ [self] (querySnapshot, error) in
+            db.collection("Users").document(friend[0]).collection("Posts").order(by: "date").addSnapshotListener{ [self] (querySnapshot, error) in
                 
                 if let e = error {
                     print("There was an issue retrieving data from Firestore, \(e)")
@@ -158,6 +166,21 @@ class FeedViewController: UIViewController {
         }
     }
     
+    func getList() {
+        
+        db.collection("Users").addSnapshotListener { (querySnapshot, error) in
+            if let e = error {
+                print("There was an issue retrieving data from Firestore, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        
+                    }
+                }
+            }
+        }
+    }
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FeedToProfile" {
             let profileVC = segue.destination as! ProfileViewController
@@ -224,34 +247,37 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let dateString = posts[section-1].dateString
             cell.dateString.text = dateString
             
+            let blurb = posts[section-1].blurb
+            cell.blurb = blurb
+            
             cell.email = posts[section-1].userEmail
             //            print(posts)
             //            print[posts[section-1].category])
+            
+            
+            let category = posts[section-1].category
+            cell.category = category
             
             if let image = categoryIcons[posts[section-1].category]! {
                 cell.categoryIcon.image = image
             }
             
+            let rating = posts[section-1].rating
+            cell.rating = rating
+            
+            cell.listButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            
             cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
-            //            cell.profilePic.layer.borderWidth = 1
             
             DispatchQueue.main.async {
                 cell.profilePic.loadAndCacheImage(urlString: self.posts[section-1].profilePicURL!)
             }
+
+            cell.listButton.isHidden = false
             
-            //Color Corresponding to Category
-//            cell.friendsPostTextView.backgroundColor = categoryColorsSingular[posts[section-1].category]
-//            cell.creatorTextView.backgroundColor = categoryColorsSingularPale[posts[section-1].category]
             cell.userView.backgroundColor = categoryColorsSingular[posts[section-1].category]
             cell.categoryIcon.tintColor = categoryColorsSingular[posts[section-1].category]
             
-            
-//            cell.profilePic.layer.borderWidth = 1
-//            cell.profilePic.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-//            
-//            cell.titleStack.layer.borderWidth = 1
-//            cell.titleStack.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//            cell.layer.cornerRadius = 10
             
             return cell
         }

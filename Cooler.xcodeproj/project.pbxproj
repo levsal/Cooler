@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3DEABF08C91F92D57F7AA40F /* Pods_Cooler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A80370F2BD337BDE819D0F88 /* Pods_Cooler.framework */; };
+		BE2128C1257EF4D1008FD520 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2128C0257EF4D1008FD520 /* ListViewController.swift */; };
+		BE2128C92581CBD9008FD520 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2128C82581CBD7008FD520 /* K.swift */; };
 		BE3ACFE02576A89F000BBFF9 /* UserSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3ACFDF2576A89E000BBFF9 /* UserSettingsViewController.swift */; };
 		BE3ACFE62576AAF9000BBFF9 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3ACFE42576AAF9000BBFF9 /* SettingsTableViewCell.swift */; };
 		BE3ACFE72576AAF9000BBFF9 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE3ACFE52576AAF9000BBFF9 /* SettingsTableViewCell.xib */; };
@@ -59,6 +61,8 @@
 		828583950298E2F2A0B64819 /* Pods-Cooler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.debug.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.debug.xcconfig"; sourceTree = "<group>"; };
 		A6D6413E73ABC88DC1477ECF /* Pods-Cooler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.release.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.release.xcconfig"; sourceTree = "<group>"; };
 		A80370F2BD337BDE819D0F88 /* Pods_Cooler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cooler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE2128C0257EF4D1008FD520 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		BE2128C82581CBD7008FD520 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		BE3ACFDF2576A89E000BBFF9 /* UserSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsViewController.swift; sourceTree = "<group>"; };
 		BE3ACFE42576AAF9000BBFF9 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		BE3ACFE52576AAF9000BBFF9 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
@@ -201,6 +205,7 @@
 				BE3FF8D825257E9600F9B5E5 /* ProfileViewController.swift */,
 				BE3FF8D725257E9600F9B5E5 /* PostViewController.swift */,
 				BEAD57AE25312D9300261E8F /* PositionCorrectingTableView.swift */,
+				BE2128C0257EF4D1008FD520 /* ListViewController.swift */,
 				BE3ACFE22576AAD0000BBFF9 /* Settings */,
 				BE3FF92F25278A3F00F9B5E5 /* Category Header */,
 			);
@@ -273,6 +278,7 @@
 				BE3FF8EF25257F9000F9B5E5 /* View */,
 				BE3FF8EE25257F5100F9B5E5 /* Controller */,
 				BEEEC471250081FC00A4732B /* Assets.xcassets */,
+				BE2128C82581CBD7008FD520 /* K.swift */,
 				BEEEC473250081FC00A4732B /* LaunchScreen.storyboard */,
 				BE3FF90D2526D8A200F9B5E5 /* LICENSE.txt */,
 				BE3FF9042526D8A200F9B5E5 /* OpenSans-Bold.ttf */,
@@ -456,6 +462,8 @@
 				BEAD57AF25312D9400261E8F /* PositionCorrectingTableView.swift in Sources */,
 				BEEEC469250081F900A4732B /* AppDelegate.swift in Sources */,
 				BE9CD2B62541BC7300D142C4 /* UIImageCacher.swift in Sources */,
+				BE2128C1257EF4D1008FD520 /* ListViewController.swift in Sources */,
+				BE2128C92581CBD9008FD520 /* K.swift in Sources */,
 				BEAD57AB2530F96700261E8F /* PostDetailView.swift in Sources */,
 				BE3FF943252965EF00F9B5E5 /* AddFriendsCollectionViewCell.swift in Sources */,
 				BEEEC483250185F700A4732B /* SignUpViewController.swift in Sources */,

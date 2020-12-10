@@ -41,105 +41,77 @@ class UserSettingsViewController: UIViewController, UITableViewDataSource, UITab
         settingsTableView.dataSource = self
         settingsTableView.delegate = self
         
-        settingsTableView.register(UINib(nibName: "SettingsTableViewCell", bundle: nil), forCellReuseIdentifier: "SettingsTableViewCell")
         settingsTableView.register(UINib(nibName: "FriendsPostsTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendsPostsTableViewCell")
 
     }
         
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return categoryColorsPlural.count
-        }
-        if section == 1 {
-            return 1
-        }
-        print("Googoogaga")
-        return 4
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        return 90
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return categoryColorsPlural.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = Bundle.main.loadNibNamed("SettingsTableViewCell", owner: self, options: nil)?.first as! SettingsTableViewCell
-        cell.parentSettingsVC = self
-        switch section {
-        case 0:
-            cell.headerButton.setTitle("Board Categories", for: .normal)
-        case 1 :
-            cell.headerButton.setTitle("Bio", for: .normal)
-        default:
-            return cell
+        let cell = Bundle.main.loadNibNamed("FriendsPostsTableViewCell", owner: self, options: nil)?.first as! FriendsPostsTableViewCell
+        cell.parentUserSettingsVC = self
+                
+        cell.categoryIcon.tintColor = categoryColorsPlural[categoryNames[section]]
+        
+        cell.categoryIcon.image = (categoryIcons[categoryNames[section]]!!)
+        cell.icon = (categoryIcons[categoryNames[section]]!!)
+
+        cell.friendsPostTextView.text = categoryNames[section]
+        
+        let title = cell.friendsPostTextView.text
+        if parentProfileVC!.categories.contains(title!){
+            cell.categoryIcon.image = UIImage(systemName: "checkmark")
         }
         
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsPostsTableViewCell") as! FriendsPostsTableViewCell
-            cell.parentUserSettingsVC = self
-            
-            cell.stackToBottom.constant = 20
-            
-            cell.categoryIcon.tintColor = categoryColorsPlural[categoryNames[indexPath.row]]
-            
-            cell.categoryIcon.image = (categoryIcons[categoryNames[indexPath.row]]!!)
-            cell.icon = (categoryIcons[categoryNames[indexPath.row]]!!)
-
-            cell.friendsPostTextView.text = categoryNames[indexPath.row]
-            
-            let title = cell.friendsPostTextView.text
-            if parentProfileVC!.categories.contains(title!){
-                cell.categoryIcon.image = UIImage(systemName: "checkmark")
-            }
-            
-            switch cell.friendsPostTextView.text {
-           
-            case "Albums":
-                cell.creatorTextView.text = "Artist or Band"
-            case "Movies":
-                 cell.creatorTextView.text = "Director"
-            case "TV Shows":
-                cell.creatorTextView.text = "Creator or Star"
-            case "Books":
-                cell.creatorTextView.text = "Author"
-            case "Artists":
-                cell.creatorTextView.text = "Medium, e.g. singer/songwriter"
-            case "Songs":
-                 cell.creatorTextView.text = "Artist or Band"
-           
-           
-            default:
-                cell.creatorTextView.text = "Creator"
-            }
+        switch cell.friendsPostTextView.text {
+       
+        case "Albums":
+            cell.creatorTextView.text = "Artist or Band"
+        case "Movies":
+             cell.creatorTextView.text = "Director"
+        case "TV Shows":
+            cell.creatorTextView.text = "Creator or Star"
+        case "Books":
+            cell.creatorTextView.text = "Author"
+        case "Artists":
+            cell.creatorTextView.text = "Medium, e.g. singer/songwriter"
+        case "Songs":
+             cell.creatorTextView.text = "Artist or Band"
+       
+       
+        default:
+            cell.creatorTextView.text = "Creator"
+        }
 
 //            cell.friendsPostTextView.isHidden = false
 //            cell.creatorTextView.isHidden = true
 //            cell.creatorTextView.text = ""
 //
 //            cell.userView.isHidden = true
-            cell.profilePic.isHidden = true
-            cell.userEmail.isHidden = true
-            cell.dateString.isHidden = true
-            
-            return cell
-        }
+        cell.profilePic.isHidden = true
+        cell.userEmail.isHidden = true
+        cell.dateString.isHidden = true
         
+        return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 110
-        }
-        return 50
+        return 120
     }
     
     

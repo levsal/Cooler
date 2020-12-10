@@ -20,6 +20,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet weak var creatorTextView: UITextView!
     @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet var listButton: UIButton!
     @IBOutlet weak var editStack: UIStackView!
     @IBOutlet weak var titleStack: UIStackView! 
     @IBOutlet var userView: UIView!
@@ -27,6 +28,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet var iconOffset: NSLayoutConstraint!
     @IBOutlet var iconHeight: NSLayoutConstraint!
     @IBOutlet var iconWidth: NSLayoutConstraint!
+
     
     
     var date : Double?
@@ -34,11 +36,13 @@ class FriendsPostsTableViewCell: UITableViewCell {
     var rating : Double?
     var email : String?
     var icon : UIImage?
+    var blurb : String?
     
     var parentProfileVC : ProfileViewController?
     var parentFeedVC : FeedViewController?
     var parentFindFriendsVC : FindFriendsViewController?
     var parentUserSettingsVC : UserSettingsViewController?
+    var parentListVC : ListViewController?
     
     
     @IBOutlet var stackToTop: NSLayoutConstraint!
@@ -50,6 +54,8 @@ class FriendsPostsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         editStack.isHidden = true
         editButton.isHidden = true
+        
+        listButton.isHidden = true
         
 //        titleStack.layer.borderWidth = 2
 //        titleStack.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -115,13 +121,13 @@ class FriendsPostsTableViewCell: UITableViewCell {
         
         
         //User Settings
-        if parentUserSettingsVC != nil {
+        if parentUserSettingsVC != nil  {
             if categoryIcon.image != UIImage(systemName: "checkmark") {
                 categoryIcon.image = UIImage(systemName: "checkmark")
                 parentUserSettingsVC!.parentProfileVC?.categories.append(friendsPostTextView.text)
                 db.collection("Users").document((Auth.auth().currentUser?.email!)!).updateData(["Artforms" : parentUserSettingsVC!.parentProfileVC!.categories])
             }
-            else {
+            else if (parentUserSettingsVC?.parentProfileVC?.categories.count)!>1 {
                 categoryIcon.image = icon
                 let exitingCategoryIndex = parentUserSettingsVC?.parentProfileVC?.categories.firstIndex(of: friendsPostTextView.text)
                 parentUserSettingsVC!.parentProfileVC?.categories.remove(at: exitingCategoryIndex!)
@@ -193,9 +199,16 @@ class FriendsPostsTableViewCell: UITableViewCell {
         
         else if sender.titleLabel?.text == "Confirm"{
             print("\(String(describing: Auth.auth().currentUser?.email))_Posts")
-            parentProfileVC?.db.collection("\((Auth.auth().currentUser?.email!)!)_Posts").document(friendsPostTextView.text).delete()
+            parentProfileVC?.db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts").document(friendsPostTextView.text).delete()
         }
     }
+    
+    @IBAction func addToListPressed(_ sender: Any) {
+        
+        db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List")
+            .document(friendsPostTextView.text).setData(["text": friendsPostTextView.text, "date": -Date().timeIntervalSince1970, "category": category as! String, "creator": creatorTextView.text,"blurb" : blurb, "rating": rating as! Double, "dateString" : dateString.text, "user" : userEmail.titleLabel!.text as! String])
+    }
+
     
     
 }

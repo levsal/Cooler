@@ -51,7 +51,7 @@ class AddFriendsTableViewCell: UITableViewCell{
             for friend in parentFriends {
 //                print(friend[1] + "'s run")
                 
-                db.collection("\(friend[0])_Friends").addSnapshotListener { [self] (querySnapshot, error) in
+                db.collection("Users").document(friend[0]).collection("Friends").addSnapshotListener { [self] (querySnapshot, error) in
                     if let e = error {
                         print("There was an issue retrieving potential friends from Firestore, \(e)")
                     } else {

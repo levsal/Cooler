@@ -29,6 +29,9 @@ class FindFriendsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
+
+
         
         if fromProfile {
 //            usersSearchBar.isHidden = true
@@ -50,7 +53,7 @@ class FindFriendsViewController: UIViewController {
     
     func getFriends() {
         
-        db.collection("\(Auth.auth().currentUser!.email!)_Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
+        db.collection("Users").document("\(Auth.auth().currentUser!.email!)").collection("Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.existingFriends = []
             
             if let e = error {
@@ -123,6 +126,7 @@ extension FindFriendsViewController : UISearchBarDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let profileVC = segue.destination as! ProfileViewController
+        
         if segue.identifier == "SearchToProfile" {
            print(existingFriends)
             for friend in existingFriends {

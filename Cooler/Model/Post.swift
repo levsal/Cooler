@@ -20,4 +20,5 @@ struct Post: Equatable {
     var creator: String
     var blurb: String
     var rating: Double
+    var fromUser: String?
 }

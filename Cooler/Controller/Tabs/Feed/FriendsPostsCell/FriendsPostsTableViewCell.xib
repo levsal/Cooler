@@ -104,14 +104,14 @@
                             </button>
                         </subviews>
                     </stackView>
-                    <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZN3-GR-Qfq">
+                    <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZN3-GR-Qfq">
                         <rect key="frame" x="277" y="20" width="30" height="10"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="4lX-99-Cu3"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="13"/>
-                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="highlightedColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAG-qZ-3nV" userLabel="Username">
@@ -122,7 +122,7 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="13"/>
                         <state key="normal" title="John Deere">
-                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="titleColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </state>
                         <connections>
                             <action selector="profileTriggerPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TXS-9h-OEH"/>
@@ -136,6 +136,18 @@
                             <constraint firstAttribute="width" constant="35" id="j8c-Yx-Dxr"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUf-93-dMH">
+                        <rect key="frame" x="271" y="102" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="Zgr-x2-Owx"/>
+                            <constraint firstAttribute="width" constant="22" id="Zjz-Fi-WfC"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="rectangle.stack" catalog="system"/>
+                        <connections>
+                            <action selector="addToListPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xDp-Eq-MNf"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
@@ -148,6 +160,7 @@
                     <constraint firstItem="ZN3-GR-Qfq" firstAttribute="top" secondItem="kD1-Ro-2kM" secondAttribute="top" constant="16" id="9F2-WA-yug"/>
                     <constraint firstItem="kD1-Ro-2kM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="9oT-Xm-YRE"/>
                     <constraint firstItem="kD1-Ro-2kM" firstAttribute="trailing" secondItem="DH2-nR-che" secondAttribute="trailing" constant="20" id="CtH-g2-q1V"/>
+                    <constraint firstAttribute="trailing" secondItem="SUf-93-dMH" secondAttribute="trailing" constant="27" id="EzY-l3-rEd"/>
                     <constraint firstAttribute="bottom" secondItem="VXl-ng-Z6R" secondAttribute="bottom" id="Jgw-V6-Uzk"/>
                     <constraint firstItem="89s-fs-R99" firstAttribute="leading" secondItem="kD1-Ro-2kM" secondAttribute="leading" constant="5" id="OlV-5P-PBd"/>
                     <constraint firstAttribute="trailing" secondItem="LQJ-sp-5ha" secondAttribute="trailing" constant="13" id="TPV-L5-Hld"/>
@@ -155,6 +168,7 @@
                     <constraint firstItem="kD1-Ro-2kM" firstAttribute="trailing" secondItem="uCX-QG-f50" secondAttribute="trailing" id="X46-93-Lvk"/>
                     <constraint firstItem="lAG-qZ-3nV" firstAttribute="leading" secondItem="89s-fs-R99" secondAttribute="trailing" constant="8" symbolic="YES" id="eZv-Di-zjT"/>
                     <constraint firstItem="uCX-QG-f50" firstAttribute="leading" secondItem="kD1-Ro-2kM" secondAttribute="leading" id="h4y-l9-otV"/>
+                    <constraint firstAttribute="bottom" secondItem="SUf-93-dMH" secondAttribute="bottom" constant="15" id="itD-uF-7zX"/>
                     <constraint firstAttribute="bottom" secondItem="kD1-Ro-2kM" secondAttribute="bottom" id="lV8-6B-f21"/>
                     <constraint firstItem="DH2-nR-che" firstAttribute="top" secondItem="kD1-Ro-2kM" secondAttribute="bottom" constant="-85.5" id="lgL-rk-IcK"/>
                     <constraint firstAttribute="trailing" secondItem="VXl-ng-Z6R" secondAttribute="trailing" constant="25" id="p1C-qK-8X6"/>
@@ -173,6 +187,7 @@
                 <outlet property="iconHeight" destination="am6-ZZ-EpY" id="wV7-Xu-UA4"/>
                 <outlet property="iconOffset" destination="lgL-rk-IcK" id="yeh-kA-cPx"/>
                 <outlet property="iconWidth" destination="AbG-Mo-0Kk" id="tPx-Er-bGb"/>
+                <outlet property="listButton" destination="SUf-93-dMH" id="kfB-BR-bix"/>
                 <outlet property="profilePic" destination="89s-fs-R99" id="IyD-ND-BWc"/>
                 <outlet property="stackHeight" destination="aif-Et-bnx" id="eNK-rK-UmC"/>
                 <outlet property="stackToBottom" destination="lV8-6B-f21" id="mZY-Xa-BrN"/>
@@ -185,6 +200,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="rectangle.stack" catalog="system" width="128" height="122"/>
         <image name="tv" catalog="system" width="128" height="97"/>
     </resources>
 </document>
