@@ -57,6 +57,11 @@ class FriendsPostsTableViewCell: UITableViewCell {
         
         listButton.isHidden = true
         
+        userView.layer.borderWidth = 3
+        userView.layer.borderColor = #colorLiteral(red: 0.1618016958, green: 0.1618359685, blue: 0.1617971659, alpha: 1)
+//        userView.layer.cornerRadius = 5
+//        userView.layer.borderColor = #colorLiteral(red: 0.174927026, green: 0.1749634147, blue: 0.1749222279, alpha: 1)
+
 //        titleStack.layer.borderWidth = 2
 //        titleStack.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 //        friendsPostTextView.layer.cornerRadius = 10
@@ -83,7 +88,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
         let work = friendsPostTextView.text
         
         //PROFILE
-        if parentProfileVC?.postOpen[work!] == false{
+        if parentProfileVC?.postOpen[work!] == false {
             parentProfileVC?.postOpen[work!] = true
             
             parentProfileVC?.postTableView.reloadData()
@@ -203,10 +208,28 @@ class FriendsPostsTableViewCell: UITableViewCell {
         }
     }
     
-    @IBAction func addToListPressed(_ sender: Any) {
+    @IBAction func addToListPressed(_ sender: UIButton) {
+       
+        if sender.imageView!.image == UIImage(systemName: "plus") {
+            print("WASTANG")
+
+            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List")
+                .document(friendsPostTextView.text).setData(["text": friendsPostTextView.text, "date": -Date().timeIntervalSince1970, "category": category as! String, "creator": creatorTextView.text,"blurb" : blurb, "rating": rating as! Double, "dateString" : dateString.text, "user" : userEmail.titleLabel!.text as! String])
+            sender.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        }
+        else if sender.imageView!.image == UIImage(systemName: "checkmark") {
+            
+            print("WASMARK")
+
+            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").document(friendsPostTextView.text).delete()
+            
+//            let exitingPostIndex = parentFeedVC!.list.firstIndex(of: Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: friendsPostTextView.text, category: category, creator: nil, blurb: nil, rating: nil, fromUser: nil))!
+//            
+//            parentFeedVC!.list.remove(at: exitingPostIndex)
+            sender.setImage(UIImage(systemName: "plus"), for: .normal)
+
+        }
         
-        db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List")
-            .document(friendsPostTextView.text).setData(["text": friendsPostTextView.text, "date": -Date().timeIntervalSince1970, "category": category as! String, "creator": creatorTextView.text,"blurb" : blurb, "rating": rating as! Double, "dateString" : dateString.text, "user" : userEmail.titleLabel!.text as! String])
     }
 
     

@@ -24,23 +24,22 @@ class FeedViewController: UIViewController {
     
     @IBOutlet weak var emptyFeedViewLabel: UILabel!
     
-    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1),
-                                  "Movie": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1),
-                                  "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1),
-                                  "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
-                                  "Artist": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
-                                  "Song": #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
-                                  "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
-    var categoryColorsSingularPale = ["Album": #colorLiteral(red: 0.7195122838, green: 0.7771759033, blue: 0.9829060435, alpha: 1), "Movie": #colorLiteral(red: 0.8376982212, green: 0.8472841382, blue: 0.4527434111, alpha: 1), "TV Show": #colorLiteral(red: 0.6429418921, green: 0.8634710908, blue: 0.6248642206, alpha: 1), "Book": #colorLiteral(red: 0.886295557, green: 0.6721803546, blue: 0.6509570479, alpha: 1), "N/A": #colorLiteral(red: 0.3980969191, green: 0.4254524708, blue: 0.4201924801, alpha: 1)]
+//    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1),
+//                                  "Movie": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1),
+//                                  "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1),
+//                                  "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
+//                                  "Artist": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
+//                                  "Song": #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
+//                                  "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
     
-    var categoryIcons = ["Album": UIImage(systemName: "music.note"),
-                         "Movie": UIImage(systemName: "film"),
-                         "TV Show": UIImage(systemName: "tv"),
-                         "Book": UIImage(systemName: "book"),
-                         "Artist": UIImage(systemName: "person"),
-                         "Song" : UIImage(systemName: "music.quarternote.3"),
-                         "N/A": UIImage(systemName: "scribble")]
-    
+//    var categoryIcons = ["Album": UIImage(systemName: "music.note"),
+//                         "Movie": UIImage(systemName: "film"),
+//                         "TV Show": UIImage(systemName: "tv"),
+//                         "Book": UIImage(systemName: "book"),
+//                         "Artist": UIImage(systemName: "person"),
+//                         "Song" : UIImage(systemName: "music.quarternote.3"),
+//                         "N/A": UIImage(systemName: "scribble")]
+//    
     var postOpen : [String: Bool] = [:]
     
     var segueFriendEmail : String?
@@ -55,11 +54,6 @@ class FeedViewController: UIViewController {
 
         
         currentUser = (Auth.auth().currentUser?.email)!
-        
-        
-//        self.navigationController?.navigationBar.titleTextAttributes =
-//            [NSAttributedString.Key.font: UIFont(name: "OpenSans-Bold", size: 24.0)!,
-//             NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0.5851971507, blue: 0, alpha: 1)]
         
         feedTableView.register(UINib(nibName: "AddFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "AddFriendsTableViewCell")
         feedTableView.register(UINib(nibName: "FriendsPostsTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendsPostsTableViewCell")
@@ -77,7 +71,7 @@ class FeedViewController: UIViewController {
     }
     func assignValuesToPostOpen() {
         for post in posts {
-            postOpen[post.postText] = false
+            postOpen[post.postText!] = false
         }
     }
     
@@ -100,6 +94,7 @@ class FeedViewController: UIViewController {
                         }
                     }
                     
+//                    self.feedTableView.reloadData()
                     self.getPosts()
                 }
             }
@@ -110,7 +105,7 @@ class FeedViewController: UIViewController {
 
         self.posts = []
         
-        self.feedTableView.reloadData()
+//        self.feedTableView.reloadData()
         
         for friend in friends {
             db.collection("Users").document(friend[0]).collection("Posts").order(by: "date").addSnapshotListener{ [self] (querySnapshot, error) in
@@ -141,16 +136,13 @@ class FeedViewController: UIViewController {
                                                 username: friend[1],
                                                 profilePicURL: friend[2],
                                                 date: (date as! Double),
-                                                dateString: dateString as! String,
+                                                dateString: dateString as? String,
                                                 postText: (text as! String),
-                                                category: category as! String,
-                                                creator: creator as! String, blurb: blurb as! String, rating: givenRating as! Double)
+                                                category: category as? String,
+                                                creator: creator as? String, blurb: blurb as? String, rating: givenRating as? Double)
                                 self.posts.append(post)
                                 self.assignValuesToPostOpen()
-                                self.posts = self.posts.sorted { $0.date < $1.date }
-                                for post in self.posts {
-//                                    print(post.date + 16000000000)
-                                }
+                                self.posts = self.posts.sorted { $0.date! < $1.date! }
                                 
                             }
                         }
@@ -168,14 +160,21 @@ class FeedViewController: UIViewController {
     
     func getList() {
         
-        db.collection("Users").addSnapshotListener { (querySnapshot, error) in
+        db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").addSnapshotListener { (querySnapshot, error) in
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
             } else {
                 if let snapshotDocuments = querySnapshot?.documents {
+                    self.list = []
                     for doc in snapshotDocuments {
-                        
+                        let data = doc.data()
+                       
+                        if let title = data["text"],
+                           let category = data["category"]{
+                            self.list.append(Post(postText: title as! String, category: category as! String))
+                        }
                     }
+                    print(self.list)
                 }
             }
         }
@@ -203,6 +202,13 @@ class FeedViewController: UIViewController {
             profileVC.addFriendHidden = false
         }
     }
+    
+    
+    @IBAction func messagesPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "FeedToMessages", sender: self)
+    }
+    
+    
 }
 
 //MARK: - Table View
@@ -258,14 +264,14 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let category = posts[section-1].category
             cell.category = category
             
-            if let image = categoryIcons[posts[section-1].category]! {
+            if let image = K.categoryIcons[posts[section-1].category!]! {
                 cell.categoryIcon.image = image
             }
             
             let rating = posts[section-1].rating
             cell.rating = rating
             
-            cell.listButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            
             
             cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
             
@@ -273,10 +279,24 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.profilePic.loadAndCacheImage(urlString: self.posts[section-1].profilePicURL!)
             }
 
-            cell.listButton.isHidden = false
             
-            cell.userView.backgroundColor = categoryColorsSingular[posts[section-1].category]
-            cell.categoryIcon.tintColor = categoryColorsSingular[posts[section-1].category]
+            
+//            cell.userView.backgroundColor = K.categoryColorsSingular[posts[section-1].category!]
+            let categoryColor = K.categoryColorsSingular[posts[section-1].category!]
+            cell.categoryIcon.tintColor = categoryColor
+            
+//            cell.userView.layer.borderColor = categoryColor?.cgColor
+            
+            
+            cell.listButton.isHidden = false
+            cell.listButton.setImage(UIImage(systemName: "plus"), for: .normal)
+            
+            if list.contains(Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: cell.friendsPostTextView.text, category: cell.category, creator: nil, blurb: nil, rating: nil, fromUser: nil)) {
+                print("IN LIST")
+                cell.listButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+
+            }
+
             
             
             return cell
@@ -308,7 +328,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         else if section <= posts.count {
             let post = posts[section-1]
             
-            if postOpen[post.postText] == false{
+            if postOpen[post.postText!] == false{
                 return 0
             }
             else {
@@ -339,7 +359,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = feedTableView.dequeueReusableCell(withIdentifier: "PostDetailView")! as! PostDetailView
         cell.blurbTextView.text = posts[indexPath.section-1].blurb
-        cell.ratingValue.text = "\(posts[indexPath.section-1].rating)"
+        cell.ratingValue.text = "\(String(describing: posts[indexPath.section-1].rating!))"
         
         return cell
         

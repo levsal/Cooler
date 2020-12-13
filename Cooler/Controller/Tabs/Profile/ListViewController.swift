@@ -87,8 +87,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.friendsPostTextView.text = listeds[section].postText
         cell.creatorTextView.text = listeds[section].creator
         
-        cell.categoryIcon.image = K.categoryIcons[listeds[section].category] as? UIImage
-        cell.categoryIcon.tintColor = K.categoryColorsSingular[listeds[section].category]
+        cell.categoryIcon.image = K.categoryIcons[listeds[section].category!] as? UIImage
+        cell.categoryIcon.tintColor = K.categoryColorsSingular[listeds[section].category!]
 
         return cell
     }

@@ -12,8 +12,7 @@ class PostDetailView: UITableViewCell {
     @IBOutlet weak var blurbTextView: UITextView!
     @IBOutlet weak var ratingValue: UILabel!
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var ratingCircle: UIImageView!
-    
+    @IBOutlet var ratingView: UIView!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     
     var profileVC : ProfileViewController?
@@ -21,7 +20,9 @@ class PostDetailView: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        ratingView.layer.cornerRadius = ratingView.layer.frame.height/2
+        ratingView.layer.borderWidth = 2
+        ratingView.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

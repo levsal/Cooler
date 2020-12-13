@@ -11,6 +11,7 @@ import UIKit
 class FindFriendsTableViewCell: UITableViewCell {
 
     var parentFindFriendsVC : FindFriendsViewController?
+    var parentMessagesVC : MessagesViewController?
     
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var name: UILabel!
@@ -27,14 +28,29 @@ class FindFriendsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     @IBAction func segueTriggerPressed(_ sender: Any) {
-        for friend in parentFindFriendsVC!.friends {
-            if friend.name == name.text {
-                parentFindFriendsVC?.segueEmail = friend.email!
-                parentFindFriendsVC?.segueName = friend.name!
+        if parentFindFriendsVC != nil {
+            for friend in parentFindFriendsVC!.friends {
+                if friend.name == name.text {
+                    parentFindFriendsVC?.segueEmail = friend.email!
+                    parentFindFriendsVC?.segueName = friend.name!
+                }
             }
+            parentFindFriendsVC?.performSegue(withIdentifier: "SearchToProfile", sender: self)
         }
-        parentFindFriendsVC?.performSegue(withIdentifier: "SearchToProfile", sender: self)
+        else {
+            for friend in parentMessagesVC!.friends {
+                if friend.name == name.text {
+                    parentMessagesVC?.segueURL = friend.picURL!
+                    parentMessagesVC?.segueName = friend.name!
+                }
+            }
+
+            parentMessagesVC?.performSegue(withIdentifier: "MessagesToConvo", sender: self)
+        }
+       
     }
+    
+    
     
     
    

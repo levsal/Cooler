@@ -18,15 +18,6 @@ class PostViewController: UIViewController {
     
     var categories : [String] = []
 
-    var categoryColors = [#colorLiteral(red: 0.7195122838, green: 0.7771759033, blue: 0.9829060435, alpha: 1), #colorLiteral(red: 0.9840890765, green: 0.9478709102, blue: 0.5600411892, alpha: 1), #colorLiteral(red: 0.7062328458, green: 0.9582253098, blue: 0.6986720562, alpha: 1), #colorLiteral(red: 0.9942241311, green: 0.751460135, blue: 0.7323454618, alpha: 1)]
-    var categoryColorsPlural = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1),
-                                "Movie": #colorLiteral(red: 0.8745098039, green: 0.7058823529, blue: 0.1333333333, alpha: 1),
-                                "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1),
-                                "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
-                                "Artist": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
-                                "Song" : #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
-                                "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
-    
     var selectedCategory : String?
     
     var preservedPostText : String?
@@ -264,7 +255,7 @@ extension PostViewController: UITextViewDelegate{
             }
             if pickerView == categoryPicker {
                 pickerLabel?.text = categories[row]
-                pickerLabel?.textColor = categoryColorsPlural[categories[row]]
+                pickerLabel?.textColor = K.categoryColorsSingular[categories[row]]
             }
             else {
                 pickerLabel?.text = "\(Double(row)/10.0)"

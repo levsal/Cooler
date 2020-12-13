@@ -16,7 +16,7 @@ class PositionCorrectingTableView: UITableView {
     override func reloadData() {
     
         offset = contentOffset
-//        print(offset)
+
         super.reloadData()
 
     }

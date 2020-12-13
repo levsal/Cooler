@@ -13,12 +13,12 @@ struct Post: Equatable {
     var userEmail : String?
     var username: String?
     var profilePicURL : String?
-    var date : Double
-    var dateString : String
-    var postText : String
-    var category: String
-    var creator: String
-    var blurb: String
-    var rating: Double
+    var date : Double?
+    var dateString : String?
+    var postText : String?
+    var category: String?
+    var creator: String?
+    var blurb: String?
+    var rating: Double?
     var fromUser: String?
 }

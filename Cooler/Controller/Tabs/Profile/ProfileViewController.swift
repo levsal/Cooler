@@ -58,30 +58,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     var selectedCategories : [String] = []
     
-    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5019607843, green: 0.6078431373, blue: 0.9921568627, alpha: 1),
-                                  "Movie": #colorLiteral(red: 0.8745098039, green: 0.7058823529, blue: 0.1333333333, alpha: 1),
-                                  "TV Show": #colorLiteral(red: 0.4823529412, green: 0.7882352941, blue: 0.431372549, alpha: 1),
-                                  "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
-                                  "Artist": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
-                                  "Song" : #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
-                                  "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
-    var categoryColorsSingularPale = ["Album": #colorLiteral(red: 0.7195122838, green: 0.7771759033, blue: 0.9829060435, alpha: 1), "Movie": #colorLiteral(red: 0.8376982212, green: 0.8472841382, blue: 0.4527434111, alpha: 1), "TV Show": #colorLiteral(red: 0.6429418921, green: 0.8634710908, blue: 0.6248642206, alpha: 1), "Book": #colorLiteral(red: 0.886295557, green: 0.6721803546, blue: 0.6509570479, alpha: 1), "N/A": #colorLiteral(red: 0.3980969191, green: 0.4254524708, blue: 0.4201924801, alpha: 1)]
-    var categoryColorsPlural = ["Albums": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1),
-                                "Movies": #colorLiteral(red: 0.8745098039, green: 0.7058823529, blue: 0.1333333333, alpha: 1),
-                                "TV Shows": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1),
-                                "Books": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
-                                "Artists": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
-                                "Songs" : #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
-                                "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
-    
-    var categoryIcons = ["Album": UIImage(systemName: "music.note"),
-                         "Movie": UIImage(systemName: "film"),
-                         "TV Show": UIImage(systemName: "tv"),
-                         "Book": UIImage(systemName: "book"),
-                         "Artist": UIImage(systemName: "person"),
-                         "Song" : UIImage(systemName: "music.quarternote.3"),
-                         "N/A": UIImage(systemName: "scribble")]
-    
     var postOpen : [String: Bool] = [:]
     
     var isHost : Bool = true
@@ -261,7 +237,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     func assignValuesToPostOpen() {
         for post in posts {
-            postOpen[post.postText] = false
+            postOpen[post.postText!] = false
         }
         //        print(postOpen)
     }
@@ -291,7 +267,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
 //        performSegue(withIdentifier: "ProfileToFindFriends", sender: self)
     }
     
-    func loadPosts(from genres: [String]){
+    func loadPosts(from categories: [String]){
         
         db.collection("Users").document(email).collection("Posts").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             self.posts = []
@@ -310,11 +286,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                            let givenRating = data["rating"] {
                             
                             //Filter by selected genre
-                            for genre in genres {
+                            for cat in categories {
                                 if let category = data["category"]{
-                                    if category as! String == genre {
-                                        self.posts.append(Post(date: date as! Double, dateString: dateString as! String, postText: postText as! String, category: category as! String, creator: creator as! String, blurb: blurb as! String, rating: givenRating as! Double))
-                                        //                                    print(self.posts)
+                                    if category as! String == cat {
+                                        self.posts.append(Post(date: date as? Double, dateString: dateString as? String, postText: postText as? String, category: category as? String, creator: creator as? String, blurb: blurb as? String, rating: givenRating as? Double))
                                     }
                                 }
                             }
@@ -540,67 +515,47 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
         cell.parentVC = self
         
         cell.category!.text = categories[indexPath.item]
-        cell.category.textColor = categoryColorsPlural[cell.category.text!]
+        
+        cell.category.textColor = K.categoryColorsPlural[cell.category.text!]
+        
+        if selectedCategories == [String((cell.category.text?.dropLast())!)] {
+            cell.underlined = true
+    
+        }
+        else {
+            cell.underlined = false
+        }
+        
+        if cell.underlined {
+            let attributedString = NSMutableAttributedString.init(string: (cell.category.text!))
+            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
+            cell.category.attributedText = attributedString
+        }
+        else {
+            let attributedString = NSMutableAttributedString.init(string: (cell.category.text!))
+            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 0, range: NSRange.init(location: 0, length: attributedString.length))
+            cell.category.attributedText = attributedString
+        }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //        print("Did select Item at \(indexPath)")
         
         let categoryCell = categoryCollectionView.cellForItem(at: indexPath)! as! CategoriesCollectionViewCell
-        //        print(categoryCell.underlined)
-        
-        let attributedString = NSMutableAttributedString.init(string: (categoryCell.category.text!))
-        
-        //If not selected cell, unhighlight
-        for cell in categoryCollectionView.visibleCells {
-            let catCell = cell as! CategoriesCollectionViewCell
-            if catCell != categoryCell {
-                let attributedString2 = NSMutableAttributedString.init(string: (catCell.category.text!))
-                attributedString2.addAttribute(NSAttributedString.Key.underlineStyle, value: 0, range: NSRange.init(location: 0, length: attributedString2.length))
-                catCell.category.attributedText = attributedString2
-                catCell.underlined = false
-            }
-        }
-        
-        resetSelectedCategories()
-        
-        
         
         if categoryCell.underlined == false {
-            
-            //Underline Category
-            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
-            categoryCell.category.attributedText = attributedString
-            
-            
-            //Make Pluralized Category Header Singular
-            let genre = (categoryCell.category.text!).dropLast()
-            selectedCategories = [String(genre)]
-            
-            //Reload Posts Based on Selected Category/Lack of Selection
-            loadPosts(from: (selectedCategories))
-            categoryCell.underlined = true
-            
-
+            let cat = (categoryCell.category.text!).dropLast()
+            selectedCategories = [String(cat)]
         }
         else {
-            
-            //Underline Category
-            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 0, range: NSRange.init(location: 0, length: attributedString.length))
-            categoryCell.category.attributedText = attributedString
-            
             selectedCategories = []
             for category in categories {
                 selectedCategories.append(String(category.dropLast()))
             }
-            
-            loadPosts(from: (selectedCategories))
-            categoryCell.underlined = false
-            
         }
-        
+        loadPosts(from: selectedCategories)
+        categoryCollectionView.reloadData()
     }
     
     
@@ -612,6 +567,7 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
                           height:
                             CGFloat(24))
         }
+        
         return CGSize(width:
                         CGFloat(collectionView.frame.size.width / CGFloat(4) - CGFloat(10)),
                       height:
@@ -648,8 +604,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 //            cell.creatorTextView.backgroundColor = categoryColorsSingularPale[posts[section].category]
 //            cell.creatorTextView.textColor = .black
             
-            cell.categoryIcon.image = categoryIcons[posts[section].category]!!
-            cell.categoryIcon.tintColor = categoryColorsSingular[posts[section].category]
+            cell.categoryIcon.image = K.categoryIcons[posts[section].category!]!!
+            cell.categoryIcon.tintColor = K.categoryColorsSingular[posts[section].category!]
 //            cell.categoryTag.backgroundColor = categoryColorsSingular[posts[section].category]
 
 //            cell.stackHeight.constant = 120
@@ -701,7 +657,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section <= posts.count - 1 {
             let post = posts[section]
-            if postOpen[post.postText] == false{
+            if postOpen[post.postText!] == false{
                 return 0
             }
             else {
@@ -720,13 +676,17 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailView", for: indexPath) as! PostDetailView
         cell.blurbTextView.text = posts[indexPath.section].blurb
-        cell.ratingValue.text = "\(posts[indexPath.section].rating)"
+        cell.ratingValue.text = "\(String(describing: posts[indexPath.section].rating!))"
         cell.profileVC = self
         return cell
     }
     
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 120
+//    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
     
