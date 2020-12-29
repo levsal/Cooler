@@ -9,8 +9,10 @@
 import Foundation
 
 struct Message : Equatable {
-    var email : String?
-    var name : String?
+    var senderEmail : String?
+    var senderName : String?
+    var recipientEmail : String?
+    var recipientName : String?
     var text : String?
     var date : Double?
     var dateString: String?

@@ -42,6 +42,7 @@ class FindFriendsTableViewCell: UITableViewCell {
                 if friend.name == name.text {
                     parentMessagesVC?.segueURL = friend.picURL!
                     parentMessagesVC?.segueName = friend.name!
+                    parentMessagesVC?.segueEmail = friend.email!
                 }
             }
 

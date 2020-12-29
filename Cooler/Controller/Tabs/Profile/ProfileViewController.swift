@@ -77,6 +77,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+
      
 //        navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
@@ -217,6 +219,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                                 self.usernameString = name
                                 if let uName = self.username {
                                     uName.text = name
+
                                 }
                                 if let bioText = data["bio"] as? String{
                                     self.bio = bioText
@@ -600,21 +603,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             cell.friendsPostTextView.text = posts[section].postText
             cell.creatorTextView.text = posts[section].creator
             
-//            cell.friendsPostTextView.backgroundColor = categoryColorsSingular[posts[section].category]
-//            cell.creatorTextView.backgroundColor = categoryColorsSingularPale[posts[section].category]
-//            cell.creatorTextView.textColor = .black
-            
             cell.categoryIcon.image = K.categoryIcons[posts[section].category!]!!
             cell.categoryIcon.tintColor = K.categoryColorsSingular[posts[section].category!]
-//            cell.categoryTag.backgroundColor = categoryColorsSingular[posts[section].category]
 
-//            cell.stackHeight.constant = 120
-//            cell.iconWidth.constant = 25
-//            cell.iconHeight.constant = 25
-//            cell.iconOffset.constant = -80
-            
-//            cell.contentView.backgroundColor = .white
-            
             cell.date = posts[section].date
             cell.category = posts[section].category
             cell.rating = posts[section].rating
@@ -623,7 +614,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.editButton.isHidden = false
             }
             
-//            cell.userView.isHidden = true
+            if postOpen[posts[section].postText!]! {
+                cell.openClosedArrow.image = UIImage(systemName: "chevron.down")
+            }
+            
 
             
             

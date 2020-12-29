@@ -17,10 +17,12 @@ class UserSettingsViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet var settingsTableView: UITableView!
     
-    var categoryNames = ["Albums", "Movies", "TV Shows", "Books", "Artists", "Songs", "Misc./"]
+    var categoryNames = ["Albums", "Movies", "TV Shows", "Books", "Artists", "Songs", "Misc."]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+
         
         settingsTableView.dataSource = self
         settingsTableView.delegate = self

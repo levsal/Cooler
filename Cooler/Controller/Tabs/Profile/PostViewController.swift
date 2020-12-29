@@ -41,6 +41,8 @@ class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+
         let categoryString = NSMutableAttributedString.init(string: "Category")
         categoryString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: categoryString.length))
         categoryHeader.attributedText = categoryString

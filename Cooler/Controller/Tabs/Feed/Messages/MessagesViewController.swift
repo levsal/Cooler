@@ -12,37 +12,78 @@ import Firebase
 class MessagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let db = Firestore.firestore()
+    var existingConvos : [Friend] = []
     var friends : [Friend] = []
     var segueURL = ""
     var segueName = ""
+    var segueEmail = ""
     
     @IBOutlet var convosTableView: UITableView!
     @IBOutlet var messagesSearchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+
+        
+        self.navigationItem.backBarButtonItem?.tintColor = .white
+        
+        messagesSearchBar.backgroundColor = #colorLiteral(red: 0.1321208775, green: 0.1321504712, blue: 0.1321169734, alpha: 1)
+        messagesSearchBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
 
         convosTableView.register(UINib(nibName: "FindFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "FindFriendsTableViewCell")
         convosTableView.dataSource = self
         convosTableView.delegate = self
         messagesSearchBar.delegate = self
+        
+        getConvos()
     }
+    
+    func getConvos() {
+        db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Messages").addSnapshotListener { (querySnapshot, error) in
+            if let e = error {
+                print("Error loading conversations, \(e)")
+            }
+            else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let email = data["email"] {
+                            
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MessagesToConvo" {
             let convoVC = segue.destination as! ConvoViewController
             convoVC.imageString = segueURL
             convoVC.friend = segueName
+            convoVC.friendEmail = segueEmail
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if friends == [] {
+            return existingConvos.count
+        }
         return friends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        
+        if friends == [] {
+            
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "FindFriendsTableViewCell") as! FindFriendsTableViewCell
         cell.parentMessagesVC = self
+
         
         cell.name.text = friends[indexPath.row].name
         cell.bio.text = friends[indexPath.row].bio
@@ -56,6 +97,7 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         }
 
         return cell
+    
     }
     
     
@@ -101,6 +143,7 @@ extension MessagesViewController : UISearchBarDelegate {
                     }
                     print(self.friends)
                     self.convosTableView.reloadData()
+                    
                 }
             }
         }
@@ -110,29 +153,6 @@ extension MessagesViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-    
-    
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let profileVC = segue.destination as! ProfileViewController
-//
-//        if segue.identifier == "SearchToProfile" {
-//           print(existingFriends)
-//            for friend in existingFriends {
-//                if segueEmail == friend.email{
-//                    print("Googoogaga")
-//                    profileVC.friendStatusButton = "Remove Friend"
-//                    profileVC.friendStatusColor = #colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1)
-//                }
-//            }
-//            profileVC.isHost = false
-//            profileVC.email = segueEmail
-//            profileVC.signOutButtonTitle = "Back To Search"
-//            profileVC.postButton.image = nil
-//            profileVC.postButton.title = ""
-//            profileVC.addFriendHidden = false
-//        }
-//    }
-    
+
     
 }

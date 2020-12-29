@@ -9,9 +9,10 @@
 import UIKit
 
 class MessagesTableViewCell: UITableViewCell {
-    
+    @IBOutlet var messageText: UILabel!
     @IBOutlet var messageLeading: NSLayoutConstraint!
     @IBOutlet var messageTrailing: NSLayoutConstraint!
+    @IBOutlet var messageWidth: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()

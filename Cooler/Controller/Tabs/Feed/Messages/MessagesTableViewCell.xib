@@ -25,6 +25,9 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hiiiii" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RIQ-oX-vMY">
                         <rect key="frame" x="5" y="10" width="366" height="72"/>
                         <color key="backgroundColor" red="0.13213832480000001" green="0.13213832480000001" blue="0.13213832480000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="366" id="mSz-J8-YRd"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -41,7 +44,9 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="messageLeading" destination="ie4-1H-kxa" id="puG-zd-ndf"/>
+                <outlet property="messageText" destination="RIQ-oX-vMY" id="ftV-dp-ebe"/>
                 <outlet property="messageTrailing" destination="k4g-Fp-oX0" id="E37-6p-t6M"/>
+                <outlet property="messageWidth" destination="mSz-J8-YRd" id="QtV-Tv-SFM"/>
             </connections>
             <point key="canvasLocation" x="178.2608695652174" y="77.678571428571431"/>
         </tableViewCell>

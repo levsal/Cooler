@@ -28,7 +28,8 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet var iconOffset: NSLayoutConstraint!
     @IBOutlet var iconHeight: NSLayoutConstraint!
     @IBOutlet var iconWidth: NSLayoutConstraint!
-
+    @IBOutlet var openClosedArrow: UIImageView!
+    
     
     
     var date : Double?
@@ -57,8 +58,9 @@ class FriendsPostsTableViewCell: UITableViewCell {
         
         listButton.isHidden = true
         
-        userView.layer.borderWidth = 3
-        userView.layer.borderColor = #colorLiteral(red: 0.1618016958, green: 0.1618359685, blue: 0.1617971659, alpha: 1)
+        userView.layer.borderWidth = 2
+        
+        userView.layer.borderColor = #colorLiteral(red: 0.1502064466, green: 0.152626276, blue: 0.1541877985, alpha: 1)
 //        userView.layer.cornerRadius = 5
 //        userView.layer.borderColor = #colorLiteral(red: 0.174927026, green: 0.1749634147, blue: 0.1749222279, alpha: 1)
 

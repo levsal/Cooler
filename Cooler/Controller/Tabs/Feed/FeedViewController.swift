@@ -24,22 +24,6 @@ class FeedViewController: UIViewController {
     
     @IBOutlet weak var emptyFeedViewLabel: UILabel!
     
-//    var categoryColorsSingular = ["Album": #colorLiteral(red: 0.5018746257, green: 0.6073153615, blue: 0.9935619235, alpha: 1),
-//                                  "Movie": #colorLiteral(red: 0.8735565543, green: 0.705497086, blue: 0.1316877007, alpha: 1),
-//                                  "TV Show": #colorLiteral(red: 0.4808345437, green: 0.7886778712, blue: 0.4316937923, alpha: 1),
-//                                  "Book": #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
-//                                  "Artist": #colorLiteral(red: 0.5275336504, green: 0.8038083911, blue: 1, alpha: 1),
-//                                  "Song": #colorLiteral(red: 0.7624928355, green: 0.6272898912, blue: 0.9858120084, alpha: 1),
-//                                  "N/A": #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)]
-    
-//    var categoryIcons = ["Album": UIImage(systemName: "music.note"),
-//                         "Movie": UIImage(systemName: "film"),
-//                         "TV Show": UIImage(systemName: "tv"),
-//                         "Book": UIImage(systemName: "book"),
-//                         "Artist": UIImage(systemName: "person"),
-//                         "Song" : UIImage(systemName: "music.quarternote.3"),
-//                         "N/A": UIImage(systemName: "scribble")]
-//    
     var postOpen : [String: Bool] = [:]
     
     var segueFriendEmail : String?
@@ -48,11 +32,11 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+
         
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
 
-
-        
         currentUser = (Auth.auth().currentUser?.email)!
         
         feedTableView.register(UINib(nibName: "AddFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "AddFriendsTableViewCell")
@@ -287,6 +271,9 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
 //            cell.userView.layer.borderColor = categoryColor?.cgColor
             
+            if postOpen[posts[section-1].postText!]! {
+                cell.openClosedArrow.image = UIImage(systemName: "chevron.down")
+            }
             
             cell.listButton.isHidden = false
             cell.listButton.setImage(UIImage(systemName: "plus"), for: .normal)

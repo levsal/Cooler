@@ -29,7 +29,14 @@ class FindFriendsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
+        
+        
+        usersSearchBar.backgroundColor = #colorLiteral(red: 0.1321208775, green: 0.1321504712, blue: 0.1321169734, alpha: 1)
+        usersSearchBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
+//        self.navigationItem.titleView = usersSearchBar
 
 
         
