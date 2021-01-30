@@ -16,19 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GliitterBlack HighDef" translatesAutoresizingMaskIntoConstraints="NO" id="sNR-PD-0QE">
-                                <rect key="frame" x="57" y="328" width="300" height="300"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1024" translatesAutoresizingMaskIntoConstraints="NO" id="Y84-bT-VUc">
+                                <rect key="frame" x="57" y="259" width="300" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="XIS-zV-cVu"/>
-                                    <constraint firstAttribute="height" constant="300" id="nzs-20-5tM"/>
+                                    <constraint firstAttribute="height" constant="300" id="LIx-eA-fGI"/>
+                                    <constraint firstAttribute="width" constant="300" id="gIy-AV-VuE"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="sNR-PD-0QE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="9Rb-3v-7og"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="sNR-PD-0QE" secondAttribute="bottom" constant="234" id="Dbg-CS-Foc"/>
+                            <constraint firstItem="Y84-bT-VUc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="215" id="PlM-uB-o1V"/>
+                            <constraint firstItem="Y84-bT-VUc" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="iK3-2e-O7e"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="GliitterBlack HighDef" width="1024" height="1024"/>
+        <image name="1024" width="512" height="512"/>
     </resources>
 </document>

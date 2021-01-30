@@ -17,6 +17,7 @@ class FindFriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var bio: UILabel!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -38,11 +39,26 @@ class FindFriendsTableViewCell: UITableViewCell {
             parentFindFriendsVC?.performSegue(withIdentifier: "SearchToProfile", sender: self)
         }
         else {
-            for friend in parentMessagesVC!.friends {
-                if friend.name == name.text {
-                    parentMessagesVC?.segueURL = friend.picURL!
-                    parentMessagesVC?.segueName = friend.name!
-                    parentMessagesVC?.segueEmail = friend.email!
+            if parentMessagesVC!.friends != [] {
+                for friend in parentMessagesVC!.friends {
+                    if friend.name == name.text {
+                        parentMessagesVC!.segueCurrentUserName = K.currentUserName
+                        
+                        parentMessagesVC?.segueURL = friend.picURL!
+                        parentMessagesVC?.segueName = friend.name!
+                        parentMessagesVC?.segueEmail = friend.email!
+                    }
+                }
+            }
+            else if parentMessagesVC!.existingConvos != [] {
+                for convo in parentMessagesVC!.existingConvos {
+                    if convo.name == name.text {
+                        parentMessagesVC!.segueCurrentUserName = K.currentUserName
+                        
+                        parentMessagesVC?.segueURL = convo.picURL!
+                        parentMessagesVC?.segueName = convo.name!
+                        parentMessagesVC?.segueEmail = convo.email!
+                    }
                 }
             }
 

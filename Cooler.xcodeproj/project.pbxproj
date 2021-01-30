@@ -96,6 +96,25 @@
 		BE3FF92A25277CA700F9B5E5 /* CategoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		BE3FF92B25277CA800F9B5E5 /* CategoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoriesCollectionViewCell.xib; sourceTree = "<group>"; };
 		BE3FF94E252969F300F9B5E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BE54A94E25BB39DA0033E65E /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
+		BE54A94F25BB39DA0033E65E /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		BE54A95025BB39DA0033E65E /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
+		BE54A95125BB39DA0033E65E /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
+		BE54A95225BB39DA0033E65E /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; };
+		BE54A95325BB39DA0033E65E /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
+		BE54A95425BB39DA0033E65E /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
+		BE54A95525BB39DA0033E65E /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		BE54A95625BB39DA0033E65E /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
+		BE54A95725BB39DA0033E65E /* Montserrat-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-BlackItalic.ttf"; sourceTree = "<group>"; };
+		BE54A95825BB39DA0033E65E /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		BE54A95925BB39DA0033E65E /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		BE54A95A25BB39DA0033E65E /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
+		BE54A95B25BB39DA0033E65E /* OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		BE54A95C25BB39DA0033E65E /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		BE54A95D25BB39DA0033E65E /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		BE54A95E25BB39DA0033E65E /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
+		BE54A95F25BB39DA0033E65E /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		BE54A96025BB39DA0033E65E /* Montserrat-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		BE5FF4842538B3360075C390 /* FindFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		BE5FF4872538CC9D0075C390 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		BE9CD2B52541BC7300D142C4 /* UIImageCacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageCacher.swift; sourceTree = "<group>"; };
@@ -133,6 +152,7 @@
 		102CCC74C91FCB9A98A43E70 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				BE54A94D25BB39D90033E65E /* Montserrat */,
 				828583950298E2F2A0B64819 /* Pods-Cooler.debug.xcconfig */,
 				A6D6413E73ABC88DC1477ECF /* Pods-Cooler.release.xcconfig */,
 			);
@@ -147,7 +167,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BE21290E25856498008FD520 /* Messages */ = {
+		BE21290E25856498008FD520 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
 				BE212910258564EF008FD520 /* MessagesViewController.swift */,
@@ -155,7 +175,7 @@
 				BE2129162585694D008FD520 /* MessagesTableViewCell.swift */,
 				BE2129172585694D008FD520 /* MessagesTableViewCell.xib */,
 			);
-			path = Messages;
+			path = Messaging;
 			sourceTree = "<group>";
 		};
 		BE3ACFE22576AAD0000BBFF9 /* Settings */ = {
@@ -232,7 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				BE3FF8DD25257EA200F9B5E5 /* FeedViewController.swift */,
-				BE21290E25856498008FD520 /* Messages */,
+				BE21290E25856498008FD520 /* Messaging */,
 				BE82145D25183186009174CD /* Add Friends Cell */,
 				BE3D20B1252573790031B3EB /* FriendsPostsCell */,
 			);
@@ -245,6 +265,32 @@
 				BE3FF8D425257E8A00F9B5E5 /* TBCViewController.swift */,
 			);
 			path = "Tab Bar Controller";
+			sourceTree = "<group>";
+		};
+		BE54A94D25BB39D90033E65E /* Montserrat */ = {
+			isa = PBXGroup;
+			children = (
+				BE54A94E25BB39DA0033E65E /* Montserrat-LightItalic.ttf */,
+				BE54A94F25BB39DA0033E65E /* Montserrat-Medium.ttf */,
+				BE54A95025BB39DA0033E65E /* Montserrat-BoldItalic.ttf */,
+				BE54A95125BB39DA0033E65E /* Montserrat-Light.ttf */,
+				BE54A95225BB39DA0033E65E /* Montserrat-ThinItalic.ttf */,
+				BE54A95325BB39DA0033E65E /* Montserrat-ExtraLight.ttf */,
+				BE54A95425BB39DA0033E65E /* Montserrat-Thin.ttf */,
+				BE54A95525BB39DA0033E65E /* Montserrat-Bold.ttf */,
+				BE54A95625BB39DA0033E65E /* Montserrat-MediumItalic.ttf */,
+				BE54A95725BB39DA0033E65E /* Montserrat-BlackItalic.ttf */,
+				BE54A95825BB39DA0033E65E /* Montserrat-SemiBold.ttf */,
+				BE54A95925BB39DA0033E65E /* Montserrat-ExtraLightItalic.ttf */,
+				BE54A95A25BB39DA0033E65E /* Montserrat-ExtraBold.ttf */,
+				BE54A95B25BB39DA0033E65E /* OFL.txt */,
+				BE54A95C25BB39DA0033E65E /* Montserrat-Black.ttf */,
+				BE54A95D25BB39DA0033E65E /* Montserrat-Regular.ttf */,
+				BE54A95E25BB39DA0033E65E /* Montserrat-Italic.ttf */,
+				BE54A95F25BB39DA0033E65E /* Montserrat-SemiBoldItalic.ttf */,
+				BE54A96025BB39DA0033E65E /* Montserrat-ExtraBoldItalic.ttf */,
+			);
+			path = Montserrat;
 			sourceTree = "<group>";
 		};
 		BE5FF4832538B2DB0075C390 /* Find Friends */ = {

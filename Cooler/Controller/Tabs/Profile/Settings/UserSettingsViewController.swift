@@ -88,6 +88,12 @@ class UserSettingsViewController: UIViewController, UITableViewDataSource, UITab
         cell.userEmail.isHidden = true
         cell.dateString.isHidden = true
         
+        cell.friendsPostTextView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        cell.friendsPostTextView.layer.cornerRadius = cell.friendsPostTextView.frame.height/4.5
+        
+        cell.creatorTextView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        cell.creatorTextView.layer.cornerRadius = cell.friendsPostTextView.frame.height/4.5
+        
         return cell
     }
     

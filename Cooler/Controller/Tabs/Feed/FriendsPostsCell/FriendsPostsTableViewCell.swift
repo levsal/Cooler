@@ -58,9 +58,9 @@ class FriendsPostsTableViewCell: UITableViewCell {
         
         listButton.isHidden = true
         
-        userView.layer.borderWidth = 2
-        
-        userView.layer.borderColor = #colorLiteral(red: 0.1502064466, green: 0.152626276, blue: 0.1541877985, alpha: 1)
+//        userView.layer.borderWidth = 2
+//        
+//        userView.layer.borderColor = #colorLiteral(red: 0.1502064466, green: 0.152626276, blue: 0.1541877985, alpha: 1)
 //        userView.layer.cornerRadius = 5
 //        userView.layer.borderColor = #colorLiteral(red: 0.174927026, green: 0.1749634147, blue: 0.1749222279, alpha: 1)
 
@@ -88,6 +88,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
     
     @IBAction func postTriggerPressed(_ sender: UIButton) {
         let work = friendsPostTextView.text
+        let exactDate = date
         
         //PROFILE
         if parentProfileVC?.postOpen[work!] == false {
@@ -120,12 +121,27 @@ class FriendsPostsTableViewCell: UITableViewCell {
             parentFeedVC?.feedTableView.layoutIfNeeded()
             
         }
+       
+        //LIST
+        if parentListVC?.listedOpen[exactDate!] == false{
+            parentListVC?.listedOpen[exactDate!] = true
 
+            parentListVC?.listTableView.reloadData()
+            parentListVC?.listTableView.layoutIfNeeded()
+
+        }
+        else if parentListVC?.listedOpen[exactDate!] == true{
+            parentListVC?.listedOpen[exactDate!] = false
+
+            parentListVC?.listTableView.reloadData()
+            parentListVC?.listTableView.layoutIfNeeded()
+
+        }
         
         self.layoutIfNeeded()
         parentProfileVC?.postTableView.setContentOffset((parentProfileVC?.postTableView.offset)!, animated: false)
         parentFeedVC?.feedTableView.setContentOffset((parentFeedVC?.feedTableView.offset)!, animated: false)
-        
+        parentListVC?.listTableView.setContentOffset((parentListVC?.listTableView.offset)!, animated: false)
         
         //User Settings
         if parentUserSettingsVC != nil  {

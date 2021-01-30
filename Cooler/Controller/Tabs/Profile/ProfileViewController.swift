@@ -78,7 +78,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-
      
 //        navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
@@ -305,7 +304,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                     }
                     self.assignValuesToPostOpen()
                     
-                    self.postsCountValue = "Posts: " + String(self.posts.count)
+                    self.postsCountValue = "" + String(self.posts.count) + " posts"
                     if let pCount = self.postsCount {
                         pCount.setTitle(self.postsCountValue, for: .normal)
                     }
@@ -336,7 +335,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                     }
 
                     
-                    self.friendsCountValue = "Friends: " + String(self.friends.count)
+                    self.friendsCountValue = "" + String(self.friends.count) + " friends"
                     if let fCount = self.friendsCount {
                         fCount.setTitle(self.friendsCountValue, for: .normal)
                         
@@ -564,6 +563,7 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        
         if categories.count <= 4 {
             return CGSize(width:
                             CGFloat(collectionView.frame.size.width / CGFloat(categories.count)),
@@ -571,10 +571,9 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
                             CGFloat(24))
         }
         
-        return CGSize(width:
-                        CGFloat(collectionView.frame.size.width / CGFloat(4) - CGFloat(10)),
-                      height:
-                        CGFloat(24))
+        let throwawayLabel = UILabel()
+        throwawayLabel.text = categories[indexPath.item]
+        return CGSize(width: throwawayLabel.intrinsicContentSize.width + CGFloat(20), height: CGFloat(24))
        
         
     }
@@ -589,6 +588,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 90
+    }
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return 90
     }
     
@@ -618,7 +620,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.openClosedArrow.image = UIImage(systemName: "chevron.down")
             }
             
-
+            cell.friendsPostTextView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            cell.friendsPostTextView.layer.cornerRadius = cell.friendsPostTextView.frame.height/4.5
+            
+            cell.creatorTextView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            cell.creatorTextView.layer.cornerRadius = cell.friendsPostTextView.frame.height/4.5
             
             
             return cell
@@ -681,6 +687,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 //    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
     

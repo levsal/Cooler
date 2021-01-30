@@ -53,6 +53,9 @@ class SignUpViewController: UIViewController {
                                 "picURL" : "https://firebasestorage.googleapis.com/v0/b/cooler-e529a.appspot.com/o/a@b.com_ProfilePic?alt=media&token=fcc65527-ff9a-4d14-ae71-3e780faf7f14",
                                 "Artforms" : ["Albums", "Movies", "TV Shows", "Books"]])
                             
+                            K.currentUserName = name
+                            K.currentUserPicURL = "https://firebasestorage.googleapis.com/v0/b/cooler-e529a.appspot.com/o/a@b.com_ProfilePic?alt=media&token=fcc65527-ff9a-4d14-ae71-3e780faf7f14"
+                            
                             self.performSegue(withIdentifier: "signUpToTabs", sender: self)
                         }
                     }

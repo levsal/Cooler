@@ -33,7 +33,7 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-
+        
         
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
 
@@ -158,7 +158,7 @@ class FeedViewController: UIViewController {
                             self.list.append(Post(postText: title as! String, category: category as! String))
                         }
                     }
-                    print(self.list)
+//                    print(self.list)
                 }
             }
         }
@@ -170,7 +170,7 @@ class FeedViewController: UIViewController {
             profileVC.isHost = false
             profileVC.email = segueFriendEmail!
 //            profileVC.loadProfilePage(email: segueFriendEmail!)//
-            profileVC.signOutButtonTitle = "Back To Feed"
+            profileVC.signOutButtonTitle = "Feed"
             profileVC.postButton.image = nil
             profileVC.postButton.title = ""
             
@@ -230,9 +230,12 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             let postName = posts[section-1].postText
             cell.friendsPostTextView.text = postName
+//            cell.friendsPostTextView.textColor = K.categoryColorsSingular[posts[section-1].category!]
+
             
             let creator = posts[section-1].creator
             cell.creatorTextView.text = creator
+//            cell.creatorTextView.textColor = K.categoryColorsSingular[posts[section-1].category!]
             
             let dateString = posts[section-1].dateString
             cell.dateString.text = dateString
@@ -241,9 +244,6 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             cell.blurb = blurb
             
             cell.email = posts[section-1].userEmail
-            //            print(posts)
-            //            print[posts[section-1].category])
-            
             
             let category = posts[section-1].category
             cell.category = category
@@ -259,6 +259,12 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
             
+            cell.userView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            cell.userView.layer.cornerRadius = cell.userView.frame.height/4.5
+            
+            cell.creatorTextView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            cell.creatorTextView.layer.cornerRadius = cell.userView.frame.height/4.5
+
             DispatchQueue.main.async {
                 cell.profilePic.loadAndCacheImage(urlString: self.posts[section-1].profilePicURL!)
             }
@@ -279,7 +285,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             cell.listButton.setImage(UIImage(systemName: "plus"), for: .normal)
             
             if list.contains(Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: cell.friendsPostTextView.text, category: cell.category, creator: nil, blurb: nil, rating: nil, fromUser: nil)) {
-                print("IN LIST")
+//                print("IN LIST")
                 cell.listButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
 
             }
