@@ -17,7 +17,7 @@ class AddFriendsTableViewCell: UITableViewCell{
     
     let db = Firestore.firestore()
     
-    var potentialFriends : [[String]]? = [["","",""]]
+    var potentialFriends : [Friend] = []
     
     var firstCollectionViewLoad = true
     
@@ -43,16 +43,16 @@ class AddFriendsTableViewCell: UITableViewCell{
             
             //PRINT FRIEND NAMES
 
-            if let blankIndex = self.potentialFriends?.firstIndex(of: ["","",""]){
-                self.potentialFriends?.remove(at: blankIndex)
-            }
+//            if let blankIndex = self.potentialFriends?.firstIndex(of: ["","",""]){
+//                self.potentialFriends?.remove(at: blankIndex)
+//            }
 
             
             for friend in parentFriends {
 //                print(friend[1] + "'s run")
                 
 //                print(friend[0])
-                db.collection("Users").document(friend[0]).collection("Friends").addSnapshotListener { [self] (querySnapshot, error) in
+                db.collection("Users").document(friend.email!).collection("Friends").addSnapshotListener { [self] (querySnapshot, error) in
                     if let e = error {
                         print("There was an issue retrieving potential friends from Firestore, \(e)")
                     } else {
@@ -71,15 +71,15 @@ class AddFriendsTableViewCell: UITableViewCell{
                                     
                                     var alreadyFriend = false
                                     for friend in parentFriends{
-                                        let name = friend[1]
-                                        if name == username as! String {
+                                        let name = friend.name
+                                        if name == username as? String {
                                             alreadyFriend = true
                                         }
                                     }
                                     
                                     var alreadyPotential = false
-                                    for friend in self.potentialFriends!{
-                                        let name = friend[1]
+                                    for friend in self.potentialFriends{
+                                        let name = friend.name
                                         if name == username as! String {
                                             alreadyPotential = true
                                         }
@@ -97,8 +97,12 @@ class AddFriendsTableViewCell: UITableViewCell{
                                     }
                                     
                                     else {
-//                                        print("Potentializing " + (username as! String) + " from " + friend[1] + "'s run")
-                                        self.potentialFriends!.append([userEmail as! String, username as! String, picURL as! String])
+                                        self.potentialFriends.append(Friend(email: userEmail as? String,
+                                                                            name: username as? String,
+                                                                            date: nil,
+                                                                            picURL: picURL as? String,
+                                                                            bio: nil,
+                                                                            lastMessageTimeString: nil))
                                         self.collectionView.reloadData()
                                     }
                                 }
@@ -132,7 +136,7 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if potentialFriends == [["","",""]] || potentialFriends == [] {
+        if potentialFriends == [] {
             emptyCollectionViewLabel.isHidden = false
             collectionView.isHidden = true
         }
@@ -141,7 +145,7 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
             emptyCollectionViewLabel.isHidden = true
             collectionView.isHidden = false
         }
-        return potentialFriends!.count
+        return potentialFriends.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -151,13 +155,13 @@ extension AddFriendsTableViewCell: UICollectionViewDataSource, UICollectionViewD
         //        cell.profilePic.contentMode = .scaleAspectFit
         
 //        print("Row: \(indexPath.row) \(potentialFriends![indexPath.row][0]) \(potentialFriends![indexPath.row][1]) \(potentialFriends![indexPath.row][2])")
-        cell.email = potentialFriends![indexPath.row][0]
-        cell.userEmail.text = potentialFriends![indexPath.row][1]
-        cell.picURL = potentialFriends![indexPath.row][2]
+        cell.email = potentialFriends[indexPath.row].email!
+        cell.userEmail.text = potentialFriends[indexPath.row].name!
+        cell.picURL = potentialFriends[indexPath.row].picURL!
 
         //Get Profile Pic
         DispatchQueue.main.async {
-            cell.profilePic.loadAndCacheImage(urlString: self.potentialFriends![indexPath.row][2])
+            cell.profilePic.loadAndCacheImage(urlString: self.potentialFriends[indexPath.row].picURL!)
         }
         cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
 

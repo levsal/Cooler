@@ -16,11 +16,12 @@ class FeedViewController: UIViewController {
     
     var currentUser = ""
     
-    var friends : [[String]] = [[]]
+    var friends : [Friend] = []
     
     var posts : [Post] = []
     
     var list : [Post] = []
+    var reposts : [Post] = []
     
     @IBOutlet weak var emptyFeedViewLabel: UILabel!
     
@@ -36,6 +37,8 @@ class FeedViewController: UIViewController {
         
         
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 1, alpha: 1)]
 
         currentUser = (Auth.auth().currentUser?.email)!
         
@@ -50,7 +53,7 @@ class FeedViewController: UIViewController {
         
         //Create Friends List
         getFriends()
-        getList()
+        getListAndReposts()
         
     }
     func assignValuesToPostOpen() {
@@ -64,6 +67,7 @@ class FeedViewController: UIViewController {
         db.collection("Users").document((Auth.auth().currentUser?.email)!).collection("Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
             //            self.feedTableView.reloadData()
             self.friends = []
+            K.friends = []
             
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
@@ -74,12 +78,19 @@ class FeedViewController: UIViewController {
                         if let friendEmail = data["email"],
                            let friendName = data["name"],
                            let picURL = data["picURL"] {
-                            self.friends.append([friendEmail as! String, friendName as! String, picURL as! String])
+
+                            self.friends.append(Friend(email: friendEmail as? String,
+                                                       name: friendName as? String,
+                                                       date: nil,
+                                                       picURL: picURL as? String,
+                                                       bio: nil,
+                                                       lastMessageTimeString: nil))
                         }
                     }
                     
 //                    self.feedTableView.reloadData()
                     self.getPosts()
+                    K.friends = self.friends
                 }
             }
         }
@@ -92,7 +103,7 @@ class FeedViewController: UIViewController {
 //        self.feedTableView.reloadData()
         
         for friend in friends {
-            db.collection("Users").document(friend[0]).collection("Posts").order(by: "date").addSnapshotListener{ [self] (querySnapshot, error) in
+            db.collection("Users").document(friend.email!).collection("Posts").order(by: "date").addSnapshotListener{ [self] (querySnapshot, error) in
                 
                 if let e = error {
                     print("There was an issue retrieving data from Firestore, \(e)")
@@ -101,7 +112,7 @@ class FeedViewController: UIViewController {
                         
                         //Remove posts by relevant friend before reloading them
                         for post in self.posts{
-                            if post.username == friend[1]{
+                            if post.username == friend.name{
                                 let index = self.posts.firstIndex(of: post)
                                 self.posts.remove(at: index!)
                             }
@@ -116,9 +127,9 @@ class FeedViewController: UIViewController {
                                let creator = data["creator"],
                                let blurb = data["blurb"],
                                let givenRating = data["rating"] {
-                                let post = Post(userEmail: friend[0],
-                                                username: friend[1],
-                                                profilePicURL: friend[2],
+                                let post = Post(userEmail: friend.email,
+                                                username: friend.name,
+                                                profilePicURL: friend.picURL,
                                                 date: (date as! Double),
                                                 dateString: dateString as? String,
                                                 postText: (text as! String),
@@ -142,8 +153,9 @@ class FeedViewController: UIViewController {
         }
     }
     
-    func getList() {
+    func getListAndReposts() {
         
+        //LIST
         db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").addSnapshotListener { (querySnapshot, error) in
             if let e = error {
                 print("There was an issue retrieving data from Firestore, \(e)")
@@ -156,13 +168,37 @@ class FeedViewController: UIViewController {
                         if let title = data["text"],
                            let category = data["category"]{
                             self.list.append(Post(postText: title as! String, category: category as! String))
+//                            print(Post(postText: title as! String, category: category as! String))
                         }
                     }
-//                    print(self.list)
+                }
+            }
+        }
+        
+        //REPOSTS
+        db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts").addSnapshotListener { (querySnapshot, error) in
+            if let e = error {
+                print("There was an issue retrieving data from Firestore, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    self.reposts = []
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                       
+                        if let repost = data["repost"],
+                           let title = data["text"],
+                           let user = data["user"]{
+                            print(title)
+                            print(user)
+                            self.reposts.append(Post(postText: (title as! String), repost: (repost as! Bool), fromUser: (user as! String)))
+//                            print(Post(postText: (title as! String), repost: (repost as! Bool), fromUser: (user as! String)))
+                        }
+                    }
                 }
             }
         }
     }
+    
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FeedToProfile" {
@@ -170,12 +206,12 @@ class FeedViewController: UIViewController {
             profileVC.isHost = false
             profileVC.email = segueFriendEmail!
 //            profileVC.loadProfilePage(email: segueFriendEmail!)//
-            profileVC.signOutButtonTitle = "Feed"
+            profileVC.signOutButtonTitle = "Back to Feed"
             profileVC.postButton.image = nil
             profileVC.postButton.title = ""
             
             for friend in friends {
-                if segueFriendEmail == friend[0]{
+                if segueFriendEmail == friend.email{
                     profileVC.friendStatusButton = "Remove Friend"
                     profileVC.friendStatusColor = #colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1)
                     
@@ -266,7 +302,9 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             cell.creatorTextView.layer.cornerRadius = cell.userView.frame.height/4.5
 
             DispatchQueue.main.async {
-                cell.profilePic.loadAndCacheImage(urlString: self.posts[section-1].profilePicURL!)
+                if let url = self.posts[section-1].profilePicURL {
+                    cell.profilePic.loadAndCacheImage(urlString: url)
+                }
             }
 
             
@@ -282,15 +320,26 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             cell.listButton.isHidden = false
+            cell.repostButton.isHidden = false
             cell.listButton.setImage(UIImage(systemName: "plus"), for: .normal)
             
+//            print(list)
             if list.contains(Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: cell.friendsPostTextView.text, category: cell.category, creator: nil, blurb: nil, rating: nil, fromUser: nil)) {
-//                print("IN LIST")
                 cell.listButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
 
             }
-
+            print(reposts)
+            print(Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: cell.friendsPostTextView.text, category: nil, creator: nil, blurb: nil, rating: nil, repost: true, fromUser: username))
             
+            if reposts.contains(Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: cell.friendsPostTextView.text, category: nil, creator: nil, blurb: nil, rating: nil, repost: true, fromUser: username)) {
+                cell.repostButton.tintColor = .white
+                print("REPOST")
+            }
+            
+            let bottomBorder = CALayer()
+            bottomBorder.frame = CGRect(x: 0, y: cell.userView.frame.size.height - 2, width: cell.userView.frame.size.width, height: 2)
+            bottomBorder.backgroundColor = #colorLiteral(red: 0.1599999964, green: 0.1599999964, blue: 0.1599999964, alpha: 1)
+            cell.userView.layer.addSublayer(bottomBorder)
             
             return cell
         }
@@ -343,7 +392,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.parentFeedVC = self
             
-            if friends != [[]] {
+            if friends != [] {
                 cell.fetchUsers()
             }
             

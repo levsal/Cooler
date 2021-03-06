@@ -19,6 +19,14 @@ class WelcomeViewController: UIViewController {
 
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
         
+       
+
+        //Title Font
+//        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-Bold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 1, alpha: 1)]
+        
+        self.navigationController?.navigationBar.tintColor = .white
+        
+        
     }
     //MARK: - Segues
     @IBAction func signUpButton(_ sender: UIButton) {
@@ -44,4 +52,3 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
-

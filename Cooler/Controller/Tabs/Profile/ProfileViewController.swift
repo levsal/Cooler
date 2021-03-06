@@ -21,10 +21,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     let firebase = Storage.storage()
     
     var parentVC : AddFriendsCollectionViewCell?
+    var parentFindFriendsVC : FindFriendsViewController?
     
     @IBOutlet weak var emptyTableViewLabel: UILabel!
     
     @IBOutlet weak var profilePic: UIImageView!
+    let pickerController = UIImagePickerController()
     
     @IBOutlet weak var username: UILabel!
     
@@ -41,6 +43,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     @IBOutlet weak var signOutButton: UIBarButtonItem!
     @IBOutlet weak var postButton: UIBarButtonItem!
     var signOutButtonTitle = "Sign Out"
+    
     
     @IBOutlet weak var addFriendButton: UIButton!
     var friendStatusButton : String = "Add Friend"
@@ -63,7 +66,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     var isHost : Bool = true
     var resetSelecteds = true
     var picFromCell = false
-    var firstLoad = true
+    var loads = 0
     var firstPicLoad = true
     var needCategories = true
     
@@ -78,10 +81,18 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-     
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+
+        //Profile Pic Picker
+        pickerController.delegate = self
+        pickerController.allowsEditing = true
+        pickerController.mediaTypes = ["public.image"]
+        pickerController.sourceType = .photoLibrary
+
 //        navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
-
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 1, alpha: 1)]
+        
         addFriendButton.setTitle(friendStatusButton, for: .normal)
         addFriendButton.setTitleColor(friendStatusColor, for: .normal)
         
@@ -96,7 +107,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         postTableView.register(UINib(nibName: "PostDetailView", bundle: nil), forCellReuseIdentifier: "PostDetailView")
         
         signOutButton.title = signOutButtonTitle
+       
         username.text = usernameString
+
         bioTextField.text = bio
         postsCount.setTitle(postsCountValue, for: .normal)
         friendsCount.setTitle(friendsCountValue, for: .normal)
@@ -108,6 +121,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             email = (Auth.auth().currentUser?.email!)!
             settings.isHidden = false
             list.isHidden = false
+        }
+        else {
+            bioTextField.placeholder = ""
+            emptyTableViewLabel.text = "No posts yet!"
         }
         
         loadProfilePage(email: email)
@@ -255,7 +272,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     @IBAction func postButtonPressed(_ sender: UIBarButtonItem) {
         if postButton.title != "" {
-
             present(postVC, animated: true)
             
         }
@@ -265,6 +281,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         let friendsVC: FindFriendsViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "findFriendsViewController") as! FindFriendsViewController
         friendsVC.fromProfile = true
         friendsVC.friends = friends
+        friendsVC.existingFriends = friends
         present(friendsVC, animated: true)
 //        performSegue(withIdentifier: "ProfileToFindFriends", sender: self)
     }
@@ -291,8 +308,28 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                             for cat in categories {
                                 if let category = data["category"]{
                                     if category as! String == cat {
-                                        self.posts.append(Post(date: date as? Double, dateString: dateString as? String, postText: postText as? String, category: category as? String, creator: creator as? String, blurb: blurb as? String, rating: givenRating as? Double))
+                                        if let reposted = data["repost"], let user = data["user"] {
+                                            self.posts.append(Post(date: date as? Double,
+                                                                   dateString: dateString as? String,
+                                                                   postText: postText as? String,
+                                                                   category: category as? String,
+                                                                   creator: creator as? String,
+                                                                   blurb: blurb as? String,
+                                                                   rating: givenRating as? Double,
+                                                                   repost: reposted as? Bool,
+                                                                   fromUser: user as? String))
+                                        }
+                                        else {
+                                            self.posts.append(Post(date: date as? Double,
+                                                                   dateString: dateString as? String,
+                                                                   postText: postText as? String,
+                                                                   category: category as? String,
+                                                                   creator: creator as? String,
+                                                                   blurb: blurb as? String,
+                                                                   rating: givenRating as? Double))
+                                        }
                                     }
+                                    
                                 }
                             }
                             
@@ -315,6 +352,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     }
     
     func getFriends(of email : String) {
+        if email == Auth.auth().currentUser?.email {
+            print("yep")
+            friends = K.friends
+            self.friendsCountValue = "" + String(self.friends.count) + " friends"
+            if let fCount = self.friendsCount {
+                fCount.setTitle(self.friendsCountValue, for: .normal)
+                
+            }
+        }
+        
         
         db.collection("Users").document(email).collection("Friends").order(by: "date").addSnapshotListener { [self] (querySnapshot, error) in
             self.friends = []
@@ -364,32 +411,39 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
             parentVC?.parentCell?.collectionView.reloadData()
             
             parentVC?.parentCell?.parentFeedVC?.feedTableView.reloadData()
-            let index = parentVC?.parentCell?.potentialFriends!.firstIndex(of: [email, usernameString, picURL])
+            let index = parentVC?.parentCell?.potentialFriends.firstIndex(of: Friend(email: email, name: usernameString, date: nil, picURL: picURL, bio: nil, lastMessageTimeString: nil))
 //            print("Index is \(String(describing: index))")
-            parentVC?.parentCell?.potentialFriends?.remove(at: index!)
-            
+            parentVC?.parentCell?.potentialFriends.remove(at: index!)
+           
+
             
             
             if parentVC == nil {
                 sender.setTitle("Remove Friend", for: .normal)
                 sender.setTitleColor(#colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1), for: .normal)
             }
+            if parentFindFriendsVC?.fromProfile == true {
+                parentFindFriendsVC?.friends.append(Friend(email: email, name: username.text, date: nil, picURL: picURL, bio: nil, lastMessageTimeString: nil))
+                parentFindFriendsVC?.usersTableView.reloadData()
+            }
+
+
         }
         else if sender.titleLabel!.text == "Remove Friend" {
             parentVC?.parentCell?.parentFeedVC?.feedTableView.reloadData()
             parentVC?.parentCell?.collectionView.reloadData()
             db.collection("Users").document(Auth.auth().currentUser!.email!).collection("Friends").document(email).delete()
             
-//            db.collection("\(Auth.auth().currentUser!.email!)_Friends").document(email).delete()
-            
-//            print("Potential Friends Are \(String(describing: parentVC?.parentCell?.potentialFriends!))")
             
             if parentVC == nil{
                 sender.setTitle("Add Friend", for: .normal)
                 sender.setTitleColor(#colorLiteral(red: 0, green: 0.5851971507, blue: 0, alpha: 1), for: .normal)
-                
             }
-            
+            if let index = parentFindFriendsVC?.friends.firstIndex(of: Friend(email: email, name: username.text, date: nil, picURL: picURL, bio: nil, lastMessageTimeString: nil)) {
+                parentFindFriendsVC?.friends.remove(at: index)
+                parentFindFriendsVC?.usersTableView.reloadData()
+            }
+
         }
         
         if parentVC != nil {
@@ -397,6 +451,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                 
             }
         }
+        
+        
         
     }
     
@@ -419,11 +475,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     @IBAction func profilePicTriggerPressed(_ sender: UIButton) {
         if isHost {
-            let pickerController = UIImagePickerController()
-            pickerController.delegate = self
-            pickerController.allowsEditing = true
-            pickerController.mediaTypes = ["public.image"]
-            pickerController.sourceType = .photoLibrary
             present(pickerController, animated: true)
         }
     }
@@ -612,6 +663,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             cell.category = posts[section].category
             cell.rating = posts[section].rating
             
+            if let reposted = posts[section].repost {
+                cell.repostIcon.isHidden = false
+            }
+            
             if isHost{
                 cell.editButton.isHidden = false
             }
@@ -637,16 +692,23 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if posts.count == 0 && firstLoad == false{
-            postTableView.isHidden = true
-            emptyTableViewLabel.isHidden = false
+        if posts.count == 0 {
+            if isHost && loads >= 2{
+                postTableView.isHidden = true
+                emptyTableViewLabel.isHidden = false
+            }
+            else if isHost == false {
+                postTableView.isHidden = true
+                emptyTableViewLabel.isHidden = false
+            }
+            
         }
         else{
             emptyTableViewLabel.isHidden = true
             postTableView.isHidden = false
             
         }
-        firstLoad = false
+        loads += 1
         return posts.count + 2
     }
     

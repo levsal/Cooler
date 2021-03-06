@@ -17,12 +17,9 @@ class UserSettingsViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet var settingsTableView: UITableView!
     
-    var categoryNames = ["Albums", "Movies", "TV Shows", "Books", "Artists", "Songs", "Misc."]
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-
         
         settingsTableView.dataSource = self
         settingsTableView.delegate = self
@@ -47,12 +44,12 @@ class UserSettingsViewController: UIViewController, UITableViewDataSource, UITab
         let cell = Bundle.main.loadNibNamed("FriendsPostsTableViewCell", owner: self, options: nil)?.first as! FriendsPostsTableViewCell
         cell.parentUserSettingsVC = self
                 
-        cell.categoryIcon.tintColor = K.categoryColorsPlural[categoryNames[section]]
+        cell.categoryIcon.tintColor = K.categoryColorsPlural[K.categoryNames[section]]
         
-        cell.categoryIcon.image = (K.categoryIconsPlural[categoryNames[section]]!)
-        cell.icon = (K.categoryIconsPlural[categoryNames[section]]!!)
+        cell.categoryIcon.image = (K.categoryIconsPlural[K.categoryNames[section]]!)
+        cell.icon = (K.categoryIconsPlural[K.categoryNames[section]]!!)
 
-        cell.friendsPostTextView.text = categoryNames[section]
+        cell.friendsPostTextView.text = K.categoryNames[section]
         
         let title = cell.friendsPostTextView.text
         if parentProfileVC!.categories.contains(title!){
@@ -62,17 +59,19 @@ class UserSettingsViewController: UIViewController, UITableViewDataSource, UITab
         switch cell.friendsPostTextView.text {
        
         case "Albums":
-            cell.creatorTextView.text = "Artist or Band"
+            cell.creatorTextView.text = "Artist/Band"
         case "Movies":
-             cell.creatorTextView.text = "Genre, e.g Superhero Movie"
+             cell.creatorTextView.text = "Genre"
         case "TV Shows":
-            cell.creatorTextView.text = "Genre, e.g. Teen Drama"
+            cell.creatorTextView.text = "Genre"
         case "Books":
             cell.creatorTextView.text = "Author"
         case "Artists":
-            cell.creatorTextView.text = "Genre, e.g. Folk Band; Pop Singer"
+            cell.creatorTextView.text = "Genre"
         case "Songs":
-             cell.creatorTextView.text = "Artist or Band"
+            cell.creatorTextView.text = "Artist/Band"
+        case "Podcasts":
+            cell.creatorTextView.text = "Host(s)"
        
        
         default:
@@ -105,9 +104,4 @@ class UserSettingsViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
-    
-    
-
-
-
 }

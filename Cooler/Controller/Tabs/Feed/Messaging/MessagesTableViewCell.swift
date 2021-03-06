@@ -14,6 +14,8 @@ class MessagesTableViewCell: UITableViewCell {
     @IBOutlet var messageLeading: NSLayoutConstraint!
     @IBOutlet var messageTrailing: NSLayoutConstraint!
     @IBOutlet var messageWidth: NSLayoutConstraint!
+    
+    var parentConvoVC : ConvoViewController?
 //    @IBOutlet var messageHeight: NSLayoutConstraint!
     
     override func awakeFromNib() {
@@ -25,6 +27,10 @@ class MessagesTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    @IBAction func triggerPressed(_ sender: Any) {
+        print("Tapped")
+        parentConvoVC?.dismissKeyboard()
     }
     
 }

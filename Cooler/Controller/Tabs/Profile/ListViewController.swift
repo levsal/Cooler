@@ -23,8 +23,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-
-
+        
         listTableView.register(UINib(nibName: "FriendsPostsTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendsPostsTableViewCell")
         listTableView.register(UINib(nibName: "PostDetailView", bundle: nil), forCellReuseIdentifier: "PostDetailView")
         
@@ -93,14 +92,20 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.categoryIcon.image = K.categoryIcons[listeds[section].category!] as? UIImage
         cell.categoryIcon.tintColor = K.categoryColorsSingular[listeds[section].category!]
+        cell.category = listeds[section].category
+        cell.blurb = listeds[section].blurb
+        cell.rating = listeds[section].rating
 
-        
         cell.friendsPostTextView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         cell.friendsPostTextView.layer.cornerRadius = cell.friendsPostTextView.frame.height/4.5
         
         cell.creatorTextView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         cell.creatorTextView.layer.cornerRadius = cell.friendsPostTextView.frame.height/4.5
         
+        cell.listButton.isHidden = false
+        cell.repostButton.isHidden = false
+
+        cell.listButton.setImage(UIImage(systemName: "xmark"), for: .normal) 
         return cell
     }
     

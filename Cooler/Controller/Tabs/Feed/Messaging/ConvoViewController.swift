@@ -34,7 +34,7 @@ class ConvoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
+//        self.hideKeyboardWhenTappedAround()
         
         self.navigationItem.backBarButtonItem?.tintColor = .white
         
@@ -51,7 +51,7 @@ class ConvoViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+            }
 
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -133,38 +133,45 @@ class ConvoViewController: UIViewController {
         let dateAbsolute = Date().timeIntervalSince1970
 
         let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .long
+        
+        let formatterShort = DateFormatter()
+        formatterShort.dateStyle = .short
+        formatterShort.timeStyle = .short
+        
+        let formatterLong = DateFormatter()
+        formatterLong.dateStyle = .long
+        formatterLong.timeStyle = .long
 
-        let dateTime = formatter.string(from: date)
+        let dateTimeShort = formatterShort.string(from: date)
+        let dateTimeLong = formatterLong.string(from: date)
 
         if messageText != "" {
-            db.collection("Users").document((Auth.auth().currentUser?.email)!).collection("Messages").document(friendEmail!).collection("Messages").document(dateTime).setData (
+            db.collection("Users").document((Auth.auth().currentUser?.email)!).collection("Messages").document(friendEmail!).collection("Messages").document(dateTimeLong).setData (
                 
                 ["sender" : (Auth.auth().currentUser?.email)!,
                  "recipient" : friendEmail!,
                  "text" : messageText!,
-                 "dateString" : dateTime,
+                 "dateString" : dateTimeShort,
                  "date" : dateAbsolute])
             
-            db.collection("Users").document((Auth.auth().currentUser?.email)!).collection("Messages").document(friendEmail!).setData(["lastMessageTime" : dateTime, "name" : friend!, "email" : friendEmail!, "picURL" : imageString!])
+            db.collection("Users").document((Auth.auth().currentUser?.email)!).collection("Messages").document(friendEmail!).setData(["lastMessageTime" : dateTimeShort, "name" : friend!, "email" : friendEmail!, "picURL" : imageString!])
             
-            db.collection("Users").document(friendEmail!).collection("Messages").document((Auth.auth().currentUser?.email)!).collection("Messages").document(dateTime).setData (
+            db.collection("Users").document(friendEmail!).collection("Messages").document((Auth.auth().currentUser?.email)!).collection("Messages").document(dateTimeLong).setData (
                 
                 ["sender" : (Auth.auth().currentUser?.email)!,
                  "recipient" : friendEmail!,
                  "text" : messageText!,
-                 "dateString" : dateTime,
+                 "dateString" : dateTimeShort,
                  "date" : dateAbsolute])
             
-            db.collection("Users").document(friendEmail!).collection("Messages").document((Auth.auth().currentUser?.email)!).setData(["lastMessageTime" : dateTime, "name" : currentUserName!, "email" : (Auth.auth().currentUser?.email!)!, "picURL" : K.currentUserPicURL])
+            db.collection("Users").document(friendEmail!).collection("Messages").document((Auth.auth().currentUser?.email)!).setData(["lastMessageTime" : dateTimeShort, "name" : currentUserName!, "email" : (Auth.auth().currentUser?.email!)!, "picURL" : K.currentUserPicURL])
             
             messageTextView.text = ""
         }
 
         
     }
+   
 }
 
 extension ConvoViewController: UITableViewDataSource, UITableViewDelegate {
@@ -175,17 +182,16 @@ extension ConvoViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MessagesTableViewCell") as! MessagesTableViewCell
         
+        cell.parentConvoVC = self
+        
         var tooLong = false;
         cell.messageTrailing.isActive = false
         cell.messageLeading.isActive = false
 
         cell.messageText.text = messages[indexPath.row].text
        
-        
-        let screenWidth = UIScreen.main.bounds.width
-
         print(cell.messageText.frame.width)
-        if messages[indexPath.row].text!.count > 50 {
+        if messages[indexPath.row].text!.count > 45 {
             tooLong = true
             print(messages[indexPath.row].text!)
         }
@@ -210,7 +216,7 @@ extension ConvoViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
 //
-        cell.messageView.layer.cornerRadius = 8
+        cell.messageView.layer.cornerRadius = 10
         cell.messageView.layer.masksToBounds = true
         
         cell.messageText.sizeToFit()

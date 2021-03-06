@@ -17,9 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        let db = Firestore.firestore()
+//        let db = Firestore.firestore()
 
-    
+        //Sets back button font throughout app
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans-SemiBold", size: 16)!, NSAttributedString.Key.foregroundColor : UIColor.white,], for: .normal)
+        
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 1, alpha: 1)]
+
         
         return true
     }

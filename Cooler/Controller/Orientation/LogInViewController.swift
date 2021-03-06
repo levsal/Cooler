@@ -20,7 +20,6 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
 
-
     }
     
     

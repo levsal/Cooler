@@ -32,7 +32,8 @@ class FindFriendsViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
 
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
-        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 1, alpha: 1)]
+
         
         usersSearchBar.backgroundColor = #colorLiteral(red: 0.1321208775, green: 0.1321504712, blue: 0.1321169734, alpha: 1)
         usersSearchBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
@@ -136,6 +137,7 @@ extension FindFriendsViewController : UISearchBarDelegate {
         
         if segue.identifier == "SearchToProfile" {
            print(existingFriends)
+            
             for friend in existingFriends {
                 if segueEmail == friend.email{
                     print("Googoogaga")
@@ -143,12 +145,14 @@ extension FindFriendsViewController : UISearchBarDelegate {
                     profileVC.friendStatusColor = #colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1)
                 }
             }
+
             profileVC.isHost = false
             profileVC.email = segueEmail
             profileVC.signOutButtonTitle = "Back To Search"
             profileVC.postButton.image = nil
             profileVC.postButton.title = ""
             profileVC.addFriendHidden = false
+            profileVC.parentFindFriendsVC = self
         }
     }
 }
@@ -168,10 +172,10 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+        return 55
     }
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+        return 55
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -183,15 +187,9 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
 
         if friends[indexPath.row].picURL != nil {
             cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
-            print(cell.name.frame.height)
-            print(cell.bio.frame.height)
-            
-            print(cell.profilePic.frame.height)
-            print(cell.profilePic.frame.width)
-            
+        
             cell.profilePic.loadAndCacheImage(urlString: (friends[indexPath.row].picURL)!)
-            print(cell.profilePic.frame.height)
-            print(cell.profilePic.frame.width)
+
 
         }
         else {

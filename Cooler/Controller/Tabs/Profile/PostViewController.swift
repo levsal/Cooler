@@ -39,16 +39,26 @@ class PostViewController: UIViewController {
     
     @IBOutlet weak var postButton: UIButton!
     
+    var postButtonWidthConstant : CGFloat = 50
+    @IBOutlet var postButtonWidth: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-
+        
+        postButtonWidth.constant = postButtonWidthConstant
+        print(postButtonWidth.constant)
+        
+        postTextView.layer.cornerRadius = postTextView.frame.height / 10
+        creatorTextView.layer.cornerRadius = postTextView.frame.height / 10
+        blurbTextView.layer.cornerRadius = postTextView.frame.height / 10
+        postButton.layer.cornerRadius = postTextView.frame.height / 10
         let categoryString = NSMutableAttributedString.init(string: "Category")
-        categoryString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: categoryString.length))
+        categoryString.addAttribute(NSAttributedString.Key.underlineStyle, value: 0, range: NSRange.init(location: 0, length: categoryString.length))
         categoryHeader.attributedText = categoryString
         
         let ratingString = NSMutableAttributedString.init(string: "Rating")
-        ratingString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: ratingString.length))
+        ratingString.addAttribute(NSAttributedString.Key.underlineStyle, value: 0, range: NSRange.init(location: 0, length: ratingString.length))
         ratingHeader.attributedText = ratingString
         
         for category in delegate.categories {
@@ -69,17 +79,6 @@ class PostViewController: UIViewController {
         postTextView.textColor = .lightGray
         creatorTextView.textColor = .lightGray
         blurbTextView.textColor = .lightGray
-        
-//        postTextView.layer.borderWidth = 1
-//        postTextView.layer.borderColor = UIColor.black.cgColor
-//        creatorTextView.layer.borderWidth = 1
-//        creatorTextView.layer.borderColor = UIColor.black.cgColor
-//        blurbTextView.layer.borderWidth = 1
-//        blurbTextView.layer.borderColor = UIColor.black.cgColor
-        
-
-
-        //        postTextView.layer.cornerRadius = postTextView.layer.frame.width/40
     }
     
     //MARK: - Post Pressed
@@ -148,9 +147,12 @@ class PostViewController: UIViewController {
                 
                 
                 delegate.postTableView.reloadData()
-                postTextView.text = ""
-                creatorTextView.text = ""
-                blurbTextView.text = ""
+                postTextView.text = "Title"
+                creatorTextView.text = "Creator"
+                blurbTextView.text = "Blurb"
+                postTextView.textColor = .lightGray
+                creatorTextView.textColor = .lightGray
+                blurbTextView.textColor = .lightGray
                 self.dismiss(animated: true) {
                     
                 }
@@ -261,7 +263,7 @@ extension PostViewController: UITextViewDelegate{
             }
             else {
                 pickerLabel?.text = "\(Double(row)/10.0)"
-                pickerLabel?.textColor = #colorLiteral(red: 0, green: 0.5120117664, blue: 0.1549791396, alpha: 1)
+                pickerLabel?.textColor = #colorLiteral(red: 0.255957514, green: 0.6708714366, blue: 0.2112449706, alpha: 1)
             }
             return pickerLabel!
         }

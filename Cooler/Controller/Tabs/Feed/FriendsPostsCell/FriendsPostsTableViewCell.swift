@@ -21,6 +21,8 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet var listButton: UIButton!
+    @IBOutlet var repostButton: UIButton!
+    @IBOutlet var repostIcon: UIImageView!
     @IBOutlet weak var editStack: UIStackView!
     @IBOutlet weak var titleStack: UIStackView! 
     @IBOutlet var userView: UIView!
@@ -57,18 +59,8 @@ class FriendsPostsTableViewCell: UITableViewCell {
         editButton.isHidden = true
         
         listButton.isHidden = true
-        
-//        userView.layer.borderWidth = 2
-//        
-//        userView.layer.borderColor = #colorLiteral(red: 0.1502064466, green: 0.152626276, blue: 0.1541877985, alpha: 1)
-//        userView.layer.cornerRadius = 5
-//        userView.layer.borderColor = #colorLiteral(red: 0.174927026, green: 0.1749634147, blue: 0.1749222279, alpha: 1)
-
-//        titleStack.layer.borderWidth = 2
-//        titleStack.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//        friendsPostTextView.layer.cornerRadius = 10
-        
-
+        repostButton.isHidden = true
+        repostIcon.isHidden = true
     }
     
     
@@ -78,7 +70,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
     
     @IBAction func profileTriggerPressed(_ sender: UIButton) {
         parentFeedVC!.segueFriendEmail = email
-
+        
         parentFeedVC?.performSegue(withIdentifier: "FeedToProfile", sender: parentFeedVC)
     }
     
@@ -96,46 +88,46 @@ class FriendsPostsTableViewCell: UITableViewCell {
             
             parentProfileVC?.postTableView.reloadData()
             parentProfileVC?.postTableView.layoutIfNeeded()
-           
+            
         }
         else if parentProfileVC?.postOpen[work!] == true{
             parentProfileVC?.postOpen[work!] = false
-                        
+            
             parentProfileVC?.postTableView.reloadData()
             parentProfileVC?.postTableView.layoutIfNeeded()
-
+            
         }
         
         //FEED
         if parentFeedVC?.postOpen[work!] == false{
             parentFeedVC?.postOpen[work!] = true
-
-            parentFeedVC?.feedTableView.reloadData()
-            parentFeedVC?.feedTableView.layoutIfNeeded()
-
-        }
-        else if parentFeedVC?.postOpen[work!] == true{
-            parentFeedVC?.postOpen[work!] = false
-                        
+            
             parentFeedVC?.feedTableView.reloadData()
             parentFeedVC?.feedTableView.layoutIfNeeded()
             
         }
-       
+        else if parentFeedVC?.postOpen[work!] == true{
+            parentFeedVC?.postOpen[work!] = false
+            
+            parentFeedVC?.feedTableView.reloadData()
+            parentFeedVC?.feedTableView.layoutIfNeeded()
+            
+        }
+        
         //LIST
         if parentListVC?.listedOpen[exactDate!] == false{
             parentListVC?.listedOpen[exactDate!] = true
-
+            
             parentListVC?.listTableView.reloadData()
             parentListVC?.listTableView.layoutIfNeeded()
-
+            
         }
         else if parentListVC?.listedOpen[exactDate!] == true{
             parentListVC?.listedOpen[exactDate!] = false
-
+            
             parentListVC?.listTableView.reloadData()
             parentListVC?.listTableView.layoutIfNeeded()
-
+            
         }
         
         self.layoutIfNeeded()
@@ -168,10 +160,12 @@ class FriendsPostsTableViewCell: UITableViewCell {
         sender.isHidden = true
         editStack.isHidden = false
     }
-   
+    
     @IBAction func editPressed(_ sender: UIButton) {
         let postVC: PostViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "postViewController") as! PostViewController
         postVC.delegate = parentProfileVC
+        postVC.postButtonWidthConstant = 110
+        
         parentProfileVC?.present(postVC, animated: true)
         postVC.delegate = parentProfileVC
         
@@ -186,7 +180,6 @@ class FriendsPostsTableViewCell: UITableViewCell {
         postVC.creatorTextView.text = creatorTextView.text
         
         
-        print(postVC.categoryPickerDictionary)
         for category in 0...postVC.categories.count-1 {
             postVC.categoryPickerDictionary[postVC.categories[category]] = category
         }
@@ -195,11 +188,10 @@ class FriendsPostsTableViewCell: UITableViewCell {
         }
         if let categoryInt = postVC.categoryPickerDictionary[category!] {
             postVC.categoryPicker.selectRow(categoryInt, inComponent: 0, animated: false)
-
+            
         }
-
+        
         if let ratingInt = postVC.ratingPickerDictionary[rating!] {
-            print(ratingInt)
             postVC.ratingPicker.selectRow(ratingInt, inComponent: 0, animated: false)
         }
         
@@ -227,29 +219,69 @@ class FriendsPostsTableViewCell: UITableViewCell {
     }
     
     @IBAction func addToListPressed(_ sender: UIButton) {
-       
-        if sender.imageView!.image == UIImage(systemName: "plus") {
-            print("WASTANG")
-
-            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List")
-                .document(friendsPostTextView.text).setData(["text": friendsPostTextView.text, "date": -Date().timeIntervalSince1970, "category": category as! String, "creator": creatorTextView.text,"blurb" : blurb, "rating": rating as! Double, "dateString" : dateString.text, "user" : userEmail.titleLabel!.text as! String])
-            sender.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        if parentFeedVC != nil {
+            if sender.imageView!.image == UIImage(systemName: "plus") {
+                print("WASTANG")
+                
+                db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List")
+                    .document(friendsPostTextView.text).setData(["text": friendsPostTextView.text!, "date": -Date().timeIntervalSince1970, "category": category!, "creator": creatorTextView.text!,"blurb" : blurb!, "rating": rating!, "dateString" : dateString.text!, "user" : userEmail.titleLabel!.text!])
+                sender.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            }
+            else if sender.imageView!.image == UIImage(systemName: "checkmark") {
+                
+                print("WASMARK")
+                
+                db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").document(friendsPostTextView.text).delete()
+                
+                sender.setImage(UIImage(systemName: "plus"), for: .normal)
+                
+            }
         }
-        else if sender.imageView!.image == UIImage(systemName: "checkmark") {
+        else if parentListVC != nil {
+            for listed in parentListVC!.listeds {
+                if listed.postText == friendsPostTextView.text {
+                    if let index = parentListVC?.listeds.firstIndex(of: listed){
+                        parentListVC?.listeds.remove(at: index)
+                    }
+                    db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").document(listed.postText!).delete()
+                    
+                }
+            }
+            parentListVC?.listTableView.reloadData()
             
-            print("WASMARK")
-
-            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").document(friendsPostTextView.text).delete()
-            
-//            let exitingPostIndex = parentFeedVC!.list.firstIndex(of: Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: friendsPostTextView.text, category: category, creator: nil, blurb: nil, rating: nil, fromUser: nil))!
-//            
-//            parentFeedVC!.list.remove(at: exitingPostIndex)
-            sender.setImage(UIImage(systemName: "plus"), for: .normal)
-
         }
         
+        
     }
+    
+    
+    @IBAction func repostButtonPressed(_ sender: UIButton) {
+        if sender.tintColor == .white {
+            sender.tintColor = .darkGray
+            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts").document(friendsPostTextView.text).delete()
 
+        }
+        else {
+            sender.tintColor = .white
+            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").document(friendsPostTextView.text).delete()
+
+            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts")
+                .document(friendsPostTextView.text).setData(
+                    ["text": friendsPostTextView.text!,
+                     "date": -Date().timeIntervalSince1970,
+                     "category": category!,
+                     "creator": creatorTextView.text!,
+                     "blurb" : blurb!,
+                     "rating": rating!,
+                     "dateString" : dateString.text!,
+                     "user" : userEmail.titleLabel!.text!,
+                     "repost" : true])
+            
+        }
+        parentFeedVC?.feedTableView.reloadData()
+        parentListVC?.listTableView.reloadData()
+    }
+    
     
     
 }
