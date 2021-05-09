@@ -13,6 +13,7 @@ import FirebaseFirestore
 class FeedViewController: UIViewController {
     
     let db = Firestore.firestore()
+    let refreshControl = UIRefreshControl()
     
     var currentUser = ""
     
@@ -25,9 +26,12 @@ class FeedViewController: UIViewController {
     
     @IBOutlet weak var emptyFeedViewLabel: UILabel!
     
-    var postOpen : [String: Bool] = [:]
+    var postOpen : [Double: Bool] = [:]
     
     var segueFriendEmail : String?
+    
+    var sendingMessage = false
+    var postToSend : Post?
     
     @IBOutlet weak var feedTableView: PositionCorrectingTableView!
     
@@ -35,10 +39,12 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         
+        feedTableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(reloadTableView(_:)), for: .valueChanged)
+        refreshControl.tintColor = K.fontColor
         
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 1, alpha: 1)]
+
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 0, alpha: 1)]
 
         currentUser = (Auth.auth().currentUser?.email)!
         
@@ -54,18 +60,30 @@ class FeedViewController: UIViewController {
         //Create Friends List
         getFriends()
         getListAndReposts()
-        
+        setColors()
     }
+    
+    @objc private func reloadTableView(_ sender: Any) {
+        feedTableView.reloadData()
+        self.refreshControl.endRefreshing()
+//        self.activityIndicatorView.stopAnimating()
+
+    }
+    
+    func setColors() {
+        view.backgroundColor = K.backgroundColor
+        feedTableView.backgroundColor = K.backgroundColor
+    }
+    
     func assignValuesToPostOpen() {
         for post in posts {
-            postOpen[post.postText!] = false
+            postOpen[post.date!] = false
         }
     }
     
     
     func getFriends(){
         db.collection("Users").document((Auth.auth().currentUser?.email)!).collection("Friends").order(by: "date").addSnapshotListener { (querySnapshot, error) in
-            //            self.feedTableView.reloadData()
             self.friends = []
             K.friends = []
             
@@ -88,7 +106,6 @@ class FeedViewController: UIViewController {
                         }
                     }
                     
-//                    self.feedTableView.reloadData()
                     self.getPosts()
                     K.friends = self.friends
                 }
@@ -100,7 +117,6 @@ class FeedViewController: UIViewController {
 
         self.posts = []
         
-//        self.feedTableView.reloadData()
         
         for friend in friends {
             db.collection("Users").document(friend.email!).collection("Posts").order(by: "date").addSnapshotListener{ [self] (querySnapshot, error) in
@@ -127,23 +143,45 @@ class FeedViewController: UIViewController {
                                let creator = data["creator"],
                                let blurb = data["blurb"],
                                let givenRating = data["rating"] {
-                                let post = Post(userEmail: friend.email,
-                                                username: friend.name,
-                                                profilePicURL: friend.picURL,
-                                                date: (date as! Double),
-                                                dateString: dateString as? String,
-                                                postText: (text as! String),
-                                                category: category as? String,
-                                                creator: creator as? String, blurb: blurb as? String, rating: givenRating as? Double)
-                                self.posts.append(post)
+                                if let reposted = data["repost"], let user = data["user"], let userEmail = data["userEmail"], let url = data["userURL"]  {
+                                    let post = Post(userEmail: friend.email,
+                                                    username: friend.name,
+                                                    profilePicURL: friend.picURL,
+                                                    date: (date as! Double),
+                                                    dateString: dateString as? String,
+                                                    postText: (text as! String),
+                                                    category: category as? String,
+                                                    creator: creator as? String,
+                                                    blurb: blurb as? String,
+                                                    rating: givenRating as? Double,
+                                                    repost: reposted as? Bool,
+                                                    fromUser: user as? String,
+                                                    fromUserEmail: userEmail as? String,
+                                                    userURL: url as? String)
+                                    self.posts.append(post)
+                                }
+                                else {
+                                    let post = Post(userEmail: friend.email,
+                                                    username: friend.name,
+                                                    profilePicURL: friend.picURL,
+                                                    date: (date as! Double),
+                                                    dateString: dateString as? String,
+                                                    postText: (text as! String),
+                                                    category: category as? String,
+                                                    creator: creator as? String,
+                                                    blurb: blurb as? String,
+                                                    rating: givenRating as? Double)
+                                    self.posts.append(post)
+
+                                }
+                                
                                 self.assignValuesToPostOpen()
                                 self.posts = self.posts.sorted { $0.date! < $1.date! }
                                 
                             }
                         }
-                        self.feedTableView.reloadData()
-
                         
+                        self.feedTableView.reloadData()
                     }
                 }
                 
@@ -188,8 +226,7 @@ class FeedViewController: UIViewController {
                         if let repost = data["repost"],
                            let title = data["text"],
                            let user = data["user"]{
-                            print(title)
-                            print(user)
+
                             self.reposts.append(Post(postText: (title as! String), repost: (repost as! Bool), fromUser: (user as! String)))
 //                            print(Post(postText: (title as! String), repost: (repost as! Bool), fromUser: (user as! String)))
                         }
@@ -214,17 +251,29 @@ class FeedViewController: UIViewController {
                 if segueFriendEmail == friend.email{
                     profileVC.friendStatusButton = "Remove Friend"
                     profileVC.friendStatusColor = #colorLiteral(red: 1, green: 0.2305461764, blue: 0.1513932645, alpha: 1)
-                    
-                    
                 }
             }
             
             profileVC.addFriendHidden = false
         }
+        
+        
+        else if segue.identifier == "FeedToMessages" {
+            let messagesVC = segue.destination as! MessagesViewController
+            if sendingMessage == true {
+                messagesVC.postToSend = postToSend
+                messagesVC.sendPostViewHidden = false
+            }
+            else {
+                messagesVC.sendPostViewHidden = true
+            }
+
+        }
     }
     
     
     @IBAction func messagesPressed(_ sender: UIButton) {
+        sendingMessage = true
         performSegue(withIdentifier: "FeedToMessages", sender: self)
     }
     
@@ -239,12 +288,14 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             return 5
         }
         return 135
+//        return UIScreen.main.bounds.width - 10
     }
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 5
         }
         return 135
+//        return UIScreen.main.bounds.width - 10
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -262,8 +313,13 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             
             let username = posts[section-1].username
-            cell.userEmail!.setTitle(username, for: .normal)
-            
+            cell.userEmail.setTitle(username, for: .normal)
+//            if username != nil {
+//                let attributedString = NSMutableAttributedString.init(string: username!)
+//                attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
+//                cell.userEmail!.setAttributedTitle(attributedString, for: .normal)
+//            }
+//            
             let postName = posts[section-1].postText
             cell.friendsPostTextView.text = postName
 //            cell.friendsPostTextView.textColor = K.categoryColorsSingular[posts[section-1].category!]
@@ -271,6 +327,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             let creator = posts[section-1].creator
             cell.creatorTextView.text = creator
+            
 //            cell.creatorTextView.textColor = K.categoryColorsSingular[posts[section-1].category!]
             
             let dateString = posts[section-1].dateString
@@ -286,10 +343,17 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             if let image = K.categoryIcons[posts[section-1].category!]! {
                 cell.categoryIcon.image = image
+                
             }
             
             let rating = posts[section-1].rating
             cell.rating = rating
+            
+            let date = posts[section-1].date
+            cell.date = date
+            
+            let url = posts[section-1].profilePicURL
+            cell.profilePicURL = url
             
             
             
@@ -298,6 +362,10 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             cell.userView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             cell.userView.layer.cornerRadius = cell.userView.frame.height/4.5
             
+            cell.usernameView.isHidden = false
+            cell.usernameView.layer.cornerRadius = cell.userView.layer.cornerRadius
+            
+//            cell.usernameView.backgroundColor = K.categoryColorsSingular[posts[section-1].category!]
             cell.creatorTextView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             cell.creatorTextView.layer.cornerRadius = cell.userView.frame.height/4.5
 
@@ -310,36 +378,40 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             
 //            cell.userView.backgroundColor = K.categoryColorsSingular[posts[section-1].category!]
-            let categoryColor = K.categoryColorsSingular[posts[section-1].category!]
-            cell.categoryIcon.tintColor = categoryColor
+            if K.colorsFromDictionary {
+                let categoryColor = K.categoryColorsSingular[posts[section-1].category!]
+                cell.categoryIcon.tintColor = categoryColor
+            }
+            
             
 //            cell.userView.layer.borderColor = categoryColor?.cgColor
             
-            if postOpen[posts[section-1].postText!]! {
+            if postOpen[posts[section-1].date!]! {
                 cell.openClosedArrow.image = UIImage(systemName: "chevron.down")
             }
-            
+
             cell.listButton.isHidden = false
             cell.repostButton.isHidden = false
+//            cell.likeButton.isHidden = false
+            
             cell.listButton.setImage(UIImage(systemName: "plus"), for: .normal)
             
 //            print(list)
             if list.contains(Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: cell.friendsPostTextView.text, category: cell.category, creator: nil, blurb: nil, rating: nil, fromUser: nil)) {
                 cell.listButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-
+                cell.listButton.tintColor = K.confirmedColor
             }
-            print(reposts)
-            print(Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: cell.friendsPostTextView.text, category: nil, creator: nil, blurb: nil, rating: nil, repost: true, fromUser: username))
             
             if reposts.contains(Post(userEmail: nil, username: nil, profilePicURL: nil, date: nil, dateString: nil, postText: cell.friendsPostTextView.text, category: nil, creator: nil, blurb: nil, rating: nil, repost: true, fromUser: username)) {
-                cell.repostButton.tintColor = .white
-                print("REPOST")
+                cell.repostButton.tintColor = K.confirmedColor
+                cell.alreadyReposted = true
             }
             
-            let bottomBorder = CALayer()
-            bottomBorder.frame = CGRect(x: 0, y: cell.userView.frame.size.height - 2, width: cell.userView.frame.size.width, height: 2)
-            bottomBorder.backgroundColor = #colorLiteral(red: 0.1599999964, green: 0.1599999964, blue: 0.1599999964, alpha: 1)
-            cell.userView.layer.addSublayer(bottomBorder)
+            if let repost = posts[section-1].repost {
+                if repost {
+                    cell.repostIcon.isHidden = false
+                }
+            }
             
             return cell
         }
@@ -370,7 +442,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         else if section <= posts.count {
             let post = posts[section-1]
             
-            if postOpen[post.postText!] == false{
+            if postOpen[post.date!] == false{
                 return 0
             }
             else {
@@ -391,39 +463,58 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = feedTableView.dequeueReusableCell(withIdentifier: "AddFriendsTableViewCell") as! AddFriendsTableViewCell
             
             cell.parentFeedVC = self
-            
             if friends != [] {
                 cell.fetchUsers()
             }
+            
             
             return cell
         }
         
         let cell = feedTableView.dequeueReusableCell(withIdentifier: "PostDetailView")! as! PostDetailView
+        cell.feedVC = self
+
         cell.blurbTextView.text = posts[indexPath.section-1].blurb
         cell.ratingValue.text = "\(String(describing: posts[indexPath.section-1].rating!))"
+        
+        cell.category.setTitle(posts[indexPath.section-1].category!, for: .normal)
+        if posts[indexPath.section-1].fromUser != nil {
+            cell.separator.isHidden = false
+            cell.repostStack.isHidden = false
+            cell.repostDetail.setTitle(posts[indexPath.section-1].fromUser!, for: .normal)
+        }
+        else {
+            cell.separator.isHidden = true
+            cell.repostStack.isHidden = true
+        }
+        
+        cell.fromUserEmail = posts[indexPath.section-1].fromUserEmail
+        cell.userURL = posts[indexPath.section-1].userURL
+        
+        cell.packagedPost = Post(userEmail: posts[indexPath.section-1].userEmail,
+                                 username: posts[indexPath.section-1].username,
+                                 profilePicURL: posts[indexPath.section-1].profilePicURL,
+                                 date: posts[indexPath.section-1].date,
+                                 dateString: posts[indexPath.section-1].dateString,
+                                 postText: posts[indexPath.section-1].postText,
+                                 category: posts[indexPath.section-1].category,
+                                 creator: posts[indexPath.section-1].creator,
+                                 blurb: posts[indexPath.section-1].blurb,
+                                 rating: posts[indexPath.section-1].rating,
+                                 repost: posts[indexPath.section-1].repost,
+                                 fromUser: posts[indexPath.section-1].fromUser,
+                                 fromUserEmail: posts[indexPath.section-1].fromUserEmail,
+                                 userURL: posts[indexPath.section-1].userURL)
         
         return cell
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 120
-        }
-        else {
-            return 120
-            
-        }
+        return 151
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 120
-        }
-        else {
-            return 120
-            
-        }
+        return 151
     }
     
     

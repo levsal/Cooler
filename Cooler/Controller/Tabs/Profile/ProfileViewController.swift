@@ -61,7 +61,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     var selectedCategories : [String] = []
     
-    var postOpen : [String: Bool] = [:]
+    var postOpen : [Double: Bool] = [:]
     
     var isHost : Bool = true
     var resetSelecteds = true
@@ -89,9 +89,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         pickerController.mediaTypes = ["public.image"]
         pickerController.sourceType = .photoLibrary
 
-//        navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 1, alpha: 1)]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 0, alpha: 1)]
+        signOutButton.tintColor = .black
         
         addFriendButton.setTitle(friendStatusButton, for: .normal)
         addFriendButton.setTitleColor(friendStatusColor, for: .normal)
@@ -174,9 +173,20 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         
         self.categoryCollectionView.reloadData()
 
+        setColors()
     }
     
-    
+    func setColors() {
+        view.backgroundColor = K.backgroundColor
+        postTableView.backgroundColor = K.backgroundColor
+        categoryCollectionView.backgroundColor = K.backgroundColor
+        username.textColor = K.fontColor
+        bioTextField.textColor = K.fontColor
+        friendsCount.setTitleColor(K.fontColor, for: .normal)
+        postsCount.setTitleColor(K.fontColor, for: .normal)
+        list.setTitleColor(K.fontColor, for: .normal)
+        settings.tintColor = K.fontColor
+    }
     
     func getCategories() {
         db.collection("Users").addSnapshotListener { [self] (querySnapshot, error) in
@@ -256,7 +266,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
     
     func assignValuesToPostOpen() {
         for post in posts {
-            postOpen[post.postText!] = false
+            postOpen[post.date!] = false
         }
         //        print(postOpen)
     }
@@ -308,7 +318,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                             for cat in categories {
                                 if let category = data["category"]{
                                     if category as! String == cat {
-                                        if let reposted = data["repost"], let user = data["user"] {
+                                        if let reposted = data["repost"], let user = data["user"], let userEmail = data["userEmail"], let url = data["userURL"] {
                                             self.posts.append(Post(date: date as? Double,
                                                                    dateString: dateString as? String,
                                                                    postText: postText as? String,
@@ -317,7 +327,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
                                                                    blurb: blurb as? String,
                                                                    rating: givenRating as? Double,
                                                                    repost: reposted as? Bool,
-                                                                   fromUser: user as? String))
+                                                                   fromUser: user as? String,
+                                                                   fromUserEmail: userEmail as? String,
+                                                                   userURL : url as? String))
                                         }
                                         else {
                                             self.posts.append(Post(date: date as? Double,
@@ -569,7 +581,12 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
         
         cell.category!.text = categories[indexPath.item]
         
-        cell.category.textColor = K.categoryColorsPlural[cell.category.text!]
+        if K.colorsFromDictionary {
+            cell.category.textColor = K.categoryColorsPlural[cell.category.text!]
+        }
+        else {
+            cell.category.textColor = K.fontColor
+        }
         
         if selectedCategories == [String((cell.category.text?.dropLast())!)] {
             cell.underlined = true
@@ -652,12 +669,24 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = Bundle.main.loadNibNamed("FriendsPostsTableViewCell", owner: self, options: nil)?.first as! FriendsPostsTableViewCell
             
             cell.parentProfileVC = self
+            cell.userView.isHidden = true
+            cell.userEmail.isHidden = true
+            cell.dateString.isHidden = true
+            cell.profileSegueTrigger.isHidden = true
             
             cell.friendsPostTextView.text = posts[section].postText
             cell.creatorTextView.text = posts[section].creator
             
             cell.categoryIcon.image = K.categoryIcons[posts[section].category!]!!
-            cell.categoryIcon.tintColor = K.categoryColorsSingular[posts[section].category!]
+          
+            if K.colorsFromDictionary {
+                let categoryColor = K.categoryColorsSingular[posts[section].category!]
+                cell.categoryIcon.tintColor = categoryColor
+            }
+
+            
+//            cell.friendsPostTextView.backgroundColor = K.categoryColorsSingular[posts[section].category!]
+//            cell.creatorTextView.backgroundColor = K.categoryColorsSingular[posts[section].category!]
 
             cell.date = posts[section].date
             cell.category = posts[section].category
@@ -671,7 +700,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.editButton.isHidden = false
             }
             
-            if postOpen[posts[section].postText!]! {
+            if postOpen[posts[section].date!]! {
                 cell.openClosedArrow.image = UIImage(systemName: "chevron.down")
             }
             
@@ -719,7 +748,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section <= posts.count - 1 {
             let post = posts[section]
-            if postOpen[post.postText!] == false{
+            if postOpen[post.date!] == false {
                 return 0
             }
             else {
@@ -735,11 +764,26 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        print(indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailView", for: indexPath) as! PostDetailView
+        cell.profileVC = self
+        cell.fromUserEmail = posts[indexPath.section].fromUserEmail
+        cell.userURL = posts[indexPath.section].userURL
+
         cell.blurbTextView.text = posts[indexPath.section].blurb
         cell.ratingValue.text = "\(String(describing: posts[indexPath.section].rating!))"
-        cell.profileVC = self
+        
+        cell.category.setTitle(posts[indexPath.section].category!, for: .normal)
+        if posts[indexPath.section].fromUser != nil {
+            cell.separator.isHidden = false
+            cell.repostStack.isHidden = false
+            cell.repostDetail.setTitle(posts[indexPath.section].fromUser!, for: .normal)
+        }
+        else {
+            cell.separator.isHidden = true
+            cell.repostStack.isHidden = true
+        }
+        
         return cell
     }
     
@@ -749,10 +793,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 //    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 151
     }
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 151
     }
     
 }

@@ -16,10 +16,12 @@ struct Post: Equatable {
     var date : Double?
     var dateString : String?
     var postText : String?
-    var category: String?
-    var creator: String?
-    var blurb: String?
-    var rating: Double?
-    var repost: Bool?
-    var fromUser: String?
+    var category : String?
+    var creator : String?
+    var blurb : String?
+    var rating : Double?
+    var repost : Bool?
+    var fromUser : String?
+    var fromUserEmail : String?
+    var userURL : String?
 }

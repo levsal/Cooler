@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="OpenSans-Bold.ttf">
             <string>OpenSans-Bold</string>
+        </array>
+        <array key="OpenSans-SemiBold.ttf">
+            <string>OpenSans-SemiBold</string>
         </array>
         <array key="OpenSans-SemiBoldItalic.ttf">
             <string>OpenSans-SemiBoldItalic</string>
@@ -18,58 +20,148 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostDetailView" rowHeight="123" id="KGk-i7-Jjw" customClass="PostDetailView" customModule="Cooler" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="331" height="123"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostDetailView" rowHeight="161" id="KGk-i7-Jjw" customClass="PostDetailView" customModule="Cooler" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="331" height="161"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="331" height="123"/>
+                <rect key="frame" x="0.0" y="0.0" width="331" height="161"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Fictionally speaking, this work's fictional writing is great" translatesAutoresizingMaskIntoConstraints="NO" id="hYe-Yg-GcP" userLabel="Blurb">
-                        <rect key="frame" x="10" y="0.0" width="250" height="123"/>
-                        <color key="backgroundColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <rect key="frame" x="10" y="0.0" width="246" height="120"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="120" id="vfL-3Q-xvK"/>
+                        </constraints>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="OpenSans-SemiBoldItalic" family="Open Sans" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="364-v7-IY9">
-                        <rect key="frame" x="260" y="5" width="56" height="56"/>
+                        <rect key="frame" x="256" y="10" width="60" height="60"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMZ-mh-Gc0">
-                                <rect key="frame" x="16" y="16.5" width="24.5" height="23.5"/>
-                                <color key="backgroundColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="17" y="17.5" width="26" height="25"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="56" id="5yG-ZP-dlK"/>
-                            <constraint firstAttribute="height" constant="56" id="8mR-ND-0wS"/>
+                            <constraint firstAttribute="width" constant="60" id="5yG-ZP-dlK"/>
+                            <constraint firstAttribute="height" constant="60" id="8mR-ND-0wS"/>
                             <constraint firstItem="DMZ-mh-Gc0" firstAttribute="centerX" secondItem="364-v7-IY9" secondAttribute="centerX" id="CnV-Tg-uYG"/>
                             <constraint firstItem="DMZ-mh-Gc0" firstAttribute="centerY" secondItem="364-v7-IY9" secondAttribute="centerY" id="KbL-pK-MmZ"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0WA-v4-362" userLabel="Action Bar">
+                        <rect key="frame" x="10" y="121" width="311" height="40"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tc9-nJ-3fm" userLabel="Send">
+                                <rect key="frame" x="269" y="0.0" width="21" height="40"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="paperplane.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="DMpressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2kg-jg-voX"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="U5F-fF-VL4" userLabel="Action Stack">
+                                <rect key="frame" x="0.0" y="5" width="170.5" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zR8-C0-c5Z" userLabel="Category">
+                                        <rect key="frame" x="0.0" y="0.0" width="59" height="30"/>
+                                        <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="13"/>
+                                        <state key="normal" title="Category">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="·" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dkv-ck-s4A" userLabel="Separator">
+                                        <rect key="frame" x="64" y="0.0" width="6" height="30"/>
+                                        <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="20"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nvi-t0-RJn" userLabel="Repost Stack">
+                                        <rect key="frame" x="75" y="0.0" width="95.5" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPS-r1-Dvp">
+                                                <rect key="frame" x="0.0" y="0.0" width="22.5" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="repeat" catalog="system"/>
+                                                <connections>
+                                                    <action selector="repostDetailPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Scr-R3-X4J"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H2d-lC-7Z6" userLabel="Repost Detail">
+                                                <rect key="frame" x="25.5" y="0.0" width="70" height="30"/>
+                                                <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="13"/>
+                                                <state key="normal" title="John Deere">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="repostDetailPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rZ5-VT-ZJE"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="tc9-nJ-3fm" firstAttribute="centerY" secondItem="0WA-v4-362" secondAttribute="centerY" id="6fW-uP-Ht9"/>
+                            <constraint firstAttribute="bottom" secondItem="tc9-nJ-3fm" secondAttribute="bottom" id="fiE-4O-IcG"/>
+                            <constraint firstAttribute="trailing" secondItem="tc9-nJ-3fm" secondAttribute="trailing" constant="21" id="iGc-bw-Mp5"/>
+                            <constraint firstItem="tc9-nJ-3fm" firstAttribute="top" secondItem="0WA-v4-362" secondAttribute="top" id="wbe-90-PTb"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tE8-Gh-C10">
+                        <rect key="frame" x="10" y="120" width="306" height="1"/>
+                        <color key="backgroundColor" red="0.13213832480000001" green="0.13213832480000001" blue="0.13213832480000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Tep-Cy-c59"/>
+                            <constraint firstAttribute="height" constant="1" id="bfk-GX-jse"/>
                         </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.061409422589999998" green="0.061409422589999998" blue="0.061409422589999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="0WA-v4-362" secondAttribute="bottom" id="402-O8-gaa"/>
                     <constraint firstAttribute="trailing" secondItem="364-v7-IY9" secondAttribute="trailing" constant="15" id="5vR-wO-DFR"/>
                     <constraint firstItem="hYe-Yg-GcP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="7DT-PA-TV2"/>
-                    <constraint firstAttribute="bottom" secondItem="hYe-Yg-GcP" secondAttribute="bottom" id="Gec-ES-qQx"/>
-                    <constraint firstItem="364-v7-IY9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="PkF-f1-2ES"/>
+                    <constraint firstItem="tE8-Gh-C10" firstAttribute="top" secondItem="hYe-Yg-GcP" secondAttribute="bottom" id="8cv-EW-XBa"/>
+                    <constraint firstItem="364-v7-IY9" firstAttribute="trailing" secondItem="tE8-Gh-C10" secondAttribute="trailing" id="CWk-tK-HFT"/>
+                    <constraint firstItem="364-v7-IY9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="PkF-f1-2ES"/>
+                    <constraint firstItem="0WA-v4-362" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="WB9-w7-b8j"/>
                     <constraint firstItem="364-v7-IY9" firstAttribute="leading" secondItem="hYe-Yg-GcP" secondAttribute="trailing" id="Zbc-6W-YcC"/>
+                    <constraint firstAttribute="trailing" secondItem="0WA-v4-362" secondAttribute="trailing" constant="10" id="wD5-bM-q4h"/>
                     <constraint firstItem="hYe-Yg-GcP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="xZw-Lo-dg1"/>
+                    <constraint firstItem="0WA-v4-362" firstAttribute="top" secondItem="tE8-Gh-C10" secondAttribute="bottom" id="yr7-iH-tuV"/>
+                    <constraint firstItem="tE8-Gh-C10" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="zRT-za-WMF"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="actionBar" destination="0WA-v4-362" id="DCA-dg-PrQ"/>
                 <outlet property="blurbTextView" destination="hYe-Yg-GcP" id="ScI-2o-0nW"/>
+                <outlet property="category" destination="zR8-C0-c5Z" id="yMP-fG-9Uy"/>
                 <outlet property="ratingValue" destination="DMZ-mh-Gc0" id="I2A-sP-c0K"/>
                 <outlet property="ratingView" destination="364-v7-IY9" id="E87-je-1g0"/>
+                <outlet property="repostDetail" destination="H2d-lC-7Z6" id="ot6-JU-Np5"/>
+                <outlet property="repostStack" destination="nvi-t0-RJn" id="ihO-89-2Rn"/>
+                <outlet property="separator" destination="Dkv-ck-s4A" id="7oX-mj-KOW"/>
             </connections>
-            <point key="canvasLocation" x="102.17391304347827" y="113.50446428571428"/>
+            <point key="canvasLocation" x="102.17391304347827" y="126.22767857142857"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="paperplane.fill" catalog="system" width="128" height="118"/>
+        <image name="repeat" catalog="system" width="128" height="99"/>
+    </resources>
 </document>

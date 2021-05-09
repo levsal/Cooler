@@ -18,10 +18,18 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet weak var dateString: UILabel!
     @IBOutlet weak var friendsPostTextView: UITextView!
     @IBOutlet weak var creatorTextView: UITextView!
+    
+    @IBOutlet var usernameView: UIView!
+    
     @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var editButton: UIButton!
+    
     @IBOutlet var listButton: UIButton!
     @IBOutlet var repostButton: UIButton!
+    @IBOutlet var likeButton: UIButton!
+    
+    @IBOutlet var profileSegueTrigger: UIButton!
+    
     @IBOutlet var repostIcon: UIImageView!
     @IBOutlet weak var editStack: UIStackView!
     @IBOutlet weak var titleStack: UIStackView! 
@@ -33,13 +41,15 @@ class FriendsPostsTableViewCell: UITableViewCell {
     @IBOutlet var openClosedArrow: UIImageView!
     
     
-    
     var date : Double?
     var category : String?
     var rating : Double?
     var email : String?
     var icon : UIImage?
     var blurb : String?
+    var alreadyReposted : Bool = false
+    var alreadyLiked : Bool = false
+    var profilePicURL : String?
     
     var parentProfileVC : ProfileViewController?
     var parentFeedVC : FeedViewController?
@@ -60,7 +70,32 @@ class FriendsPostsTableViewCell: UITableViewCell {
         
         listButton.isHidden = true
         repostButton.isHidden = true
+        likeButton.isHidden = true
         repostIcon.isHidden = true
+        usernameView.isHidden = true
+        
+        userView.backgroundColor = K.tileColor
+        friendsPostTextView.backgroundColor = K.tileColor
+        creatorTextView.backgroundColor = K.tileColor
+        contentView.backgroundColor = K.backgroundColor
+      
+        userEmail.setTitleColor(K.fontColor, for: .normal)
+        friendsPostTextView.textColor = K.fontColor
+        creatorTextView.textColor = K.fontColor
+        dateString.textColor = K.fontColor
+        categoryIcon.tintColor = K.iconColor
+        
+        repostIcon.tintColor = K.fontColor
+        openClosedArrow.tintColor = K.fontColor
+
+//        categoryIcon.layer.borderWidth = 2
+//        categoryIcon.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+//        profilePic.layer.borderWidth = 0.7
+//        profilePic.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+//        userView.alpha = 0.5
+//        friendsPostTextView.alpha = 0.5
+//        creatorTextView.alpha = 0.5
     }
     
     
@@ -69,7 +104,7 @@ class FriendsPostsTableViewCell: UITableViewCell {
     }
     
     @IBAction func profileTriggerPressed(_ sender: UIButton) {
-        parentFeedVC!.segueFriendEmail = email
+        parentFeedVC?.segueFriendEmail = email
         
         parentFeedVC?.performSegue(withIdentifier: "FeedToProfile", sender: parentFeedVC)
     }
@@ -79,19 +114,18 @@ class FriendsPostsTableViewCell: UITableViewCell {
     
     
     @IBAction func postTriggerPressed(_ sender: UIButton) {
-        let work = friendsPostTextView.text
         let exactDate = date
         
         //PROFILE
-        if parentProfileVC?.postOpen[work!] == false {
-            parentProfileVC?.postOpen[work!] = true
+        if parentProfileVC?.postOpen[exactDate!] == false {
+            parentProfileVC?.postOpen[exactDate!] = true
             
             parentProfileVC?.postTableView.reloadData()
             parentProfileVC?.postTableView.layoutIfNeeded()
             
         }
-        else if parentProfileVC?.postOpen[work!] == true{
-            parentProfileVC?.postOpen[work!] = false
+        else if parentProfileVC?.postOpen[exactDate!] == true{
+            parentProfileVC?.postOpen[exactDate!] = false
             
             parentProfileVC?.postTableView.reloadData()
             parentProfileVC?.postTableView.layoutIfNeeded()
@@ -99,15 +133,15 @@ class FriendsPostsTableViewCell: UITableViewCell {
         }
         
         //FEED
-        if parentFeedVC?.postOpen[work!] == false{
-            parentFeedVC?.postOpen[work!] = true
+        if parentFeedVC?.postOpen[exactDate!] == false{
+            parentFeedVC?.postOpen[exactDate!] = true
             
             parentFeedVC?.feedTableView.reloadData()
             parentFeedVC?.feedTableView.layoutIfNeeded()
             
         }
-        else if parentFeedVC?.postOpen[work!] == true{
-            parentFeedVC?.postOpen[work!] = false
+        else if parentFeedVC?.postOpen[exactDate!] == true{
+            parentFeedVC?.postOpen[exactDate!] = false
             
             parentFeedVC?.feedTableView.reloadData()
             parentFeedVC?.feedTableView.layoutIfNeeded()
@@ -208,29 +242,27 @@ class FriendsPostsTableViewCell: UITableViewCell {
     }
     
     @IBAction func deletePressed(_ sender: UIButton) {
-        if sender.titleLabel?.text == "Delete"{
-            sender.setTitle("Confirm", for: .normal)
+        if sender.tintColor == .white {
+            sender.tintColor = #colorLiteral(red: 1, green: 0.2564296126, blue: 0.2134288847, alpha: 1)
         }
         
-        else if sender.titleLabel?.text == "Confirm"{
-            print("\(String(describing: Auth.auth().currentUser?.email))_Posts")
-            parentProfileVC?.db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts").document(friendsPostTextView.text).delete()
+        else {
+            print("\(friendsPostTextView.text!)\(date!)")
+            parentProfileVC?.db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts").document("\(friendsPostTextView.text!)\(date!)").delete()
+            
         }
     }
     
     @IBAction func addToListPressed(_ sender: UIButton) {
         if parentFeedVC != nil {
             if sender.imageView!.image == UIImage(systemName: "plus") {
-                print("WASTANG")
-                
+                sender.tintColor = K.confirmedColor
                 db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List")
                     .document(friendsPostTextView.text).setData(["text": friendsPostTextView.text!, "date": -Date().timeIntervalSince1970, "category": category!, "creator": creatorTextView.text!,"blurb" : blurb!, "rating": rating!, "dateString" : dateString.text!, "user" : userEmail.titleLabel!.text!])
                 sender.setImage(UIImage(systemName: "checkmark"), for: .normal)
             }
             else if sender.imageView!.image == UIImage(systemName: "checkmark") {
-                
-                print("WASMARK")
-                
+                sender.tintColor = .darkGray
                 db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").document(friendsPostTextView.text).delete()
                 
                 sender.setImage(UIImage(systemName: "plus"), for: .normal)
@@ -256,31 +288,64 @@ class FriendsPostsTableViewCell: UITableViewCell {
     
     
     @IBAction func repostButtonPressed(_ sender: UIButton) {
-        if sender.tintColor == .white {
-            sender.tintColor = .darkGray
-            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts").document(friendsPostTextView.text).delete()
-
+        let dateReversed = -Date().timeIntervalSince1970
+        if alreadyReposted {
+            sender.tintColor = K.fontColor
+            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts").document("\(friendsPostTextView.text!)\(date!)").delete()
+            alreadyReposted = false
         }
-        else {
-            sender.tintColor = .white
-            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").document(friendsPostTextView.text).delete()
+        else if !alreadyReposted {
+            sender.tintColor = K.confirmedColor
+            if parentListVC != nil{
+                for listed in parentListVC!.listeds {
+                    if listed.date == date {
+                        let dex = parentListVC!.listeds.firstIndex(of: listed)
+                        parentListVC!.listeds.remove(at: dex!)
+                    }
+                }
+            }
 
+            db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("List").document("\(friendsPostTextView.text!)\(dateReversed)").delete()
+            
             db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts")
-                .document(friendsPostTextView.text).setData(
+                .document("\(friendsPostTextView.text!)\(dateReversed)").setData(
                     ["text": friendsPostTextView.text!,
-                     "date": -Date().timeIntervalSince1970,
+                     "date": dateReversed,
                      "category": category!,
                      "creator": creatorTextView.text!,
                      "blurb" : blurb!,
                      "rating": rating!,
                      "dateString" : dateString.text!,
                      "user" : userEmail.titleLabel!.text!,
+                     "userEmail" : email!,
+                     "userURL" : profilePicURL!,
                      "repost" : true])
-            
+            alreadyReposted = true
         }
-        parentFeedVC?.feedTableView.reloadData()
-        parentListVC?.listTableView.reloadData()
+//        parentFeedVC?.feedTableView.reloadData()
+//        parentListVC?.listTableView.reloadData()
+        
     }
+    
+    
+//    @IBAction func likeButtonPressed(_ sender: UIButton) {
+//        if !alreadyLiked {
+//            sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//            sender.tintColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+//            alreadyLiked = true
+//        }
+//        else if alreadyLiked {
+//            
+//            sender.setImage(UIImage(systemName: "heart"), for: .normal)
+//            sender.tintColor = .darkGray
+//            
+//            parentProfileVC?.db.collection("Users").document((Auth.auth().currentUser?.email!)!).collection("Posts").document(friendsPostTextView.text).collection("Likes").document((Auth.auth().currentUser?.email!)!)
+//            
+//            alreadyLiked = false
+//        }
+//        
+//        
+//    }
     
     
     

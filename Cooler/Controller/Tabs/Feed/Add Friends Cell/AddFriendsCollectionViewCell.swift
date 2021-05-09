@@ -24,11 +24,8 @@ class AddFriendsCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         profileVC.parentVC = self
-        
-//        profilePic.layer.borderWidth = 3
-//        profilePic.layer.borderColor = #colorLiteral(red: 0.1095183119, green: 0.109544374, blue: 0.1095148847, alpha: 1)
-        
-
+        userEmail.textColor = K.fontColor
+        contentView.backgroundColor = K.backgroundColor
     }
 
 

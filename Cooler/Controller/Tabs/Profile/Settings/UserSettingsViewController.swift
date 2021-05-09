@@ -56,33 +56,8 @@ class UserSettingsViewController: UIViewController, UITableViewDataSource, UITab
             cell.categoryIcon.image = UIImage(systemName: "checkmark")
         }
         
-        switch cell.friendsPostTextView.text {
-       
-        case "Albums":
-            cell.creatorTextView.text = "Artist/Band"
-        case "Movies":
-             cell.creatorTextView.text = "Genre"
-        case "TV Shows":
-            cell.creatorTextView.text = "Genre"
-        case "Books":
-            cell.creatorTextView.text = "Author"
-        case "Artists":
-            cell.creatorTextView.text = "Genre"
-        case "Songs":
-            cell.creatorTextView.text = "Artist/Band"
-        case "Podcasts":
-            cell.creatorTextView.text = "Host(s)"
-       
-       
-        default:
-            cell.creatorTextView.text = "Creator or Genre"
-        }
+        cell.creatorTextView.text = K.subheadingDictionary[cell.friendsPostTextView.text]
 
-//            cell.friendsPostTextView.isHidden = false
-//            cell.creatorTextView.isHidden = true
-//            cell.creatorTextView.text = ""
-//
-//            cell.userView.isHidden = true
         cell.profilePic.isHidden = true
         cell.userEmail.isHidden = true
         cell.dateString.isHidden = true

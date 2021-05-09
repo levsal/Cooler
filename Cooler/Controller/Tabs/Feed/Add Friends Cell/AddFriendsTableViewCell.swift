@@ -17,6 +17,8 @@ class AddFriendsTableViewCell: UITableViewCell{
     
     let db = Firestore.firestore()
     
+    @IBOutlet var addFriendsLabel: UILabel!
+    
     var potentialFriends : [Friend] = []
     
     var firstCollectionViewLoad = true
@@ -34,7 +36,10 @@ class AddFriendsTableViewCell: UITableViewCell{
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
-
+        addFriendsLabel.textColor = K.fontColor
+        contentView.backgroundColor = K.backgroundColor
+        emptyCollectionViewLabel.backgroundColor = K.backgroundColor
+        collectionView.backgroundColor = K.backgroundColor
     }
 
     

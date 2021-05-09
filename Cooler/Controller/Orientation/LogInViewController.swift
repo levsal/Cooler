@@ -37,6 +37,7 @@ class LogInViewController: UIViewController {
                         else {
                             let data = querySnapshot?.data()
                             K.currentUserName = data!["name"] as! String
+                            K.currentUserEmail = (Auth.auth().currentUser?.email!)!
                             self!.db.collection("Users").document(email).getDocument { (querySnapshot, error) in
                                 if let e = error {
                                     print("Error getting doc, \(e)")

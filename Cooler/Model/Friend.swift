@@ -15,5 +15,6 @@ struct Friend : Equatable {
     var date : Double?
     var picURL : String?
     var bio : String?
-    var lastMessageTimeString: String?
+    var lastMessage : String?
+    var lastMessageTimeString : String?
 }

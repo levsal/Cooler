@@ -21,6 +21,8 @@ class MessagesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        contentView.backgroundColor = K.backgroundColor
+        messageView.backgroundColor = K.tileColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -29,8 +31,7 @@ class MessagesTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     @IBAction func triggerPressed(_ sender: Any) {
-        print("Tapped")
         parentConvoVC?.dismissKeyboard()
     }
-    
+
 }

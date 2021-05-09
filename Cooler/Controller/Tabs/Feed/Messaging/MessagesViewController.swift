@@ -11,6 +11,7 @@ import Firebase
 
 class MessagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    var postToSend : Post? = nil
     let db = Firestore.firestore()
     var existingConvos : [Friend] = []
     var friends : [Friend] = []
@@ -20,13 +21,21 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
     var segueName = ""
     var segueEmail = ""
     
+    @IBOutlet var sendPostView: UIView!
+    @IBOutlet var sendPostLabel: UILabel!
+    var sendPostViewHidden = true
+    
     @IBOutlet var convosTableView: UITableView!
     @IBOutlet var messagesSearchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-
+        
+        sendPostView.isHidden = sendPostViewHidden
+        if postToSend != nil {
+            sendPostLabel.text = "Send \(postToSend!.postText!), posted by \(postToSend!.username!), to..."
+        }
         
         self.navigationItem.backBarButtonItem?.tintColor = .white
         
@@ -37,6 +46,12 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         convosTableView.dataSource = self
         convosTableView.delegate = self
         messagesSearchBar.delegate = self
+        
+        sendPostView.backgroundColor = K.backgroundColor
+        sendPostLabel.textColor = K.fontColor
+        
+        view.backgroundColor = K.backgroundColor
+        convosTableView.backgroundColor = K.backgroundColor
         
         getCurrentUserName()
         getConvos()
@@ -61,12 +76,14 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
                         if let email = data["email"],
                            let name = data["name"],
                            let picURL = data["picURL"],
+                           let lastMessage = data["lastMessage"],
                            let lastMessageTime = data["lastMessageTime"] {
                             self.existingConvos.append(Friend(email: email as? String,
                                                          name: name as? String,
                                                          date: nil,
                                                          picURL: picURL as? String,
                                                          bio: nil,
+                                                         lastMessage: lastMessage as? String,
                                                          lastMessageTimeString: lastMessageTime as? String))
                             
                         }
@@ -76,6 +93,8 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         }
+
+        
     }
     
     
@@ -88,6 +107,11 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
             convoVC.imageString = segueURL
             convoVC.friend = segueName
             convoVC.friendEmail = segueEmail
+            
+            if postToSend != nil {
+                convoVC.postToSend = postToSend
+                convoVC.pendingPostSend = true
+            }
         }
     }
     
@@ -106,7 +130,7 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         if friends == [] && existingConvos != [] {
             print("SHOWING EXISTING CONVOS")
             cell.name.text = existingConvos[indexPath.row].name
-            cell.bio.text = existingConvos[indexPath.row].lastMessageTimeString
+            cell.bio.text = "\(existingConvos[indexPath.row].lastMessage!) · \(existingConvos[indexPath.row].lastMessageTimeString!)"
             
             if existingConvos[indexPath.row].picURL != nil {
                 cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height/2
@@ -131,6 +155,10 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
 
         return cell
     
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
     
     

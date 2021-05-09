@@ -31,7 +31,6 @@ class FindFriendsViewController: UIViewController {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
 
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.06139858812, green: 0.06141700596, blue: 0.06139617413, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans-SemiBold", size: 18)!, NSAttributedString.Key.foregroundColor : UIColor(white: 1, alpha: 1)]
 
         
@@ -44,7 +43,7 @@ class FindFriendsViewController: UIViewController {
         if fromProfile {
 //            usersSearchBar.isHidden = true
         }
-        else{
+        else {
             getFriends()
         }
         
@@ -56,8 +55,15 @@ class FindFriendsViewController: UIViewController {
         usersTableView.register(UINib(nibName: "FindFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "FindFriendsTableViewCell")
         
         usersTableView.separatorColor = .clear
+        setColors()
     }
 
+    func setColors() {
+        view.backgroundColor = K.backgroundColor
+        emptyTableViewLabel.backgroundColor = K.backgroundColor
+        emptyTableViewLabel.textColor = K.fontColor
+        usersSearchBar.backgroundColor = K.backgroundColor
+    }
     
     func getFriends() {
         
@@ -172,10 +178,10 @@ extension FindFriendsViewController : UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55
+        return 70
     }
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55
+        return 70
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

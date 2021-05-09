@@ -111,7 +111,7 @@ class PostViewController: UIViewController {
 //                delegate.appendToArray(post: Post(date: dateReversed, dateString: dateTime, postText: postText!, category: selectedCategory, creator: creatorText!, blurb: blurbText!, rating: givenRating))
                 
                 if sender.titleLabel?.text == "Post"{
-                    db.collection("Users").document(delegate.email).collection("Posts").document(postText!).setData(["text": postText! as String, "date": dateReversed, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
+                    db.collection("Users").document(delegate.email).collection("Posts").document("\(postText!)\(dateReversed)").setData(["text": postText! as String, "date": dateReversed, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
                         
                         if let e = error{
                             print("There was an issue saving data to Firestore, \(e)")
@@ -120,7 +120,8 @@ class PostViewController: UIViewController {
                 }
                 else if sender.titleLabel!.text == "Finish Edit"{
                     if preservedPostText == postText {
-                        db.collection("Users").document(delegate.email).collection("Posts").document(preservedPostText!).updateData(["text": postText! as String, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
+                        print("Googoogaga")
+                        db.collection("Users").document(delegate.email).collection("Posts").document("\(preservedPostText!)\(preservedDate!)").updateData(["text": postText! as String, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
                             
                             if let e = error{
                                 print("There was an issue saving data to Firestore, \(e)")
@@ -130,7 +131,7 @@ class PostViewController: UIViewController {
                         }
                     }
                     else {
-                        db.collection("Users").document(delegate.email).collection("Posts").document(postText!).setData(["text": postText! as String, "date": preservedDate!, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
+                        db.collection("Users").document(delegate.email).collection("Posts").document("\(postText!)\(dateReversed)").setData(["text": postText! as String, "date": preservedDate!, "category": selectedCategory, "creator": creatorText!,"blurb" : blurbText!, "rating": givenRating, "dateString" : dateTime]){ (error) in
                             
                             if let e = error {
                                 print("There was an issue saving data to Firestore, \(e)")

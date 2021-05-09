@@ -20,7 +20,9 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+//        category.layer.cornerRadius = 5
+//        category.clipsToBounds = true
+        category.backgroundColor = K.backgroundColor
     }
 }
 

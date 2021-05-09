@@ -12,13 +12,13 @@ import Firebase
 
 struct K {
     
+    static var currentUserEmail = ""
     static var currentUserName = ""
     static var currentUserPicURL = ""
     
     static var friends : [Friend] = []
     
     static let categoryNames = ["Albums", "Movies", "TV Shows", "Books", "Artists", "Songs", "Podcasts"]
-//               , "Misc."]
 
     static let categoryIcons = ["Album": UIImage(systemName: "music.quarternote.3"),
                          "Movie": UIImage(systemName: "film.fill"),
@@ -27,8 +27,6 @@ struct K {
                          "Artist": UIImage(systemName: "person.fill"),
                          "Song" : UIImage(systemName: "music.note"),
                          "Podcast" : UIImage(systemName: "mic.fill")]
-//        ,
-//                         "Misc": UIImage(systemName: "scribble"),]
    
     static let categoryIconsPlural = ["Albums": UIImage(systemName: "music.quarternote.3"),
                          "Movies": UIImage(systemName: "film.fill"),
@@ -37,25 +35,6 @@ struct K {
                          "Artists": UIImage(systemName: "person.fill"),
                          "Songs" : UIImage(systemName: "music.note"),
                          "Podcasts" : UIImage(systemName: "mic.fill")]
-//        ,
-//                         "Misc.": UIImage(systemName: "scribble")]
-    
-    //Original Colors
-//    static let categoryColorsSingular = ["Album": #colorLiteral(red: 0.5411764706, green: 0.6470588235, blue: 0.9882352941, alpha: 1),
-//                                  "Movie": #colorLiteral(red: 0.8549019608, green: 0.8039215686, blue: 0.3333333333, alpha: 1),
-//                                  "TV Show": #colorLiteral(red: 0.5338507295, green: 0.7872315049, blue: 0.5110785961, alpha: 1),
-//                                  "Book": #colorLiteral(red: 0.885936439, green: 0.6727313399, blue: 0.7194210887, alpha: 1),
-//                                  "Artist": #colorLiteral(red: 0.5799238682, green: 0.8220599294, blue: 0.9982820153, alpha: 1),
-//                                  "Song" : #colorLiteral(red: 0.7758142352, green: 0.7204052806, blue: 0.98112005, alpha: 1),
-//                                  "Podcast" : #colorLiteral(red: 0.9861215949, green: 0.5122104287, blue: 0.4508516192, alpha: 1)]
-//
-//    static let categoryColorsPlural = ["Albums": #colorLiteral(red: 0.5411764706, green: 0.6470588235, blue: 0.9882352941, alpha: 1),
-//                                "Movies": #colorLiteral(red: 0.8565239906, green: 0.805349052, blue: 0.3322198987, alpha: 1),
-//                                "TV Shows": #colorLiteral(red: 0.5333333333, green: 0.7882352941, blue: 0.5098039216, alpha: 1),
-//                                "Books": #colorLiteral(red: 0.8862745098, green: 0.6745098039, blue: 0.7176470588, alpha: 1),
-//                                "Artists": #colorLiteral(red: 0.5799238682, green: 0.8220599294, blue: 0.9982820153, alpha: 1),
-//                                "Songs" : #colorLiteral(red: 0.7758142352, green: 0.7204052806, blue: 0.98112005, alpha: 1),
-//                                "Podcasts" : #colorLiteral(red: 0.9861215949, green: 0.5122104287, blue: 0.4508516192, alpha: 1)]
     
     static let categoryColorsSingular = ["Album": #colorLiteral(red: 0.6588235294, green: 0.7176470588, blue: 1, alpha: 1),
                                   "Movie": #colorLiteral(red: 0.9137254902, green: 0.8431372549, blue: 0.3450980392, alpha: 1),
@@ -71,4 +50,31 @@ struct K {
                                   "Artists": #colorLiteral(red: 0.6509803922, green: 0.8666666667, blue: 1, alpha: 1),
                                   "Songs" : #colorLiteral(red: 0.8196078431, green: 0.768627451, blue: 1, alpha: 1),
                                   "Podcasts" : #colorLiteral(red: 0.9843137255, green: 0.5137254902, blue: 0.4509803922, alpha: 1)]
+
+    static let subheadingDictionary = ["Albums": "Artist/Band",
+                                      "Movies": "Genre",
+                                      "TV Shows": "Genre",
+                                      "Books": "Author(s)",
+                                      "Artists": "Category",
+                                      "Songs" : "Artist/Band",
+                                      "Podcasts" : "Host(s)"]
+    
+////
+//        static let navigationBarColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        static let tileColor = #colorLiteral(red: 0.1138141975, green: 0.1143484786, blue: 0.1156276539, alpha: 1)
+//
+//        static let backgroundColor = #colorLiteral(red: 0.07843137255, green: 0.07843137255, blue: 0.07843137255, alpha: 1)
+//        static var fontColor = #colorLiteral(red: 0.8673595786, green: 0.8812954426, blue: 0.8903576732, alpha: 1)
+
+//        static let colorsFromDictionary = false
+//        static let iconColor = fontColor
+    
+//    ALTERNATES
+    static let colorsFromDictionary = false
+    static let tileColor = #colorLiteral(red: 0.9750371575, green: 0.9692406058, blue: 0.9794927239, alpha: 1)
+    static let backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    static let fontColor = #colorLiteral(red: 0.1138141975, green: 0.1143484786, blue: 0.1156276539, alpha: 1)
+    static let iconColor = fontColor
+    static let confirmedColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+
 }
